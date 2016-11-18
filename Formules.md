@@ -32,11 +32,34 @@
 # Explication des formules et variables
 
 
-
+- $l_{1}$ :
+- $l_{2}$ :
+- $q_{1}$ :
+- $q_{2}$ :
+- $m_{1}$ :
+- $m_{2}$ :
+- $l_{c1}$ :
+- $l_{c2}$ :
+- $I_{1}$ :
+- $I_{2}$ :
 - $ X_{G}$ : Déplacement horizontal du centre de masse ```variable double```
-
 - $L$ : Moment angulaire par rapport au point de contact
-
-- $X_{G} = 0$ : Signifie mon centre de masse est aligné avec le point de contact au sol
-
-- $\dot{q_{1}} = \dot{q_{2}} = 0$ : Signifie
+- $X_{G} = 0$ : Signifie que mon centre de masse est aligné avec le point de contact au sol
+- $\dot{q_{1}} = \dot{q_{2}} = 0$ :
+- $L = \dot{L} = \ddot{L} = 0$ :
+- $k_{dd}$ :
+- $k_{d}$ :
+- $k_{p}$ :
+- $\tau$ :
+- $\tau^{d}$ :
+- $q_{1}^{d}$ :
+- $q_{2}^{d}$ :
+- $k_{v} = ( m_{1} + m_{2})g k_{dd}$ :
+- $k_{x} = ( m_{1} + m_{2})g k_{d}$ :
+- $x = (q_{1} - q_{1}^{d}, q_{2} - q_{2}^{d}, \dot{q}_{1}, \dot{q}_{2})$ :
+- $ u = \tau$ :
+- $\dot{x} = h(x)$ :
+- $A = \frac{\partial h}{\partial x} \mid x = 0 $ :
+- $b_{i}$ :
+- $a$ :
+- $\alpha$ :
