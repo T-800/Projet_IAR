@@ -32,18 +32,18 @@
 # Explication des formules et variables
 
 ## Variables physiques
-- $l_{1}$ :
-- $l_{2}$ :
+- $l_{1}$ : Longueur de l'objet1
+- $l_{2}$ : Longueur de l'objet2
 - $q_{1}$ :
 - $q_{2}$ :
-- $m_{1}$ :
-- $m_{2}$ :
+- $m_{1}$ : Masse de l'objet1 (uniforme)
+- $m_{2}$ : Masse de l'objet2 (uniforme)
 - $l_{c1}$ :
 - $l_{c2}$ :
-- $I_{1}$ :
-- $I_{2}$ :
+- $I_{1}$ : Moment d'inertie de l'objet1
+- $I_{2}$ : Moment d'inertie de l'objet2
 
-## 
+##
 - $ X_{G}$ : Déplacement horizontal du centre de masse ```variable double```
 - $L$ : Moment angulaire par rapport au point de contact
 - $X_{G} = 0$ : Signifie que mon centre de masse est aligné avec le point de contact au sol
