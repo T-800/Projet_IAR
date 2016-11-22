@@ -1,0 +1,162 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1,utf8]{inputenc}
+\usepackage{soul}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphics}
+\usepackage{pgf,tikz}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\newcommand{\hsp}{\hspace{20pt}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+\section*{1. Formules}
+
+$\label{eq:L}
+	\dot{L} = -( m_{1} + m_{2})gX_{G} $
+
+
+$	\ddot{L} = -( m_{1} + m_{2})g\dot{X}_{G} $
+
+
+$	\tau = k_{dd}\ddot{L} + k_{d}\dot{L} + k_{p}L + \tau^{d} $
+
+
+$	\tau^{d} = m_{2} l_{c2} g \cos(q_{1} + q_{2}) $
+
+$	\tau = - k_{v}\dot{X}_{G} - k_{x}X_{G} + k_{p}L + \tau^{d} $
+
+$	\dot{x} = f(x) + g(x) . u $
+
+$	\dot{x} = Ax $
+
+$	\lambda^{4} + (b_{1} k_{dd} - b_{2} k_{p} )\lambda^{3} + (b_{3} k_{d} - : \alpha)\lambda^{2} + (b_{4} k_{p} )\lambda + a = $
+
+$	\lambda_{1} = \lambda_{2} = \lambda_{3} = \lambda_{4} = -p $
+
+$	(\lambda + p)^{4} = \lambda^{4} + 4p\lambda^{3} + 6p^{2}\lambda^{2} +  4p^{3}\lambda : +  p^{4} = $
+
+
+
+\section*{2. Explication des formules et variables}
+\label{sec:Explication des formules et variables}
+
+
+$	l_{1} $
+Longueur de l'objet1, cet objet est attaché au sol par un point fixe.\\
+
+$	l_{2} $
+Longueur de l'objet2, cet objet est attaché à l'objet1 par une jointure à une de ses éxtrémités.\\
+
+$	q_{1} $
+Angle de l'objet 1 par rapport au sol, au niveau de la jointure.\\
+
+$	q_{2} $
+Angle de l'objet 2 par rapport au (sol ou de l'objet 1 ??), au niveau de la jointure.\\
+
+
+$	m_{1} $
+Masse de l'objet1 la masse est considédée uniforme.\\
+
+$	m_{2} $
+Masse de l'objet2 la masse est considédée uniforme.\\
+
+$	l_{c1} $
+Longueur entre une éxtrémité et le centre de masse (pas sûr) ($\Longleftrightarrow$ barycentre ?). Le point change en fonction de l'inclinaison de l'objet non ? - Et pour trouver le barycentre comme ça il faut utiliser une intégrale ?\\
+
+
+$	l_{c2} $
+
+
+$	I_{1} $
+Moment d'inertie de l'objet1.\\
+
+
+$	I_{2} $
+Moment d'inertie de l'objet2.\\
+
+
+
+\subsection*{2. Autres Variables}
+\label{sub:Autres Variables}
+
+
+$	L $
+
+Moment angulaire par rapport a un point le point choisi est le point de contact au sol.\\
+
+
+$	X_{G} = 0 $
+
+Signifie que mon centre de masse "global" est aligné avec le point de contact au sol "$=0$".\\
+
+
+$	L = 0 $
+
+Comme L est exprimé en fonction du point de contact au sol avoir $	L = 0 $ signifie que l'on veut que toutes les forces s'annule ???.\\
+
+
+$	\dot{X}_{G} = 0 $
+.\\
+
+
+$	\dot{q_{1}} = \dot{q_{2}} = 0 $
+
+Dérivé de $q_{i}$ par rapport au temps on veut que $	\dot{q_{1}} = \dot{q_{2}} $ soit égal a $0$ signifie que nos angles ne bougent pas (on se déplace pas )\\
+
+
+
+$	L = \dot{L} = \ddot{L} = 0 $
+Comme on veut que $	X_{G} = 0 $ et  $	\dot{X}_{G} = 0 $ et que $ \dot{L}$ et $\ddot{L}$ sont exprimmés respectivement en fonction de $	X_{G} = 0 $ et  $	\dot{X}_{G} = 0 $ on a donc que $	L = \dot{L} = \ddot{L} = 0 $
+
+
+
+$	k_{dd} $
+
+$	k_{d} $
+
+$	k_{p} $
+
+$	\tau $
+
+$	\tau^{d} $
+
+$	q_{1}^{d} $
+
+$	q_{2}^{d} $
+
+$	k_{v} = ( m_{1} + m_{2})g k_{dd} $
+
+$	k_{x} = ( m_{1} + m_{2})g k_{d} $
+
+$	x = (q_{1} - q_{1}^{d}, q_{2} - q_{2}^{d}, \dot{q}_{1}, \dot{q}_{2}) $
+
+$	 u = \tau $
+
+$	\dot{x} = h(x) $
+
+$	A = \frac{\partial h}{\partial x} \mid x = 0 $
+
+$	b_{i} $
+
+$	a $
+
+$	\alpha $
+
+
+\end{document}
