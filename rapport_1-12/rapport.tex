@@ -32,10 +32,12 @@
 
     \textsc{ Université Pierre et Marie Curie \\[1cm] \huge IAR}\\[6cm]
 
-    \textsc{\huge \bfseries Angular Momentum Based Controller for Balancing an Inverted Double Pendulum.}\\
 
+    \textsc{\huge \bfseries Angular Momentum Based Controller for Balancing an Inverted Double Pendulum.}\\
     % Title
     \HRule \\[0.4cm]
+    ~~\\
+    \huge \bfseries Résumé
 
 ~~\\
 ~~\\
@@ -50,13 +52,34 @@
     \vfill
 
     % Bottom of the page
-    {\large 01/12/2016}
+    {\large 08/12/2016}
 
   \end{center}
   \end{sffamily}
 \end{titlepage}
 
-\section*{1. }
+\section*{ Résumé }
+
+L'article que nous étudions dans le cadre de ce projet présente un nouvel algorithme de contrôle de l'équilibre d'un double pendule inversé (IDP pour Inverted Double Pendulum) avec un degré de liberté.
+
+Le robot considéré est constitué de deux parties reliées entre elles par une articulation contenant un moteur. La partie inférieure est en contact permanent avec le sol. Ce contact est appelé un pied, et selon le modèle il est fixé ou non au sol. Dans un premier cas, il se résume en un point unique et est fixé au sol. Dans les deux autres, il n'est pas fixé au sol et à une forme d'arc de cercle ou de courbe convexe. Nous ne considérerons que le premier cas dans ce projet.\\
+Il est supposé qu'il n'y a pas de frottement, de glissement ou de perte de contact entre le pied du robot et le sol.
+
+%Le pieds du robot forme un angle $q_1$ avec le sol, c'est cet angle que l'on contrôle.
+
+Dans l'algorithme présenté, le contrôle du robot est basé sur un calcul de moment cinétique par rapport au point de contact. L'avantage de cet algorithme est que contrairement à d'anciennes méthodes qui nécessitent de calculer la troisième dérivée du moment, celle ci se contente de la dérivée seconde.\\
+Ceci est du à l'équivalence entre les conditions d'équilibre et l'annulation du moment cinétique et de ces deux premières dérivées. Les conditions d'équilibre de base étants l'alignement du centre de masse avec le point de contact et l'annulation de la vitesse angulaire du robot.
+
+Ce contrôlleur permet d'aller vers une configuration d'équilibre à partir de n'importe quelle autre configuration (d'équilibre ou non).
+
+
+
+%Dans ce projet, nous nous plaçons dans le cadre de la première configuration: pointfoot balancer (acrobot).
+
+
+
+
+
 
 
 
