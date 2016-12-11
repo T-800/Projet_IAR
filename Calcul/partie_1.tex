@@ -14,12 +14,12 @@
 \usepackage{graphics}
 \usepackage{pgf,tikz}
 \usetikzlibrary{quotes,angles}
+\usetikzlibrary{arrows}
 \usepackage{multirow}
 \usepackage{listings}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{graphicx}
-
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 \newcommand{\hsp}{\hspace{20pt}}
@@ -32,18 +32,37 @@
 
 Nous avons $\mu(\overrightarrow{P}) = \tau$ qui est le moment cinétique de la force $P$. Par rapport au point $O$.
 
-\begin{tikzpicture}
-\draw
+\begin{tikzpicture}[
+    axis/.style={very thick, ->, >=stealth'},
+    important line/.style={thick},
+    dashed line/.style={dashed, thin},
+    pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten
+    >=2pt},
+    every node/.style={color=black}]
 
-  (O,1.5) coordinate (m) node[left] {M}
-  -- (3,5) coordinate (o) node[right] {O}
-  -- (3,2) coordinate (p) node[above right] {$\overrightarrow{P}$}
-  pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
-  {angle=m--o--p};
-  \filldraw[fill=white,line width=1pt](4,2)circle(.12cm);
-      \draw[line width=.6pt] (4,2)
-                            +(-135:.12cm) -- +(45:.12cm)
-                            +(-45:.12cm) -- +(135:.12cm);
+  \draw[axis] (-0.1,0)  -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
+
+   \filldraw[fill=white,line width=1pt]
+    (2,0)circle(.12cm);
+  \draw[line width=.6pt]
+    (2,0) +(-135:.12cm) -- +(45:.12cm)
+            +(-45:.12cm) -- +(135:.12cm);
+  \draw
+
+    (1,2.5) coordinate (m) node[left] {M}
+    -- (3,5) coordinate (o) node[right] {O}
+    -- (3,3) coordinate (p) node[right]{P}
+
+    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
+   {angle=m--o--p};
+   \draw (1,2.5) node[black]{$\bullet$};
+   \draw (3,5) node[black]{$\bullet$};
+
+   \draw[thick,->]
+   (3,5) coordinate (O)  node[right]{}
+   -- (3,3) coordinate (p) node[right]{P};
+
 \end{tikzpicture}
 
 
@@ -55,14 +74,38 @@ $$
 Ce qui nous donne $\mu(\overrightarrow{P}) = -Px$\\
 
 
-\begin{tikzpicture}
-\node[circle,draw,black,scale=0.2] (O) at (1,2) {};
-\node[circle,draw,black,scale=0.2] (M) at (3,4) {};
-\node[circle,draw,black,scale=0.2] (P) at (3,4) {};
 
-\draw[postaction={decorate,decoration={markings,mark=at position 0.25 with {\arrow[black,line width=1.5pt]{>}}}}](O)node[below]{O}--(M)node[above]{M};
+\begin{tikzpicture}[
+    axis/.style={very thick, ->, >=stealth'},
+    important line/.style={thick},
+    dashed line/.style={dashed, thin},
+    pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten
+    >=2pt},
+    every node/.style={color=black}]
+
+  \draw[axis] (-0.1,0)  -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
+
+   \filldraw[fill=white,line width=1pt]
+    (2,0)circle(.12cm);
+    \filldraw[fill=black,line width=1pt]
+     (2,0)circle(.03cm);
+  \draw
+
+    (6,2.5) coordinate (m) node[left] {M}
+    -- (3,5) coordinate (o) node[right] {O}
+    -- (3,3) coordinate (p) node[right]{P}
+
+    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
+   {angle=p--o--m};
+   \draw (6,2.5) node[black]{$\bullet$};
+   \draw (3,5) node[black]{$\bullet$};
+
+   \draw[thick,->]
+   (3,5) coordinate (O)  node[right]{}
+   -- (3,3) coordinate (p) node[right]{P};
+
 \end{tikzpicture}
-
 
 Avec $x < 0$ et $\mu(\overrightarrow{P}) > 0 \Rightarrow \mu(\overrightarrow{P}) = |\mu(\overrightarrow{P})|$
 
