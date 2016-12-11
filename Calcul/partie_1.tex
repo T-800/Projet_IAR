@@ -44,24 +44,26 @@ Nous avons $\mu(\overrightarrow{P}) = \tau$ qui est le moment cinétique de la f
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
    \filldraw[fill=white,line width=1pt]
-    (2,0)circle(.12cm);
+    (2.5,0)circle(.12cm);
   \draw[line width=.6pt]
-    (2,0) +(-135:.12cm) -- +(45:.12cm)
+    (2.5,0) +(-135:.12cm) -- +(45:.12cm)
             +(-45:.12cm) -- +(135:.12cm);
+  \draw (2 ,0) node[black]{$\overrightarrow{\tau}$};
   \draw
 
-    (1,2.5) coordinate (m) node[left] {M}
-    -- (3,5) coordinate (o) node[right] {O}
-    -- (3,3) coordinate (p) node[right]{P}
+    (4,0) coordinate (m) node[left] {O}
+    -- (6,3) coordinate (o) node[right] {M}
+    -- (6,1) coordinate (p) node[right]{$\overrightarrow{P}$}
 
     pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
    {angle=m--o--p};
-   \draw (1,2.5) node[black]{$\bullet$};
-   \draw (3,5) node[black]{$\bullet$};
+   \draw (4,0) node[black]{$\bullet$};
+   \draw (6,3) node[black]{$\bullet$};
+
 
    \draw[thick,->]
-   (3,5) coordinate (O)  node[right]{}
-   -- (3,3) coordinate (p) node[right]{P};
+   (6,3) coordinate (O)  node[right]{}
+   -- (6,1) coordinate (p) node[right]{};
 
 \end{tikzpicture}
 
@@ -87,23 +89,24 @@ Ce qui nous donne $\mu(\overrightarrow{P}) = -Px$\\
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
    \filldraw[fill=white,line width=1pt]
-    (2,0)circle(.12cm);
+    (2.5,0)circle(.12cm);
     \filldraw[fill=black,line width=1pt]
-     (2,0)circle(.03cm);
+     (2.5,0)circle(.03cm);
+    \draw (2 ,0) node[black]{$\overrightarrow{\tau}$};
   \draw
 
-    (6,2.5) coordinate (m) node[left] {M}
-    -- (3,5) coordinate (o) node[right] {O}
-    -- (3,3) coordinate (p) node[right]{P}
+    (5,0) coordinate (m) node[left] {O}
+    -- (3,3) coordinate (o) node[right] {M}
+    -- (3,1) coordinate (p) node[right]{$\overrightarrow{P}$}
 
     pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
    {angle=p--o--m};
-   \draw (6,2.5) node[black]{$\bullet$};
-   \draw (3,5) node[black]{$\bullet$};
+   \draw (5,0) node[black]{$\bullet$};
+   \draw (3,3) node[black]{$\bullet$};
 
    \draw[thick,->]
-   (3,5) coordinate (O)  node[right]{}
-   -- (3,3) coordinate (p) node[right]{P};
+   (3,3) coordinate (O)  node[right]{}
+   -- (3,1) coordinate (p) node[right]{$\overrightarrow{P}$};
 
 \end{tikzpicture}
 
