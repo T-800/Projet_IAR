@@ -61,29 +61,20 @@
 
 \section*{ Résumé }
 
-L'article que nous étudions dans le cadre de ce projet présente un nouvel algorithme de contrôle de l'équilibre d'un double pendule inversé (IDP pour Inverted Double Pendulum) avec deux degrés de liberté et un degré ***d'action***.
+L'article que nous étudions dans le cadre de ce projet présente un nouvel algorithme de contrôle de l'équilibre d'un double pendule inversé (IDP pour Inverted Double Pendulum) avec deux degrés de liberté et un degré de contrôle.
 
 Le robot considéré est constitué de deux corps reliés entre eux par une articulation contenant un moteur.\\
-Le corps inférieur est en contact permanent avec le sol. Ce contact est appelé un pied, qui est, selon le modèle, fixé ou non au sol. Dans un premier cas (c'est celui qui nous intéresse dans ce projet), il se résume en un point unique et est fixé au sol, dans les deux autres, il ne l'est pas et possède une forme d'arc de cercle ou de courbe convexe quelconque.\\
-Il est supposé qu'il n'y a pas de frottements, de glissements ou de pertes de contact entre le pied du robot et le sol.
+Le corps inférieur est en contact permanent avec le sol. Ce contact est appelé un pied, qui, selon le modèle, est fixé ou non au sol. Dans un premier cas (c'est celui qui nous intéresse dans ce projet), il se résume en un point unique et est fixé au sol, dans les deux autres, il ne l'est pas et possède une forme d'arc de cercle ou de courbe convexe quelconque.\\
+Il est supposé qu'il n'y a pas de de pertes de contact entre le pied du robot et le sol et que la seule force exercée dessus est la force de la pesanteur.
 
-L'algorithme de contrôle présenté est basé sur un calcul des moments cinétiques des forces appliquées sur le robot par rapport au point de contact.\\
-La nouveauté de cet algorithme est que, contrairement à d'autres méthodes précédentes qui nécessitent de calculer les trois premières dérivées du moment cinétique, la lois de contrôle qui le compose se contente du calcul des deux premières dérivées, ce qui implique un gain en terme de calculs.\\
-Ceci est du à l'équivalence entre les conditions d'équilibre et l'annulation du moment cinétique et de ces deux premières dérivées. Les conditions d'équilibre de base étant l'alignement du centre de masse avec le point de contact et l'annulation de la vitesse angulaire du robot.
+L'algorithme de contrôle présenté est basé sur un calcul du moment cinétique des forces appliquées sur le robot par rapport au point de contact.\\
+La nouveauté de cet algorithme est que, contrairement à d'autres méthodes similaires qui nécessitent de calculer les trois premières dérivées du moment cinétique, la loi de contrôle qui le compose se contente du calcul des deux premières dérivées, ce qui implique un gain en terme de calculs.\\
+Cette amélioration est possible grâce à l'équivalence entre les conditions d'équilibre et l'annulation du moment cinétique et de ces deux premières dérivées. Les conditions d'équilibre de base étant l'alignement du centre de masse avec le point de contact et l'annulation de la vitesse angulaire du robot.
 
-Le pieds du robot forme un angle $q_1$ avec le sol, et le corps supérieur forme un angle $q_2$ avec le corps inférieur; c'est ce dernier que le moteur contrôle. Ces deux angles définissent l'état du robot et la lois de contrôle proposée est une commande par retour d'états qui annule le moment cinétique et ses dérivées et qui, de ce fait, mène le robot vers un état d'équilibre.
+La loi de contrôle proposée s'écrit donc en fonction du moment cinétique et de ces deux premières dérivées, qui lorsqu'elles s'annulent, font tendre l'état du robot vers un état d'équilibre. Cette commande de contrôle est donc une commande par retour d'états où
+l'état du robot est caractérisé par deux angles (celui formé entre la partie inférieure du robot et le sol, et celui formé entre les deux parties) et deux vitesses angulaires correspondantes à ces deux angles.
 
-Le robot peut ainsi, aller d'une configuration (d'équilibre ou non) vers une configuration d'équilibre cible.
-
-
-
-%Dans ce projet, nous nous plaçons dans le cadre de la première configuration: pointfoot balancer (acrobot).
-
-
-
-
-
-
+L'algorithme ainsi défini doit donc permettre au robot d'aller d'une configuration (d'équilibre ou non) vers une configuration d'équilibre cible.
 
 
 \end{document}
