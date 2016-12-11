@@ -1,0 +1,127 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1,utf8]{inputenc}
+\usepackage{soul}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphics}
+\usepackage{pgf,tikz}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\newcommand{\hsp}{\hspace{20pt}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+
+\subsubsection{.}
+\label{subs:}
+
+Nous avons $\mu(\overrightarrow{P}) = \tau$ qui est le moment cinétique de la force $P$. Par rapport au point $O$.
+
+\textbf{SCHEMA}\\\\
+Nous avons ici $x > o$ et $\mu(\overrightarrow{P}) < 0 \Rightarrow \mu(\overrightarrow{P}) = - |\mu(\overrightarrow{P})|$.\\
+$$
+|\mu(\overrightarrow{P})| = OM.P.\sin{\theta} = OM.P. \frac{x}{OM} = Px
+$$
+
+Ce qui nous donne $\mu(\overrightarrow{P}) = -Px$\\
+
+\textbf{SCHEMA}\\\\
+Avec $x < 0$ et $\mu(\overrightarrow{P}) > 0 \Rightarrow \mu(\overrightarrow{P}) = |\mu(\overrightarrow{P})|$
+
+$$
+\mu(\overrightarrow{P}) = |\mu(\overrightarrow{P})| = OM.P.\sin{\theta}
+$$
+
+Comme $x < 0$ et que $\mu(\overrightarrow{P})$ doit être $> 0$ on a $\mu(\overrightarrow{P}) = -P.x$\\\\
+
+
+
+\subsubsection{.}
+\label{subs:}
+\textbf{D'après le Théorem du moment cinétique nous avons} :
+
+$$\dot{L} = \sum{}{\mu(\overrightarrow{F}_{ext})} $$
+
+Dans le cadre de notre  projet nous supposons que la seul force extérieur est la force de pesanteur.
+$\dot{L}$ est donc égal à:
+
+$$\dot{L} = -m_1.g.x_1 - m_2.g.x_2 = - (m_1 + m_2).g.\frac{m_1.x_1 + m_2.x_2}{m_1 + m_2}$$
+
+Avec $\frac{m_1.x_1 + m_2.x_2}{m_1 + m_2} = X_G$ qui représente le centre de masse du corps
+
+On retrouve donc la formule :
+
+$$\dot{L} = - (m_1 + m_2)g X_G$$
+
+$m_i$ et $g$ étant des constantes nous avons bien
+$$\dot{L} = 0 \Leftrightarrow X_G = 0$$
+
+Et
+
+$\ddot{L} = - (m_1 + m_2)g \dot{X}_G$
+
+
+
+\subsubsection{.}
+\label{subs:}
+
+$$\overrightarrow{L} = I.\overrightarrow{\omega}$$
+Avec : $I = \frac{1}{12}.m_i.l_i$ et $\omega = \dot{q}$
+
+$L$ s'écrit donc
+$$L = \frac{1}{12}.m_1.l_1.\dot{q}_1 + \frac{1}{12}.m_2.l_2.\dot{q}_2$$
+
+$m_i$, $l_i$ étant des constantes $\dot{L} = 0 \Leftrightarrow \dot{q}_1 = 0$ et $\dot{q}_2 = 0$
+
+
+\subsubsection{.}
+\label{subs:}
+
+$$X_g = \frac{m_1.x_1 + m_2.x_2}{m_1 + m_2}$$
+
+Avec $x_1 = l_{c1} \cos{q_1}$ et $x_2 = l_{1} \cos{q_1} + l_{c2} \cos{q_1 + q_2}$
+
+\textbf{SCHEMA}\\\\
+
+$$X_G = \frac{m_1.l_{c1} \cos{q_1} + m_2.(l_{1} \cos{q_1} + l_{c2} \cos{q_1 + q_2})}{m_1 + m_2}$$
+
+d'où
+$$
+\dot{x_1} = - \dot{q_1}.l_{c1}.\sin(q_1)
+$$
+$$
+\dot{x_2} = - \dot{q_1}.l_{1}.\sin(q_1) - (\dot{q_1} + \dot{q_2}).l_{c2}.\sin(q_1 + q_2)
+$$
+
+$\dot{X}_G$ se ré-écrit :
+$$\dot{X}_G = \frac{m_1}{m_1 + m_2}.(- \dot{q_1}.l_{c1}.\sin(q_1)) + \frac{m_2}{m_1 + m_2}.(- \dot{q_1}.l_{1}.\sin(q_1) - (\dot{q_1} + \dot{q_2}).l_{c2}.\sin(q_1 + q_2))$$
+
+On trouve que
+$$\dot{q_1} = \dot{q_2} = 0 \Leftrightarrow \dot{X}_G = 0$$
+
+$$
+\dot{L} = - (m_1 + m_2)g X_G \Rightarrow \dot{L} = 0 \Leftrightarrow X_G = 0
+$$
+
+$$
+\ddot{L} = - (m_1 + m_2)g \dot{X}_G \Rightarrow \ddot{L} = 0 \Leftrightarrow \dot{X}_G = 0 \Leftrightarrow \dot{q}_1 = 0 =\dot{q}_2 = 0
+$$
+
+
+d'où : \\
+$q_1 = q_2 = 0$ et $X_G = 0 \Leftrightarrow L = \dot{L} = \ddot{L} = 0$
+\end{document}
