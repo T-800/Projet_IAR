@@ -40,30 +40,27 @@ Nous avons $\mu(\overrightarrow{P}) = \tau$ qui est le moment cinétique de la f
     >=2pt},
     every node/.style={color=black}]
 
-  \draw[axis] (-0.1,0)  -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (-0.1,0) -- (1.1,0) node(xline)[right]{$x$};
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
-   \filldraw[fill=white,line width=1pt]
-    (2.5,0)circle(.12cm);
+  \filldraw[fill=white,line width=1pt] (2.5,0)circle(.12cm);
   \draw[line width=.6pt]
     (2.5,0) +(-135:.12cm) -- +(45:.12cm)
             +(-45:.12cm) -- +(135:.12cm);
-  \draw (2 ,0) node[black]{$\overrightarrow{\tau}$};
-  \draw
 
+  \draw (2 ,0) node[black]{$z$};
+  \draw % segment OMP
     (4,0) coordinate (m) node[left] {O}
     -- (6,3) coordinate (o) node[right] {M}
-    -- (6,1) coordinate (p) node[right]{$\overrightarrow{P}$}
+    -- (6,2) coordinate (p) node[right]{$\overrightarrow{P}$}
+    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm] {angle=m--o--p}; % Angle theta
 
-    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
-   {angle=m--o--p};
-   \draw (4,0) node[black]{$\bullet$};
-   \draw (6,3) node[black]{$\bullet$};
+   \draw (4,0) node[black]{$\bullet$}; % Point O
+   \draw (6,3) node[black]{$\bullet$}; % Point M
+   \draw (6.9,2) node[black]{$\overrightarrow{\tau}$};
 
 
-   \draw[thick,->]
-   (6,3) coordinate (O)  node[right]{}
-   -- (6,1) coordinate (p) node[right]{};
+   \draw[thick,->] (6,3) -- (6,1); % vector P
 
 \end{tikzpicture}
 
@@ -85,28 +82,24 @@ Ce qui nous donne $\mu(\overrightarrow{P}) = -Px$\\
     >=2pt},
     every node/.style={color=black}]
 
-  \draw[axis] (-0.1,0)  -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (-0.1,0) -- (1.1,0) node(xline)[right]{$x$};
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
-   \filldraw[fill=white,line width=1pt]
-    (2.5,0)circle(.12cm);
-    \filldraw[fill=black,line width=1pt]
-     (2.5,0)circle(.03cm);
-    \draw (2 ,0) node[black]{$\overrightarrow{\tau}$};
-  \draw
+  \filldraw[fill=white,line width=1pt] (2.5,0)circle(.12cm);
+  \filldraw[fill=black,line width=1pt] (2.5,0)circle(.03cm);
+  \draw (2 ,0) node[black]{$z$};
 
+  \draw % segment OMP
     (5,0) coordinate (m) node[left] {O}
     -- (3,3) coordinate (o) node[right] {M}
-    -- (3,1) coordinate (p) node[right]{$\overrightarrow{P}$}
+    -- (3,2) coordinate (p) node[left]{$\overrightarrow{P}$}
+    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm] {angle=p--o--m};
 
-    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
-   {angle=p--o--m};
-   \draw (5,0) node[black]{$\bullet$};
-   \draw (3,3) node[black]{$\bullet$};
+   \draw (2 ,2) node {$\overrightarrow{\tau}$};
+   \draw (5,0) node {$\bullet$}; % Point O
+   \draw (3,3) node {$\bullet$}; % Point M
 
-   \draw[thick,->]
-   (3,3) coordinate (O)  node[right]{}
-   -- (3,1) coordinate (p) node[right]{$\overrightarrow{P}$};
+   \draw[thick,->] (3,3) -- (3,1);
 
 \end{tikzpicture}
 
@@ -173,26 +166,25 @@ Avec $x_1 = l_{c1} \cos{q_1}$ et $x_2 = l_{1} \cos{q_1} + l_{c2} \cos{q_1 + q_2}
     >=2pt},
     every node/.style={color=black}]
 
-  \draw[axis] (-0.1,0)  -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (-0.1,0) -- (1.1,0) node(xline)[right]{$x$};
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
-   \filldraw[fill=white,line width=1pt]
+  \filldraw[fill=white,line width=1pt]
     (2.5,0)circle(.12cm);
   \draw[line width=.6pt]
     (2.5,0) +(-135:.12cm) -- +(45:.12cm)
             +(-45:.12cm) -- +(135:.12cm);
-  \draw (2 ,0) node[black]{$\overrightarrow{\tau}$};
+
+  \draw (2 ,0) node{$z$};
 
   %Sol
-  \draw[thick]
-  (3,0) -- (7,0);
+  \draw[thick] (3,0) -- (7,0);
   \draw
 
     (5,0) coordinate (u)
     -- (4,0) coordinate (o) node[above left] {O}
     -- (5,1) coordinate (m)
     -- (2,3) coordinate (p)
-
     pic["$q_1$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
    {angle=u--o--m};
 
@@ -223,9 +215,9 @@ Avec $x_1 = l_{c1} \cos{q_1}$ et $x_2 = l_{1} \cos{q_1} + l_{c2} \cos{q_1 + q_2}
    \draw[thick,<->] (4,-0.5) -- (4.5,-0.5) ;
    \draw (4,-0.8) node[black]{$x_1 = l_{c1} \cos(q_1)$};
 
-  \draw[thick,<->] (4,3.5) -- (5,3.5);
-  \draw[thick,<->] (4,3.5) -- (3.5,3.5);
- \draw (4,3.8) node[black]{$x_2 = l_{1} \cos(q_1) + l_{c2} \cos(q_1 + q_2)$};
+   \draw[thick,<->] (4,3.5) -- (5,3.5);
+   \draw[thick,<->] (4,3.5) -- (3.5,3.5);
+   \draw (4,3.8) node[black]{$x_2 = l_{1} \cos(q_1) + l_{c2} \cos(q_1 + q_2)$};
 
 \end{tikzpicture}
 

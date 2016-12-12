@@ -48,30 +48,27 @@ Soit $\mu(\overrightarrow{P})$ la mesure algébrique de ce moment. On peut disti
     >=2pt},
     every node/.style={color=black}]
 
-  \draw[axis] (-0.1,0)  -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (-0.1,0) -- (1.1,0) node(xline)[right]{$x$};
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
-   \filldraw[fill=white,line width=1pt]
-    (2.5,0)circle(.12cm);
+  \filldraw[fill=white,line width=1pt] (2.5,0)circle(.12cm);
   \draw[line width=.6pt]
     (2.5,0) +(-135:.12cm) -- +(45:.12cm)
             +(-45:.12cm) -- +(135:.12cm);
-  \draw (2 ,0) node[black]{$\overrightarrow{\tau}$};
-  \draw
 
+  \draw (2 ,0) node[black]{$z$};
+  \draw % segment OMP
     (4,0) coordinate (m) node[left] {O}
     -- (6,3) coordinate (o) node[right] {M}
-    -- (6,1) coordinate (p) node[right]{$\overrightarrow{P}$}
+    -- (6,2) coordinate (p) node[right]{$\overrightarrow{P}$}
+    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm] {angle=m--o--p}; % Angle theta
 
-    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
-   {angle=m--o--p};
-   \draw (4,0) node[black]{$\bullet$};
-   \draw (6,3) node[black]{$\bullet$};
+   \draw (4,0) node[black]{$\bullet$}; % Point O
+   \draw (6,3) node[black]{$\bullet$}; % Point M
+   \draw (6.9,2) node[black]{$\overrightarrow{\tau}$};
 
 
-   \draw[thick,->]
-   (6,3) coordinate (O)  node[right]{}
-   -- (6,1) coordinate (p) node[right]{};
+   \draw[thick,->] (6,3) -- (6,1); % vector P
 
 \end{tikzpicture}
 \end{center}
@@ -85,7 +82,8 @@ Ce qui nous donne donc:
 $$ \mu(\overrightarrow{P}) = -Px $$\\
 \item[Cas 2:] Le corps se trouve à gauche du point de repère: ~~\\
 \begin{center}
- \begin{tikzpicture}[
+
+\begin{tikzpicture}[
     axis/.style={very thick, ->, >=stealth'},
     important line/.style={thick},
     dashed line/.style={dashed, thin},
@@ -93,39 +91,34 @@ $$ \mu(\overrightarrow{P}) = -Px $$\\
     >=2pt},
     every node/.style={color=black}]
 
-  \draw[axis] (-0.1,0)  -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (-0.1,0) -- (1.1,0) node(xline)[right]{$x$};
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
-   \filldraw[fill=white,line width=1pt]
-    (2.5,0)circle(.12cm);
-    \filldraw[fill=black,line width=1pt]
-     (2.5,0)circle(.03cm);
-    \draw (2 ,0) node[black]{$\overrightarrow{\tau}$};
-  \draw
+  \filldraw[fill=white,line width=1pt] (2.5,0)circle(.12cm);
+  \filldraw[fill=black,line width=1pt] (2.5,0)circle(.03cm);
+  \draw (2 ,0) node[black]{$z$};
 
+  \draw % segment OMP
     (5,0) coordinate (m) node[left] {O}
     -- (3,3) coordinate (o) node[right] {M}
-    -- (3,1) coordinate (p) node[right]{$\overrightarrow{P}$}
+    -- (3,2) coordinate (p) node[left]{$\overrightarrow{P}$}
+    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm] {angle=p--o--m};
 
-    pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
-   {angle=p--o--m};
-   \draw (5,0) node[black]{$\bullet$};
-   \draw (3,3) node[black]{$\bullet$};
+   \draw (2 ,2) node {$\overrightarrow{\tau}$};
+   \draw (5,0) node {$\bullet$}; % Point O
+   \draw (3,3) node {$\bullet$}; % Point M
 
-   \draw[thick,->]
-   (3,3) coordinate (O)  node[right]{}
-   -- (3,1) coordinate (p) node[right]{$\overrightarrow{P}$};
-
+   \draw[thick,->] (3,3) -- (3,1);
 \end{tikzpicture}
 
 \end{center}
 ~~\\
 Ici, $x < 0$ et $\mu(\overrightarrow{P}) > 0 \ \ \Rightarrow \ \ \mu(\overrightarrow{P}) = |\mu(\overrightarrow{P})| = OM.P.\sin{\theta}$;\\
-Comme $x < 0$ alors: 
+Comme $x < 0$ alors:
 $$\mu(\overrightarrow{P}) = -P.x$$\\
 
 \end{itemize}
-On a donc toujours: 
+On a donc toujours:
 $$\mu(\overrightarrow{P}) = -P.x$$
 
 \subsection*{Moment cinétique et conditions d'équilibre}
@@ -168,9 +161,72 @@ La seconde dérivée du moment cinétique s'écrit:
 $$\ddot{L} = - (m_1 + m_2)g \dot{X}_G$$
 
 $$X_G = \frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}$$
+\begin{center}
+\begin{tikzpicture}[
+    axis/.style={very thick, ->, >=stealth'},
+    important line/.style={thick},
+    dashed line/.style={dashed, thin},
+    pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten
+    >=2pt},
+    every node/.style={color=black}]
 
+  \draw[axis] (-0.1,0) -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
+
+  \filldraw[fill=white,line width=1pt]
+    (2.5,0)circle(.12cm);
+  \draw[line width=.6pt]
+    (2.5,0) +(-135:.12cm) -- +(45:.12cm)
+            +(-45:.12cm) -- +(135:.12cm);
+
+  \draw (2 ,0) node{$z$};
+
+  %Sol
+  \draw[thick] (3,0) -- (7,0);
+  \draw
+
+    (5,0) coordinate (u)
+    -- (4,0) coordinate (o) node[above left] {O}
+    -- (5,1) coordinate (m)
+    -- (2,3) coordinate (p)
+    pic["$q_1$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
+   {angle=u--o--m};
+
+   \draw [dashed]
+    (7,1) coordinate (w)
+    -- (5,1) coordinate (v)
+    -- (7,3) coordinate (z)
+    pic["$q_1$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
+   {angle=w--v--z};
+
+   \draw [dashed]
+    (7,3) coordinate (ww)
+    -- (5,1) coordinate (vv)
+    -- (4.9,1.1) coordinate (zz)
+    pic["$q_2$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
+   {angle=ww--vv--zz};
+
+
+   \draw (4,0) node[black]{$\bullet$};
+   \draw (4.5,0.5) node[black]{$\bullet$};
+   \draw (5,1) node[black]{$\bullet$};
+   \draw (3.5,2) node[black]{$\bullet$};
+   \draw (2,3) node[black]{$\bullet$};
+   \draw (4.15,0.5) node[black]{$l_{c1}$};
+   \draw (4.15,1.5) node[black]{$l_{c2}$};
+
+
+   \draw[thick,<->] (4,-0.5) -- (4.5,-0.5) ;
+   \draw (4,-0.8) node[black]{$x_1 = l_{c1} \cos(q_1)$};
+
+   \draw[thick,<->] (4,3.5) -- (5,3.5);
+   \draw[thick,<->] (4,3.5) -- (3.5,3.5);
+   \draw (4,3.8) node[black]{$x_2 = l_{1} \cos(q_1) + l_{c2} \cos(q_1 + q_2)$};
+
+\end{tikzpicture}
+\end{center}
 Avec,
-$$ x_1 = l_{c1} \cos{(q_1)} $$ 
+$$ x_1 = l_{c1} \cos{(q_1)} $$
 $$ x_2 = l_{1} \cos{(q_1)} + l_{c2} \cos{(q_1 + q_2)} $$
 
 d'où
@@ -296,7 +352,7 @@ $$
     \dot{q_1} \\
     \dot{q_2} \\
     \frac{d_{22}}{det(M)}(-h_1 - \phi_1) - \frac{d_{12}}{det(M)}(\tau -h_2 - \phi_2) \\
-    -\frac{d_{21}}{det(M)}(-h_1 - \phi_1) + \frac{d_{11}}{det(M)} (\tau -h_2 - \phi_2)     
+    -\frac{d_{21}}{det(M)}(-h_1 - \phi_1) + \frac{d_{11}}{det(M)} (\tau -h_2 - \phi_2)
     \end{pmatrix}
 $$
 
@@ -383,12 +439,12 @@ $$
 	\frac{\partial \tau}{\partial \dot{q_1}}\ |_{x=0} = k_{dd} g(m_1 l_{c_1} sin(q_1^d) + m_2 l_1 sin(q_1^d) + m_2 l_{c_2} sin(q_1^d + q_2^d)) + \frac{1}{12} k_p m_1 l_1^2 \\
 	\ \\
 	\frac{\partial \tau}{\partial \dot{q_2}}\ |_{x=0} = k_{dd} g(m_2 l_{c_2} sin(q_1^d + q_2^d)) + \frac{1}{12} k_p m_2 l_2^2 \\
-	
+
     \end{array}
 \right.
 $$
 
-d'où 
+d'où
 $$
     A
     =
@@ -396,7 +452,7 @@ $$
     0 & 0 & 1 & 0 \\
     0 & 0 & 0 & 1 \\
     A_{31} & A_{32} & A_{33} & A_{34} \\
-    A_{41} & A_{42} & A_{43} & A_{44} 
+    A_{41} & A_{42} & A_{43} & A_{44}
     \end{pmatrix}
 $$
 
@@ -405,35 +461,35 @@ $$
 \left\{
     \begin{array}{ll}
 	A_{31} = - [ (\frac{d_{22}}{det(M)} \frac{\partial \phi_1}{\partial{q_1}}) + (\frac{d_{12}}{det(M)} \frac{\partial (\tau - \phi_2)}{\partial{q_1}}) ] \ |_{x=0} \\
-	
+
 	\ \\
-    
+
 	A_{32} = - [ (\frac{d_{22}}{det(M)} \frac{\partial \phi_1}{\partial{q_2}}) + (\frac{\partial}{\partial q_2}\frac{d_{12}}{det(M)})(\tau - \phi_2) + (\frac{d_{12}}{det(M)} \frac{\partial (\tau - \phi_2)}{\partial{q_2}}) ] \ |_{x=0} \\
-        
+
         \ \\
-        
+
         A_{33} = - [ (\frac{d_{12}}{det(M)} \frac{\partial \tau}{\partial{\dot{q}_1}}) ] \ |_{x=0} \\
-        
+
         \ \\
-        
+
         A_{34} = - [ (\frac{d_{12}}{det(M)} \frac{\partial \tau}{\partial{\dot{q}_2}}) ] \ |_{x=0} \\
-        
+
         \ \\
-        
+
         A_{41} = [ (\frac{d_{21}}{det(M)} \frac{\partial \phi_1}{\partial{q_1}}) + (\frac{d_{11}}{det(M)} \frac{\partial (\tau - \phi_2)}{\partial{q_1}}) ] \ |_{x=0} \\
-	
+
 	\ \\
-    
+
 	A_{42} = [ \frac{\partial}{\partial q_2}(\frac{d_{21}}{det(M)})(h_1 + \phi_1) + \frac{d_{21}}{det(M)} \frac{\partial \phi_1}{\partial q_2} + (\frac{\partial}{\partial{q_2}} \frac{d_{11}}{det(M)}) (\tau - h_2 - \phi_2) + \frac{d_{11}}{det(M)} \frac{\partial (\tau - \phi_2)}{\partial{q_2}} ] \ |_{x=0} \\
-	
+
         \ \\
-        
+
         A_{43} = - [ (\frac{d_{11}}{det(M)} \frac{\partial \tau}{\partial{\dot{q}_1}}) ] \ |_{x=0} \\
-        
+
         \ \\
-        
+
         A_{44} = - [ (\frac{d_{11}}{det(M)} \frac{\partial \tau}{\partial{\dot{q}_2}}) ] \ |_{x=0} \\
-        
+
     \end{array}
 \right.
 $$
