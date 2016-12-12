@@ -52,11 +52,9 @@ Soit $\mu(\overrightarrow{P})$ la mesure algébrique de ce moment. On peut disti
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
   \filldraw[fill=white,line width=1pt] (2.5,0)circle(.12cm);
-  \draw[line width=.6pt]
-    (2.5,0) +(-135:.12cm) -- +(45:.12cm)
-            +(-45:.12cm) -- +(135:.12cm);
-
+  \filldraw[fill=black,line width=1pt] (2.5,0)circle(.03cm);
   \draw (2 ,0) node[black]{$z$};
+
   \draw % segment OMP
     (4,0) coordinate (m) node[left] {O}
     -- (6,3) coordinate (o) node[right] {M}
@@ -66,6 +64,10 @@ Soit $\mu(\overrightarrow{P})$ la mesure algébrique de ce moment. On peut disti
    \draw (4,0) node[black]{$\bullet$}; % Point O
    \draw (6,3) node[black]{$\bullet$}; % Point M
    \draw (6.9,2) node[black]{$\overrightarrow{\tau}$};
+   \filldraw[fill=white,line width=1pt] (7.5,2)circle(.12cm);
+   \draw[line width=.6pt]
+     (7.5,2) +(-135:.12cm) -- +(45:.12cm)
+             +(-45:.12cm) -- +(135:.12cm);
 
 
    \draw[thick,->] (6,3) -- (6,1); % vector P
@@ -105,6 +107,9 @@ $$ \mu(\overrightarrow{P}) = -Px $$\\
     pic["$\theta$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm] {angle=p--o--m};
 
    \draw (2 ,2) node {$\overrightarrow{\tau}$};
+   \filldraw[fill=white,line width=1pt] (2,1.5)circle(.12cm);
+   \filldraw[fill=black,line width=1pt] (2,1.5)circle(.03cm);
+
    \draw (5,0) node {$\bullet$}; % Point O
    \draw (3,3) node {$\bullet$}; % Point M
 
@@ -161,6 +166,7 @@ La seconde dérivée du moment cinétique s'écrit:
 $$\ddot{L} = - (m_1 + m_2)g \dot{X}_G$$
 
 $$X_G = \frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}$$
+~~\\
 \begin{center}
 \begin{tikzpicture}[
     axis/.style={very thick, ->, >=stealth'},
@@ -173,11 +179,8 @@ $$X_G = \frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}$$
   \draw[axis] (-0.1,0) -- (1.1,0) node(xline)[right]{$x$};
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
-  \filldraw[fill=white,line width=1pt]
-    (2.5,0)circle(.12cm);
-  \draw[line width=.6pt]
-    (2.5,0) +(-135:.12cm) -- +(45:.12cm)
-            +(-45:.12cm) -- +(135:.12cm);
+  \filldraw[fill=white,line width=1pt] (2.5,0)circle(.12cm);
+  \filldraw[fill=black,line width=1pt] (2.5,0)circle(.03cm);
 
   \draw (2 ,0) node{$z$};
 
@@ -225,6 +228,7 @@ $$X_G = \frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}$$
 
 \end{tikzpicture}
 \end{center}
+~~\\
 Avec,
 $$ x_1 = l_{c1} \cos{(q_1)} $$
 $$ x_2 = l_{1} \cos{(q_1)} + l_{c2} \cos{(q_1 + q_2)} $$
