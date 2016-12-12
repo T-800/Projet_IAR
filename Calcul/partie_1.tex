@@ -165,7 +165,69 @@ $$X_g = \frac{m_1.x_1 + m_2.x_2}{m_1 + m_2}$$
 
 Avec $x_1 = l_{c1} \cos{q_1}$ et $x_2 = l_{1} \cos{q_1} + l_{c2} \cos{q_1 + q_2}$
 
-\textbf{SCHEMA}\\\\
+\begin{tikzpicture}[
+    axis/.style={very thick, ->, >=stealth'},
+    important line/.style={thick},
+    dashed line/.style={dashed, thin},
+    pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten
+    >=2pt},
+    every node/.style={color=black}]
+
+  \draw[axis] (-0.1,0)  -- (1.1,0) node(xline)[right]{$x$};
+  \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
+
+   \filldraw[fill=white,line width=1pt]
+    (2.5,0)circle(.12cm);
+  \draw[line width=.6pt]
+    (2.5,0) +(-135:.12cm) -- +(45:.12cm)
+            +(-45:.12cm) -- +(135:.12cm);
+  \draw (2 ,0) node[black]{$\overrightarrow{\tau}$};
+
+  %Sol
+  \draw[thick]
+  (3,0) -- (7,0);
+  \draw
+
+    (5,0) coordinate (u)
+    -- (4,0) coordinate (o) node[above left] {O}
+    -- (5,1) coordinate (m)
+    -- (2,3) coordinate (p)
+
+    pic["$q_1$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
+   {angle=u--o--m};
+
+   \draw [dashed]
+    (7,1) coordinate (w)
+    -- (5,1) coordinate (v)
+    -- (7,3) coordinate (z)
+    pic["$q_1$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
+   {angle=w--v--z};
+
+   \draw [dashed]
+    (7,3) coordinate (ww)
+    -- (5,1) coordinate (vv)
+    -- (4.9,1.1) coordinate (zz)
+    pic["$q_2$", draw=orange, <->, angle eccentricity=1.2, angle radius=1cm]
+   {angle=ww--vv--zz};
+
+
+   \draw (4,0) node[black]{$\bullet$};
+   \draw (4.5,0.5) node[black]{$\bullet$};
+   \draw (5,1) node[black]{$\bullet$};
+   \draw (3.5,2) node[black]{$\bullet$};
+   \draw (2,3) node[black]{$\bullet$};
+   \draw (4.15,0.5) node[black]{$l_{c1}$};
+   \draw (4.15,1.5) node[black]{$l_{c2}$};
+
+
+   \draw[thick,<->] (4,-0.5) -- (4.5,-0.5) ;
+   \draw (4,-0.8) node[black]{$x_1 = l_{c1} \cos(q_1)$};
+
+  \draw[thick,<->] (4,3.5) -- (5,3.5);
+  \draw[thick,<->] (4,3.5) -- (3.5,3.5);
+ \draw (4,3.8) node[black]{$x_2 = l_{1} \cos(q_1) + l_{c2} \cos(q_1 + q_2)$};
+
+\end{tikzpicture}
 
 $$X_G = \frac{m_1.l_{c1} \cos{q_1} + m_2.(l_{1} \cos{q_1} + l_{c2} \cos{q_1 + q_2})}{m_1 + m_2}$$
 
