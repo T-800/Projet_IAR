@@ -179,11 +179,8 @@ $$X_G = \frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}$$
   \draw[axis] (-0.1,0) -- (1.1,0) node(xline)[right]{$x$};
   \draw[axis] (0,-0.1) -- (0,1.1) node(yline)[above] {$y$};
 
-  \filldraw[fill=white,line width=1pt]
-    (2.5,0)circle(.12cm);
-  \draw[line width=.6pt]
-    (2.5,0) +(-135:.12cm) -- +(45:.12cm)
-            +(-45:.12cm) -- +(135:.12cm);
+  \filldraw[fill=white,line width=1pt] (2.5,0)circle(.12cm);
+  \filldraw[fill=black,line width=1pt] (2.5,0)circle(.03cm);
 
   \draw (2 ,0) node{$z$};
 
