@@ -27,7 +27,7 @@ dotL = -g * ( m1*x1 + m2*x2 );
 ddotL = -g * ( m1*dotx1 + m2*dotx2 );
 
 % A vérifier si ce ne sont pas des qd
-taud = m2*lc2*g*cos(qd1 + qd2);
+taud = m2*lc2*g*cos(q1 + q2);
 
 % Formule de la loi de contrôle
 tau = kdd*ddotL + kd*dotL  + kp*L + taud;
@@ -63,17 +63,15 @@ for i = 1:4
     end
 end
 
-
 A = subs( A, [q1 q2 dotq1 dotq2], [qd1 qd2 0 0] );
-A = subs(A, [qd1 qd2], [80 20]);
 A = vpa(A);
 % Est ce qu'on a le droit de garder uniquemment la partie réelle???
 A = real(A);
 %lambda = eig(A);
 
 % Calcul du polynôme caractéristique
+p = charpoly(A);
 
-syms x
-p = charpoly(A, x);
-p
-lam = solve(p==0, x)
+
+
+%[lam1, lam2, lam3, lam4] = solve(p==0, x)
