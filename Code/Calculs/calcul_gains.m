@@ -45,15 +45,11 @@ phi2 = m2*lc2*g*cos(q1+q2);
 
 
 % Calcul de la fonction h
-M = zeros(4);
-M = sym(M);
-M(3,1) = 1;
-M(4,2) = 1;
-M(1,3) = d11;
-M(1,4) = d12;
-M(2,3) = d21;
-M(2,4) = d22;
 
+M = [[0 0 d11 d12]
+    [0 0 d21 d22]
+    [1 0 0 0]
+    [0 1 0 0]];
 N = [-h1-phi1 tau-h2-phi2 dotq1 dotq2]';
 hx = M\N;
 
