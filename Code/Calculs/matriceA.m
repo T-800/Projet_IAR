@@ -29,12 +29,10 @@ ddotq1_q2 = (1 / a) * (- kd * g * (c2 + c3 * cos(qd2)) * c5 * sin(qd1 + qd2));
 ddotq1_dotq1 = (1 / a) * (kdd * gamma2 - kp * gamma1) * (c2 + c3 * cos(qd2));
 ddotq1_dotq2 = -(1 / a) * (kp * (c2 + c3 * cos(qd2))^2 + kdd * g * (c2 + c3 * cos(qd2)) * c5 * sin(qd1 + qd2));
 
-
 ddotq2_q1 = (gamma2 / a) * (c2 + c3 * cos(qd2) - kd * gamma1);
 ddotq2_q2 = (1 / a) * ( (kd * g * c5 * sin(qd1 + qd2)) * gamma1 - (c2 + c3 * cos(qd2)) * c5 * g * sin(qd1 + qd2));
 ddotq2_dotq1 = (gamma1 / a) * (kp * gamma1 - kdd * gamma2);
 ddotq2_dotq2 = (gamma1 / a) * (kp * (c2 + c3 * cos(qd2)) + kdd * g * c5 * sin(qd1+ qd2));
-
 
 A = [[0 0 1 0]
     [0 0 0 1]
@@ -42,7 +40,7 @@ A = [[0 0 1 0]
     [ddotq2_q1 ddotq2_q2 ddotq2_dotq1 ddotq2_dotq2]];
 
 
-A = subs(A, [qd1 qd2], [80 20]);
+A = subs(A, [qd1 qd2], [90 0]);
 A = vpa(A);
 % Est ce qu'on a le droit de garder uniquemment la partie réelle???
 A = real(A);
@@ -52,5 +50,7 @@ A = real(A);
 
 syms x
 p = charpoly(A);
-p(5)
-%lam = solve(p==0, x)
+p(5);
+
+%lam = solve(p==0, x);
+%lam = vpa(lam)
