@@ -74,6 +74,6 @@ A = real(A);
 % Calcul du polynôme caractéristique
 
 syms x
-p = charpoly(A, x);
+p = charpoly(A);
 p
-lam = solve(p==0, x)
+%lam = solve(p==0, x)
