@@ -9,6 +9,8 @@ m2 = 0.9;
 I1 = 1/12 * m1 * l1^2;
 I2 = 1/12 * m2 * l2^2;
 
+
+
 % On déclare les gains et les variables d'angles comme étants des symboles de
 % variables réelles
 syms q1 q2 qd1 qd2 dotq1 dotq2 ddotq1 ddotq2 kdd kd kp real
@@ -29,6 +31,7 @@ c2 = m2 * lc2^2 + I2;
 c3 = m2 * l1 * lc2;
 c4 = m1 * lc1 + m2 * l1;
 c5 = m2 * lc2;
+
 
 L = (c1 + c2 + 2*c3*cos(q2))*dotq1 + (c2 + c3*cos(q2))*dotq2;
 %L = (m1*lc1^2 + m2*l1^2 + I1 + m2*lc2^2 + I2 + 2*m2*l1*lc2*cos(q2))*dotq1 + (m2*lc2^2 + I2 + m2*l1*lc2*cos(q2))*dotq2; 
@@ -75,23 +78,43 @@ end
 
 
 A = subs( A, [q1 q2 dotq1 dotq2], [qd1 qd2 0 0] );
-A = subs(A, [qd1 qd2], [90 0]);
-A = vpa(A);
 
+% Formule du de la position horizontale du centre de masse
+f = c4*cos(qd1)+c5*cos(qd1+qd2);
+f = subs(f, qd2, 0);
+
+%val_qd1 = solve(f==0, qd1, 'Real', true);
+val_qd1 = solve(f==0, qd1);
+
+A = subs(A, [qd1 qd2], [val_qd1(1) 0]);
+A = vpa(A);
+A(3,2);
 % Est ce qu'on a le droit de garder uniquemment la partie réelle???
-A = real(A);
+%A = real(A);
 %lambda = eig(A)
 
 % Calcul du polynôme caractéristique
 
 syms x
 polynome = charpoly(A);
-
+polynome(5)
 %calcul des gains
-c = coeffs(polynome(length(polynome)),kd);
-p = -nthroot(double(c(1)), 4);
+%c = coeffs(polynome(length(polynome)),kd);
+%p = -nthroot(double(c(1)), 4);
 %kp = (4*p^3)/
 
 
 %lam = solve(p==0, x);
 %lam = vpa(lam)
+
+%ouvre un fichier ou le créé
+fid = fopen('test.txt','w');
+%écrit dans ce fichier, fid est sa reference pour matlab
+fprintf(fid,'jhgfghjkl \n');
+for i = 2:5
+    fprintf(fid,'%s\n',polynome(i));
+end
+fclose(fid);
+
+%type test.txt
+

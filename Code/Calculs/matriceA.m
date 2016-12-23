@@ -25,7 +25,9 @@ gamma2 = - g * (c4 * sin (qd1) + c5 * sin (qd1 + qd2));
 
 
 ddotq1_q1 = (gamma2/a) * (kd * (c2 + c3 * cos(qd2)) - c2);
-ddotq1_q2 = (1 / a) * (- kd * g * (c2 + c3 * cos(qd2)) * c5 * sin(qd1 + qd2));
+ddotq1_q2 = (1 / a) * (- kd * g * (c2 + c3 * cos(qd2)) * c5 * sin(qd1 + qd2) + c2 * c5 * g * sin(qd1 + qd2) );
+%ddotq1_q2 = subs(ddotq1_q2, [qd1 qd2], [45 90]);
+%vpa(ddotq1_q2)
 ddotq1_dotq1 = (1 / a) * (kdd * gamma2 - kp * gamma1) * (c2 + c3 * cos(qd2));
 ddotq1_dotq2 = -(1 / a) * (kp * (c2 + c3 * cos(qd2))^2 + kdd * g * (c2 + c3 * cos(qd2)) * c5 * sin(qd1 + qd2));
 
@@ -40,7 +42,7 @@ A = [[0 0 1 0]
     [ddotq2_q1 ddotq2_q2 ddotq2_dotq1 ddotq2_dotq2]];
 
 
-A = subs(A, [qd1 qd2], [90 0]);
+A = subs(A, [qd1 qd2], [45 90]);
 A = vpa(A);
 % Est ce qu'on a le droit de garder uniquemment la partie réelle???
 A = real(A);
