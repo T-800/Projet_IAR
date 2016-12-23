@@ -97,7 +97,7 @@ A(3,2);
 
 syms x
 polynome = charpoly(A);
-polynome(5)
+polynome(5);
 %calcul des gains
 %c = coeffs(polynome(length(polynome)),kd);
 %p = -nthroot(double(c(1)), 4);
@@ -110,9 +110,8 @@ polynome(5)
 %ouvre un fichier ou le créé
 fid = fopen('test.txt','w');
 %écrit dans ce fichier, fid est sa reference pour matlab
-fprintf(fid,'jhgfghjkl \n');
 for i = 2:5
-    fprintf(fid,'%s\n',polynome(i));
+    fprintf(fid,'%s\n \n',polynome(i));
 end
 fclose(fid);
 
