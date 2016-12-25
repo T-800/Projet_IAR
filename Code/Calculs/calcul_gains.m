@@ -81,12 +81,13 @@ A = subs( A, [q1 q2 dotq1 dotq2], [qd1 qd2 0 0] );
 
 % Formule du de la position horizontale du centre de masse
 f = c4*cos(qd1)+c5*cos(qd1+qd2);
-f = subs(f, qd2, 0);
+val_q2 = -pi/2;
+f = subs(f, qd2, val_q2);
 
 %val_qd1 = solve(f==0, qd1, 'Real', true);
-val_qd1 = solve(f==0, qd1);
+val_qd1 = solve(f==0, qd1, 'Real', true);
 
-A = subs(A, [qd1 qd2], [val_qd1(1) 0]);
+A = subs(A, [qd1 qd2], [val_qd1(1) val_q2]);
 A = vpa(A);
 A(3,2);
 % Est ce qu'on a le droit de garder uniquemment la partie réelle???

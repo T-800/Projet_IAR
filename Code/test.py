@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import scipy.integrate as integrate
 import matplotlib.animation as animation
 from readfile import kd, kdd, kp
+from sympy.solvers import solve
+from sympy import Symbol
+import sympy as sp
 
 g = 9.81  # gravite (m/s^2)
 l1 = 1.15  # longueur des segments (m)
@@ -20,8 +23,12 @@ I2 = 1 / 12.0 * m2 * l2 ** 2
 dt = 30e-3
 t = np.arange(0.0, 10, dt)
 
-qd1 = 90.0
-qd2 = 0.0
+qd2 = 0
+qd1 = pi/2.0
+
+#x = Symbol('x')
+#x = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+qd2), x)[0]
+
 
 def torque(state, t):
 
