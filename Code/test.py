@@ -18,21 +18,23 @@ I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie (kg.m^2)
 I2 = 1 / 12.0 * m2 * l2 ** 2
 
 dt = 30e-3
-t = np.arange(0.0, 25, dt)
+t = np.arange(0.0, 10, dt)
 
+qd1 = 90.0
+qd2 = 0.0
 
 def torque(state, t):
 
 	q1 = state[0]
-	q2 = state[2]
 	dq1 = state[1]
+	q2 = state[2]
 	dq2 = state[3]
 	x1 = lc1 * cos(q1)
 	x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
-	dx1 = -dq1 * lc1 * sin(q1)
-	dx2 = -dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
+	dx1 = - dq1 * lc1 * sin(q1)
+	dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
 
-	taud = m2 * lc2 * g * cos(q1 + q2) # voir si q1d et q2d 
+	taud = m2 * lc2 * g * cos(qd1 + qd2)
 	'''
 	kv = (m1 + m2) * g * kdd
 	kx = (m1 + m2) * g * kd
@@ -45,9 +47,13 @@ def torque(state, t):
 	tau = - kv * XG - kx * dXG + kp * L
 	#print(tau)
 	'''
+
+	Moment = (m1 * lc1**2 + m2 * l1**2 + I1 + m2 * lc2**2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * dq1 + (m2 * lc2**2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
+
 	dL = - g * (m1 * x1 + m2 * x2)
 	ddL = - g * (m1 * dx1 + m2 * dx2)
-	tau = kdd * ddL + kd * dL + kp * L + taud
+
+	tau = kdd * ddL + kd * dL + kp * Moment + taud
 	tq = tau
 	return tq
 
@@ -93,7 +99,7 @@ dth2 = 0.0
 # etat initial (un vecteur de dimension 4)
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
 
-y = integrate.odeint(derivs, state, t)
+y = integrate.odeint(derivs, state, t, mxstep=5000000)
 
 x1 = l1 * cos(y[:, 0])
 y1 = l1 * sin(y[:, 0])
