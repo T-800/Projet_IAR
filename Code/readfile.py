@@ -9,14 +9,22 @@ def getGains():
 
 
 	# λ4 + (b1 kdd − b2 kp )λ3 + (b3 kd − α)λ2 + (b4 kp )λ + a = 0
+	kp = kd =  kdd = 1
 
 	b1 = b2 = b3 = b4 = a = alpha = 0
+	for i in range(len(lines)):
+		lines[i] = lines[i].rstrip()
+		lines[i] = lines[i].split('-')
+		lines[i] =  list(filter(None, lines[i]))
+		for j in range(len(lines[i])):
+			lines[i][j] = lines[i][j].replace('^', '**')
+
+	lines = list(filter(None, lines))
+
 
 	ligne0 = lines[0]
-	ligne0 = ligne0.split('-')
-	ligne0 =  list(filter(None, ligne0))
+	print(ligne0)
 	for l in ligne0:
-		l = l.replace('^', '**')
 		if eval(l) < 0.001:
 			continue
 		if 'kdd' in l:
@@ -24,11 +32,8 @@ def getGains():
 		elif 'kp' in l:
 			b2 = eval(l)
 
-	ligne0 = lines[2]
-	ligne0 = ligne0.split('-')
-	ligne0 = list(filter(None, ligne0))
+	ligne0 = lines[1]
 	for l in ligne0:
-		l = l.replace('^', '**')
 		if eval(l) < 0.001:
 			continue
 		if 'kd' in l:
@@ -37,21 +42,15 @@ def getGains():
 			alpha = eval(l)
 
 
-	ligne0 = lines[4]
-	ligne0 = ligne0.split('-')
-	ligne0 = list(filter(None, ligne0))
+	ligne0 = lines[2]
 	for l in ligne0:
-		l = l.replace('^', '**')
 		if eval(l) < 0.001:
 			continue
 		if 'kp' in l:
 			b4 = eval(l)
 
-	ligne0 = lines[6]
-	ligne0 = ligne0.split('-')
-	ligne0 = list(filter(None, ligne0))
+	ligne0 = lines[3]
 	for l in ligne0:
-		l = l.replace('^', '**')
 		if eval(l) < 0.001:
 			continue
 		a += eval(l)
