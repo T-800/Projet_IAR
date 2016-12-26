@@ -14,7 +14,7 @@ def getGains(file="./Calculs/test.txt"):
 
     b1 = b2 = b3 = b4 = a = alpha = 0
     lines = list(filter(None, lines))
-    print('avant')
+    print('\n\navant')
     for i in range(len(lines[:])):
         lines[i] = lines[i].split(' ')
         for j in range(len(lines[i])):
@@ -30,48 +30,52 @@ def getGains(file="./Calculs/test.txt"):
         for exp in lines[i]:
             tmp = tmp + " " + exp
         tmp += " "
-
-        lines[i] = tmp.replace(' - 0', '')  # on retire les -0
-        lines[i] = lines[i].replace(' 0 -', '-')  # on remplace les 0- par -
-        lines[i] = lines[i].replace(' + 0 ', '')  # les +0
-        lines[i] = lines[i].replace(' 0 + ', '+')  # on remplace les 0- par -
-
+        #print(tmp)
+        lines[i] = tmp.replace(' + 0 ', ' ')  # on retire les -0
+        lines[i] = lines[i].replace(' 0 +', ' ')  # on remplace les 0- par -
+        lines[i] = lines[i].replace('- 0 ', ' ')  # les +0
+        lines[i] = lines[i].replace(' 0 -', ' -')  # on remplace les 0- par -
+        lines[i] = lines[i].replace(' + - ', ' - ')  # on remplace les 0- par -
+        lines[i] = lines[i].replace(' - + ', ' - ')  # on remplace les 0- par -
+        lines[i] = lines[i].replace(' - ', ' -')  # on remplace les 0- par -
+        lines[i] = lines[i].replace(' + ', ' +')  # on remplace les 0- par -
+        lines[i] = lines[i].lstrip(' ')
+        lines[i] = lines[i].rstrip(' ')
 
         # Suivant les lignes il reste maintenant que 1 ou deux term donc on split sur les + et -
-        delimiters = " - ", " + "
-        regexPattern = '|'.join(map(re.escape, delimiters))
-        lines[i] = re.split(regexPattern, lines[i])
+        #delimiters = " - ", " + "
+        #regexPattern = '|'.join(map(re.escape, delimiters))
+        #lines[i] = re.split(regexPattern, lines[i])
         print(lines[i])
 
 
-    ligne0 = lines[0][0].split(" ")
+    ligne0 = lines[0].split(' ')
     for l in ligne0:
         if 'kx' in l:
             b1 = eval(l)
         elif 'kp' in l:
-            b2 = eval(l)
+            b2 = -eval(l)
+        #print(l)
 
-    print(lines[1])
-    ligne0 = [i.split(" ") for i in lines[1]]
-    #ligne0 = [item for sublist in ligne0 for item in sublist]
-    print("ici")
-    print(ligne0)
+    ligne0 = lines[1].split(' ')
     for l in ligne0:
         if 'kd' in l:
             b3 = eval(l)
-        elif l != '' and l != '0':
-            print(l)
-            alpha = eval(l)
+        elif l != '':
+            alpha = -eval(l)
 
-    ligne0 = lines[2][0].split(" ")
-    for l in ligne0:
-        if 'kp' in l:
-            b4 = eval(l)
+    ligne0 = lines[2]
+    if 'kp' in ligne0:
+        print('kpinl')
+        b4 = eval(ligne0)
 
-    ligne0 = lines[3][0].split(" ")
-    for l in ligne0:
-        if l != '' and l != '0':
-            a = eval(l)
+
+    ligne0 = lines[3]
+    if ligne0 != '':
+        a = eval(ligne0)
+
+
+
 
     print("b1 : ", b1)
     print("b2 : ", b2)
@@ -85,9 +89,13 @@ def getGains(file="./Calculs/test.txt"):
     kp = (4 * p ** 3) / b4
     kd = (6 * p ** 2 + alpha) / b3
     kx = (4 * p + b2 * kp) / b1
-
     return kp, kd, kx
 
-
-getGains("./Calculs/test.txt")
-# getGains("./Calculs/test2.txt")
+'''
+#getGains("./Calculs/test.txt")
+getGains("./Calculs/test1.txt")
+#getGains("./Calculs/test2.txt")
+getGains("./Calculs/test3.txt")
+#getGains("./Calculs/test4.txt")
+getGains("./Calculs/test5.txt")
+'''
