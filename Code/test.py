@@ -4,10 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as integrate
 import matplotlib.animation as animation
-from readfile import kd, kdd, kp
 from sympy.solvers import solve
 from sympy import Symbol
 import sympy as sp
+from readfile import *
 
 g = 9.81  # gravite (m/s^2)
 l1 = 1.15  # longueur des segments (m)
@@ -59,6 +59,8 @@ def torque(state, t):
 
 	dL = - g * (m1 * x1 + m2 * x2)
 	ddL = - g * (m1 * dx1 + m2 * dx2)
+
+	kp, kd, kdd = getGains()
 
 	tau = kdd * ddL + kd * dL + kp * Moment + taud
 	tq = tau
