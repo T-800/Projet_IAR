@@ -1,6 +1,6 @@
 import re
-def getGains():
-	file = open("./Calculs/test2.txt", 'r')
+def getGains(file="./Calculs/test.txt"):
+	file = open(file, 'r')
 	lines = [line.rstrip() for line in file]
 	file.close()
 	'''
@@ -13,25 +13,29 @@ def getGains():
 
 	b1 = b2 = b3 = b4 = a = alpha = 0
 	lines = list(filter(None, lines))
+	print('avant')
 	for i in range(len(lines[:])):
 		lines[i] = lines[i].split(' ')
 		for j in range(len(lines[i])):
 			lines[i][j] = lines[i][j].replace('^', '**')
-			lines[i][j] = lines[i][j].replace('kdd', 'kx')
-			if lines[i][j] not in '-+' and abs(eval(lines[i][j])) < 0.001:
+			lines[i][j] = lines[i][j].replace('kdd', 'kx')  # on remplace pour eviter les erreur entre kd et kdd
+			if lines[i][j] not in '-+' and abs(eval(lines[i][j])) < 0.001: # si la valeur est trop petite
 				lines[i][j] = '0'
 
+		print(lines[i])
+	print('Apres')
 	for i in range(len(lines[:])):
 		tmp = ''
 		for exp in lines[i]:
 			tmp = tmp + " "+ exp
 		tmp += " "
-		lines[i] = tmp.replace(' - 0', ' ')
-		lines[i] = lines[i].replace(' + 0 ', ' ')
-		lines[i] = lines[i].replace(' 0 - ', ' -')
+		lines[i] = tmp.replace(' - 0', ' ')  # on retire les -0
+		lines[i] = lines[i].replace(' + 0 ', ' ')  # les +0
+		lines[i] = lines[i].replace(' 0 - ', ' -')  # on remplace les 0- par -
+		# Suivant les ligne il reste maintenant que 1 ou deux term donc on split sur les + et -
 		delimiters = " - ", " + "
 		regexPattern = '|'.join(map(re.escape, delimiters))
-		lines[i] = re.split(regexPattern, lines[i])
+		lines[i] = re.split(regexPattern, lines[i])&
 		print(lines[i])
 
 	ligne0 = lines[0]
@@ -57,54 +61,6 @@ def getGains():
 	for l in ligne0:
 		a = eval(l)
 
-	'''
-	for i in range(len(lines)):
-		lines[i] = lines[i].rstrip()
-		#print(lines[i])
-		lines[i] = lines[i].split(' - ')
-		lines[i] =  list(filter(None, lines[i]))
-		for j in range(len(lines[i])):
-			if j > 0:
-				lines[i][j]  = '-' + lines[i][j]
-			lines[i][j] = lines[i][j].replace('^', '**')
-			lines[i][j] = lines[i][j].replace('kdd', 'kx')
-
-
-	lines = list(filter(None, lines))
-	#print(lines)
-
-	ligne0 = lines[0]
-	for l in ligne0:
-		if abs(eval(l)) < 0.001:
-			continue
-		if 'kx' in l:
-			b1 = eval(l)
-		elif 'kp' in l:
-			b2 = eval(l)
-
-	ligne0 = lines[1]
-	for l in ligne0:
-		if abs(eval(l)) < 0.001:
-			continue
-		if 'kd' in l:
-			b3 = eval(l)
-		else :
-			alpha = eval(l)
-
-
-	ligne0 = lines[2]
-	for l in ligne0:
-		if abs(eval(l)) < 0.001:
-			continue
-		if 'kp' in l:
-			b4 = eval(l)
-
-	ligne0 = lines[3]
-	for l in ligne0:
-		if eval(l) < 0.001:
-			continue
-		a += eval(l)
-	'''
 
 	print("b1 : ", b1)
 	print("b2 : ", b2)
@@ -125,4 +81,5 @@ def getGains():
 
 
 #b1 = b2 = b3 = b4 = a = alpha = 0
-getGains()
+getGains("./Calculs/test.txt")
+getGains("./Calculs/test2.txt")
