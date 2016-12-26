@@ -1,6 +1,6 @@
 
 def getGains():
-	file = open("./Calculs/test.txt", 'r')
+	file = open("./Calculs/test2.txt", 'r')
 	lines = [line.rstrip('\n') for line in file]
 	file.close()
 	'''
@@ -23,7 +23,6 @@ def getGains():
 
 
 	ligne0 = lines[0]
-	print(ligne0)
 	for l in ligne0:
 		if eval(l) < 0.001:
 			continue

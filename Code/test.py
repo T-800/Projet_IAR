@@ -8,6 +8,10 @@ from sympy.solvers import solve
 from sympy import Symbol
 import sympy as sp
 from readfile import *
+from plots import *
+import math as mat
+
+tab = [[], []]
 
 g = 9.81  # gravite (m/s^2)
 l1 = 1.15  # longueur des segments (m)
@@ -26,6 +30,7 @@ t = np.arange(0.0, 10, dt)
 qd2 = 0
 qd1 = pi/2.0
 
+
 #x = Symbol('x')
 #x = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+qd2), x)[0]
 
@@ -36,6 +41,9 @@ def torque(state, t):
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
+
+
+
 	x1 = lc1 * cos(q1)
 	x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
 	dx1 = - dq1 * lc1 * sin(q1)
@@ -67,13 +75,16 @@ def torque(state, t):
 	return tq
 
 
-def derivs(state, t):
+def derivs(state, t, tab):
 	d = np.zeros_like(state)
 
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
+
+	tab[0] += [mat.radians(q1)]
+	tab[1] += [mat.radians(q2)]
 
 	d11 = m1 * lc1 ** 2 + m2 * (l1 ** 2 + lc2 ** 2 + 2 * l1 * lc2 * cos(q2)) + I1 + I2
 	d22 = m2 * lc2 ** 2 + I2
@@ -102,13 +113,15 @@ def derivs(state, t):
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
 th1 = 45.0
 dth1 = 0.0
-th2 = 45.0
+th2 = 180.0
 dth2 = 0.0
 
 # etat initial (un vecteur de dimension 4)
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
 
-y = integrate.odeint(derivs, state, t, mxstep=5000000)
+y = integrate.odeint(derivs, state, t, (tab,), mxstep=5000000)
+
+
 
 x1 = l1 * cos(y[:, 0])
 y1 = l1 * sin(y[:, 0])
@@ -148,3 +161,5 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
+
+#do_plot(tab[0], tab[1], y)
