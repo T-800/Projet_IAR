@@ -11,8 +11,8 @@ from readfile import *
 from plots import *
 import math
 
-tab = [[], []]
-
+tab = [[], [], []]
+_last_time = 0
 g = 9.81  # gravite (m/s^2)
 l1 = 1.15  # longueur des segments (m)
 l2 = 2.25
@@ -61,13 +61,16 @@ def torque(state, t):
 
 
 def derivs(state, t):
+	global _last_time, tab, dt
 	d = np.zeros_like(state)
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
-	tab[0] += [q1]
-	tab[1] += [q2]
+	if _last_time < t:
+		tab[0] += [q1]
+		tab[1] += [q2]
+		tab[2] += [t]
 
 	d11 = m1 * lc1 ** 2 + m2 * (l1 ** 2 + lc2 ** 2 + 2 * l1 * lc2 * cos(q2)) + I1 + I2
 	d22 = m2 * lc2 ** 2 + I2
@@ -145,4 +148,4 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
-#do_plot(tab[0], tab[1])
+do_plot(tab[0], tab[1], tab[2])
