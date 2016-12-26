@@ -8,10 +8,14 @@ from sympy.solvers import solve
 from sympy import Symbol
 import sympy as sp
 from readfile import *
+<<<<<<< HEAD
 from plots import *
 import math as mat
 
 tab = [[], []]
+=======
+import math
+>>>>>>> e0a98e8b793929989083dda053f843c9b66e506a
 
 g = 9.81  # gravite (m/s^2)
 l1 = 1.15  # longueur des segments (m)
@@ -29,6 +33,7 @@ t = np.arange(0.0, 10, dt)
 
 qd2 = -pi/3.0
 qd1 = 2*math.atan((405*3**(1/2))/1417 - (2*624991**(1/2))/1417)
+
 
 #x = Symbol('x')
 #x = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+qd2), x)[0]
@@ -112,7 +117,7 @@ def derivs(state, t, tab):
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
 th1 = 45.0
 dth1 = 0.0
-th2 = 45.0
+th2 = 180.0
 dth2 = 0.0
 
 # etat initial (un vecteur de dimension 4)
@@ -160,3 +165,5 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
+
+#do_plot(tab[0], tab[1], y)
