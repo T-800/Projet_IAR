@@ -9,8 +9,6 @@ m2 = 0.9;
 I1 = 1/12 * m1 * l1^2;
 I2 = 1/12 * m2 * l2^2;
 
-
-
 % On déclare les gains et les variables d'angles comme étants des symboles de
 % variables réelles
 syms q1 q2 qd1 qd2 dotq1 dotq2 ddotq1 ddotq2 kdd kd kp real
@@ -81,13 +79,17 @@ A = subs( A, [q1 q2 dotq1 dotq2], [qd1 qd2 0 0] );
 
 % Formule du de la position horizontale du centre de masse
 f = c4*cos(qd1)+c5*cos(qd1+qd2);
-val_q2 = -pi/3;
+val_q2 = 0;
 f = subs(f, qd2, val_q2);
 
 %val_qd1 = solve(f==0, qd1, 'Real', true);
 val_qd1 = solve(f==0, qd1, 'Real', true);
-val_qd1 = val_qd1(1)
-
+if val_qd1(1) > 0
+    val_qd1 = val_qd1(1);
+else 
+    val_qd1 = val_qd1(2);
+end
+val_qd1
 A = subs(A, [qd1 qd2], [val_qd1(1) val_q2]);
 A = vpa(A);
 A(3,2);
@@ -112,6 +114,8 @@ polynome(5);
 %ouvre un fichier ou le créé
 fid = fopen('test.txt','w');
 %écrit dans ce fichier, fid est sa reference pour matlab
+%fprintf(fid,' qd1 = %s\n \n',val_qd1);
+%fprintf(fid,' qd2 = %s\n \n',val_qd2);
 for i = 2:5
     fprintf(fid,'%s\n \n',polynome(i));
 end

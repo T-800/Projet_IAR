@@ -27,8 +27,8 @@ I2 = 1 / 12.0 * m2 * l2 ** 2
 dt = 30e-3
 t = np.arange(0.0, 10, dt)
 
-qd2 = -pi/3.0
-qd1 = 2*math.atan((405*3**(1/2))/1417 - (2*624991**(1/2))/1417)
+qd2 = 0
+qd1 = pi/2
 
 #x = Symbol('x')
 #x = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+qd2), x)[0]
@@ -41,8 +41,6 @@ def torque(state, t):
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
-
-
 
 	x1 = lc1 * cos(q1)
 	x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
@@ -64,7 +62,6 @@ def torque(state, t):
 
 def derivs(state, t):
 	d = np.zeros_like(state)
-
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
