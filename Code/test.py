@@ -9,7 +9,7 @@ from sympy import Symbol
 import sympy as sp
 from readfile import *
 from plots import *
-import math as mat
+import math
 
 tab = [[], []]
 
@@ -82,8 +82,8 @@ def derivs(state, t, tab):
 	q2 = state[2]
 	dq2 = state[3]
 
-	tab[0] += [mat.radians(q1)]
-	tab[1] += [mat.radians(q2)]
+	tab[0] += [q1]
+	tab[1] += [q2]
 
 	d11 = m1 * lc1 ** 2 + m2 * (l1 ** 2 + lc2 ** 2 + 2 * l1 * lc2 * cos(q2)) + I1 + I2
 	d22 = m2 * lc2 ** 2 + I2
