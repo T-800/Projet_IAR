@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 '''
 bruits_0 = open("./bruit0.txt", "r")
@@ -48,15 +49,13 @@ plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
 plt.show()
 '''
 
-def do_plot(q1, q2, t):
+def do_plot(q1, q2):
 	fig = plt.figure()
 	ax = fig.add_subplot(111)
 	ax.set_xlabel('Temps')
 	ax.set_ylabel('Angle (rad)')
-	print(len(q1))
-	print(len(q2))
-	print(len(t))
-	ax.plot(q1[:len(t)], t, 'g-', label="0%")
-	ax.plot(q2[:len(t)], t, 'r-', label="10%")
-	ax.plot(q1[:len(t)], t, 'g-', label="0%")
+	t = np.array([i/len(q1)*10 for i in range(len(q1))])
+	ax.plot(t, q1, 'g-', label="0%")
+	ax.plot(t, q2, 'r-', label="10%")
+	#ax.plot(q1[:len(t)], t, 'g-', label="0%")
 	plt.show()

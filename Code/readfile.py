@@ -29,10 +29,11 @@ def getGains(file="./Calculs/test.txt"):
 		for exp in lines[i]:
 			tmp = tmp + " "+ exp
 		tmp += " "
-		lines[i] = tmp.replace(' - 0', ' ')  # on retire les -0
-		lines[i] = lines[i].replace(' + 0 ', ' ')  # les +0
-		lines[i] = lines[i].replace(' 0 - ', ' -')  # on remplace les 0- par -
-		# Suivant les ligne il reste maintenant que 1 ou deux term donc on split sur les + et -
+		lines[i] = tmp.replace(' - 0', '')  # on retire les -0
+		lines[i] = lines[i].replace(' 0 - ', '-')  # on remplace les 0- par -
+		lines[i] = lines[i].replace(' + 0 ', '')  # les +0
+		lines[i] = lines[i].replace(' 0 + ', '+')  # on remplace les 0- par -
+		# Suivant les lignes il reste maintenant que 1 ou deux term donc on split sur les + et -
 		delimiters = " - ", " + "
 		regexPattern = '|'.join(map(re.escape, delimiters))
 		lines[i] = re.split(regexPattern, lines[i])

@@ -50,18 +50,6 @@ def torque(state, t):
 	dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
 
 	taud = m2 * lc2 * g * cos(qd1 + qd2)
-	'''
-	kv = (m1 + m2) * g * kdd
-	kx = (m1 + m2) * g * kd
-
-
-
-	XG = (m1 * x1 + m2 * x2)/(m1 + m2)
-	dXG = m1/(m1 + m2) * (- dq1 * lc1 * sin(q1)) + m2/(m1 + m2) * (- dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2))
-
-	tau = - kv * XG - kx * dXG + kp * L
-	#print(tau)
-	'''
 
 	Moment = (m1 * lc1**2 + m2 * l1**2 + I1 + m2 * lc2**2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * dq1 + (m2 * lc2**2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
 
@@ -74,14 +62,13 @@ def torque(state, t):
 	return tq
 
 
-def derivs(state, t, tab):
+def derivs(state, t):
 	d = np.zeros_like(state)
 
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
-
 	tab[0] += [q1]
 	tab[1] += [q2]
 
@@ -118,7 +105,7 @@ dth2 = 0.0
 # etat initial (un vecteur de dimension 4)
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
 
-y = integrate.odeint(derivs, state, t, (tab,), mxstep=5000000)
+y = integrate.odeint(derivs, state, t, mxstep=5000000)
 
 
 
@@ -152,7 +139,8 @@ def animate(i):
 	time_text.set_text(time_template % (i * dt))
 	return line1, time_text
 
-
+print("len q1 " , len(tab[0]))
+print("len t " , len(t))
 ani = animation.FuncAnimation(fig, animate, frames=len(y),
                               interval=dt * 1e3, init_func=init)
 
@@ -160,3 +148,4 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
+#do_plot(tab[0], tab[1])
