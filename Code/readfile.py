@@ -35,7 +35,7 @@ def getGains(file="./Calculs/test.txt"):
 		# Suivant les ligne il reste maintenant que 1 ou deux term donc on split sur les + et -
 		delimiters = " - ", " + "
 		regexPattern = '|'.join(map(re.escape, delimiters))
-		lines[i] = re.split(regexPattern, lines[i])&
+		lines[i] = re.split(regexPattern, lines[i])
 		print(lines[i])
 
 	ligne0 = lines[0]
@@ -80,6 +80,5 @@ def getGains(file="./Calculs/test.txt"):
 
 
 
-#b1 = b2 = b3 = b4 = a = alpha = 0
 getGains("./Calculs/test.txt")
 getGains("./Calculs/test2.txt")
