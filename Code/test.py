@@ -8,6 +8,7 @@ from sympy.solvers import solve
 from sympy import Symbol
 import sympy as sp
 from readfile import *
+import math
 
 g = 9.81  # gravite (m/s^2)
 l1 = 1.15  # longueur des segments (m)
@@ -23,12 +24,13 @@ I2 = 1 / 12.0 * m2 * l2 ** 2
 dt = 30e-3
 t = np.arange(0.0, 10, dt)
 
-qd2 = 0
-qd1 = pi/2.0
+qd2 = -pi/3.0
+qd1 = 2*math.atan((405*3**(1/2))/1417 - (2*624991**(1/2))/1417)
 
 #x = Symbol('x')
 #x = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+qd2), x)[0]
 
+kp, kd, kdd = getGains()
 
 def torque(state, t):
 
@@ -60,7 +62,6 @@ def torque(state, t):
 	dL = - g * (m1 * x1 + m2 * x2)
 	ddL = - g * (m1 * dx1 + m2 * dx2)
 
-	kp, kd, kdd = getGains()
 
 	tau = kdd * ddL + kd * dL + kp * Moment + taud
 	tq = tau
