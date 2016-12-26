@@ -92,10 +92,10 @@ def getGains(file="./Calculs/test.txt"):
     return kp, kd, kx
 
 '''
-#getGains("./Calculs/test.txt")
+getGains("./Calculs/test.txt")
 getGains("./Calculs/test1.txt")
-#getGains("./Calculs/test2.txt")
+getGains("./Calculs/test2.txt")
 getGains("./Calculs/test3.txt")
-#getGains("./Calculs/test4.txt")
+getGains("./Calculs/test4.txt")
 getGains("./Calculs/test5.txt")
 '''
