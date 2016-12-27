@@ -1,3 +1,6 @@
+% Valeurs de qd2 à modifier
+val_qd2 = -pi/2;
+
 % Calcul des constantes
 g = 9.81;
 l1 = 1.15;
@@ -19,10 +22,7 @@ x1 = lc1*cos(q1);
 x2 = l1*cos(q1) + lc2*cos(q1 + q2);
 dotx1 = -dotq1*lc1*sin(q1);
 dotx2 = -dotq1*l1*sin(q1) - (dotq1 + dotq2)*lc2*sin(q1 + q2);
-
-% Calcul du moment angulaire et de ses 2 premières dérivées par rapport au
-% temps
-
+% Constantes
 c = m1 + m2;
 c1 = m1 * lc1^2 + m2 * l1^2 + I1;
 c2 = m2 * lc2^2 + I2;
@@ -30,13 +30,13 @@ c3 = m2 * l1 * lc2;
 c4 = m1 * lc1 + m2 * l1;
 c5 = m2 * lc2;
 
-
-L = (c1 + c2 + 2*c3*cos(q2))*dotq1 + (c2 + c3*cos(q2))*dotq2;
-%L = (m1*lc1^2 + m2*l1^2 + I1 + m2*lc2^2 + I2 + 2*m2*l1*lc2*cos(q2))*dotq1 + (m2*lc2^2 + I2 + m2*l1*lc2*cos(q2))*dotq2; 
+% Calcul du moment angulaire et de ses 2 premières dérivées par rapport au
+% temps
+L = (c1 + c2 + 2*c3*cos(q2))*dotq1 + (c2 + c3*cos(q2))*dotq2; 
 dotL = - g * ( m1*x1 + m2*x2 );
 ddotL = - g * ( m1*dotx1 + m2*dotx2 );
 
-% A vérifier si ce ne sont pas des qd
+% Valeurs du couple pour la configuration but
 taud = m2*lc2*g*cos(qd1 + qd2);
 
 % Formule de la loi de contrôle
@@ -74,64 +74,40 @@ for i = 1:4
     end
 end
 
-
+% On remplace par les valeurs de l'état but
 A = subs( A, [q1 q2 dotq1 dotq2], [qd1 qd2 0 0] );
 
-% Formule du de la position horizontale du centre de masse
+% Récupère une valeur pour qd2 qui est dans un fichier
+% Servira quant on pourra tout lancer à partir de python
+%fid = fopen('Data/vals_qd.txt','r');
+%formatSpec = '%s';
+%str = fscanf(fid,formatSpec);
+%val = strsplit(str, 'qd2=');
+%val_q2 = degtorad(str2double(val(2)));
+
+
+% Calcul de qd1, de sorte que qd1 et qd2 forment une position d'équilibre
 f = c4*cos(qd1)+c5*cos(qd1+qd2);
-
-
-%ouvre un fichier
-fid = fopen('../Data/vals_qd.txt','r');
-%lit dans ce fichier, fid est sa reference pour matlab
-formatSpec = '%s';
-str = fscanf(fid,formatSpec);
-val = strsplit(str, 'qd1=');
-val_qd2 = str2num(val(2))
-
-fclose(fid);
-
-%val_q2 = 0;
-f = subs(f, qd2, val_q2);
-
-%val_qd1 = solve(f==0, qd1, 'Real', true);
+f = subs(f, qd2, val_qd2);
 val_qd1 = solve(f==0, qd1, 'Real', true);
-if val_qd1(1) > 0
+if val_qd1(1) >= 0
     val_qd1 = val_qd1(1);
 else 
     val_qd1 = val_qd1(2);
 end
-val_qd1
-A = subs(A, [qd1 qd2], [val_qd1(1) val_q2]);
+
+A = subs(A, [qd1 qd2], [val_qd1 val_qd2]);
 A = vpa(A);
-A(3,2);
-% Est ce qu'on a le droit de garder uniquemment la partie réelle???
-%A = real(A);
-%lambda = eig(A)
 
 % Calcul du polynôme caractéristique
-
 syms x
 polynome = charpoly(A);
-polynome(5);
-%calcul des gains
-%c = coeffs(polynome(length(polynome)),kd);
-%p = -nthroot(double(c(1)), 4);
-%kp = (4*p^3)/
 
-
-%lam = solve(p==0, x);
-%lam = vpa(lam)
-
-%ouvre un fichier ou le créé
-fid = fopen('..\Data\test.txt','w');
-%écrit dans ce fichier, fid est sa reference pour matlab
+% Création d'un fichier où on va mettre tout les coef du poly
+% caractéristique et la bonne valeur de qd1
+fid = fopen('Data\test.txt','w');
 fprintf(fid,'qd1 = %s\n \n',radtodeg(vpa(val_qd1)));
-%fprintf(fid,' qd2 = %s\n \n',val_qd2);
 for i = 2:5
     fprintf(fid,'%s\n \n',polynome(i));
 end
 fclose(fid);
-
-%type test.txt
-
