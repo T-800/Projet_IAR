@@ -1,4 +1,6 @@
 import sys
+
+import subprocess
 from numpy import sin, cos, pi, array
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,6 +13,7 @@ from readfile import *
 from plots import *
 import math
 import os
+
 
 tab = [[], [], []]
 
@@ -123,9 +126,19 @@ for i in range(len(vals_qd2)):
     fic_vals = open("Data/vals_qd.txt", "w")
     fic_vals.write("qd2 = "+str(math.degrees(qd2)))
     fic_vals.close()
+"""
 
-    os.system("cd C:/Users/Nadjet BOURDACHE/Desktop/Cours/M2 ANDROIDE/Projets/Projet_IAR/Code/Calculs")
-    os.system('matlab -nojvm -nodisplay -r "calcul_gains ; exit" ')
+# coucou chez moi ça marche comme ça dans le terminal et dans pycharm parcontre
+# j'ai du modifier calcul_gains.m t'inquète pas j'ai juste changé le nom du dossier et le sens des / pour chez moi
+# et mis des valeurs fausse un peu partout :-P
+subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" ']) ## le problème ici c'est que tu faisais
+# deux commndes et que quand le cd est fini il reste pas dans le dossier il revient au dossier de base
+# il falllait tout mettre dans le même os.system
+ff = open("Data/test2.txt", 'r')  ## et j'ai verifier sur internet il attend bien que la commande soit fini avant de passer
+# à la suite du code python
+print(ff.readlines()) ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
+"""
+    #os.system('')
 
     kp, kd, kdd, qd1 = getGains()
 

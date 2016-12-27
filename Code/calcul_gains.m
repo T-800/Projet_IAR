@@ -1,4 +1,4 @@
-% Valeurs de qd2 à modifier
+% Valeurs de qd2 ï¿½ modifier
 val_qd2 = -pi/2;
 
 % Calcul des constantes
@@ -12,11 +12,11 @@ m2 = 0.9;
 I1 = 1/12 * m1 * l1^2;
 I2 = 1/12 * m2 * l2^2;
 
-% On déclare les gains et les variables d'angles comme étants des symboles de
-% variables réelles
+% On dï¿½clare les gains et les variables d'angles comme ï¿½tants des symboles de
+% variables rï¿½elles
 syms q1 q2 qd1 qd2 dotq1 dotq2 ddotq1 ddotq2 kdd kd kp real
 
-% Calcul des variables de position et de leurs premières dérivées par rapport au
+% Calcul des variables de position et de leurs premiï¿½res dï¿½rivï¿½es par rapport au
 % temps
 x1 = lc1*cos(q1);
 x2 = l1*cos(q1) + lc2*cos(q1 + q2);
@@ -30,7 +30,7 @@ c3 = m2 * l1 * lc2;
 c4 = m1 * lc1 + m2 * l1;
 c5 = m2 * lc2;
 
-% Calcul du moment angulaire et de ses 2 premières dérivées par rapport au
+% Calcul du moment angulaire et de ses 2 premiï¿½res dï¿½rivï¿½es par rapport au
 % temps
 L = (c1 + c2 + 2*c3*cos(q2))*dotq1 + (c2 + c3*cos(q2))*dotq2; 
 dotL = - g * ( m1*x1 + m2*x2 );
@@ -39,10 +39,10 @@ ddotL = - g * ( m1*dotx1 + m2*dotx2 );
 % Valeurs du couple pour la configuration but
 taud = m2*lc2*g*cos(qd1 + qd2);
 
-% Formule de la loi de contrôle
+% Formule de la loi de contrï¿½le
 tau = kdd*ddotL + kd*dotL  + kp*L + taud;
 
-% Variables liées au équations du mouvement
+% Variables liï¿½es au ï¿½quations du mouvement
 d11 = m1*lc1^2 + m2*(l1^2 + lc2^2 + 2*l1*lc2*cos(q2)) + I1 + I2;
 d22 = m2*lc2^2 + I2;
 d12 = m2*(lc2^2 + l1*lc2*cos(q2)) + I2;
@@ -74,11 +74,11 @@ for i = 1:4
     end
 end
 
-% On remplace par les valeurs de l'état but
+% On remplace par les valeurs de l'ï¿½tat but
 A = subs( A, [q1 q2 dotq1 dotq2], [qd1 qd2 0 0] );
 
-% Récupère une valeur pour qd2 qui est dans un fichier
-% Servira quant on pourra tout lancer à partir de python
+% Rï¿½cupï¿½re une valeur pour qd2 qui est dans un fichier
+% Servira quant on pourra tout lancer ï¿½ partir de python
 %fid = fopen('Data/vals_qd.txt','r');
 %formatSpec = '%s';
 %str = fscanf(fid,formatSpec);
@@ -86,7 +86,7 @@ A = subs( A, [q1 q2 dotq1 dotq2], [qd1 qd2 0 0] );
 %val_q2 = degtorad(str2double(val(2)));
 
 
-% Calcul de qd1, de sorte que qd1 et qd2 forment une position d'équilibre
+% Calcul de qd1, de sorte que qd1 et qd2 forment une position d'ï¿½quilibre
 f = c4*cos(qd1)+c5*cos(qd1+qd2);
 f = subs(f, qd2, val_qd2);
 val_qd1 = solve(f==0, qd1, 'Real', true);
@@ -99,13 +99,13 @@ end
 A = subs(A, [qd1 qd2], [val_qd1 val_qd2]);
 A = vpa(A);
 
-% Calcul du polynôme caractéristique
+% Calcul du polynï¿½me caractï¿½ristique
 syms x
 polynome = charpoly(A);
 
-% Création d'un fichier où on va mettre tout les coef du poly
-% caractéristique et la bonne valeur de qd1
-fid = fopen('Data\test.txt','w');
+% Crï¿½ation d'un fichier oï¿½ on va mettre tout les coef du poly
+% caractï¿½ristique et la bonne valeur de qd1
+fid = fopen('Data/test2.txt','w');
 fprintf(fid,'qd1 = %s\n \n',radtodeg(vpa(val_qd1)));
 for i = 2:5
     fprintf(fid,'%s\n \n',polynome(i));
