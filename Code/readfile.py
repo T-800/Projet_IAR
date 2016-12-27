@@ -1,7 +1,7 @@
 import re
+import math
 
-
-def getGains(file="./Calculs/test.txt"):
+def getGains(file="Data/test.txt"):
     file = open(file, 'r')
     lines = [line.rstrip() for line in file]
     file.close()
@@ -15,7 +15,7 @@ def getGains(file="./Calculs/test.txt"):
     b1 = b2 = b3 = b4 = a = alpha = 0
     lines = list(filter(None, lines))
     print('\n\navant')
-    for i in range(len(lines[:])):
+    for i in range(1, len(lines[:])):
         lines[i] = lines[i].split(' ')
         for j in range(len(lines[i])):
             lines[i][j] = lines[i][j].replace('^', '**')
@@ -48,8 +48,10 @@ def getGains(file="./Calculs/test.txt"):
         #lines[i] = re.split(regexPattern, lines[i])
         print(lines[i])
 
-
     ligne0 = lines[0].split(' ')
+    qd1 = float(ligne0[-1])
+
+    ligne0 = lines[1].split(' ')
     for l in ligne0:
         if 'kx' in l:
             b1 = eval(l)
@@ -57,20 +59,20 @@ def getGains(file="./Calculs/test.txt"):
             b2 = -eval(l)
         #print(l)
 
-    ligne0 = lines[1].split(' ')
+    ligne0 = lines[2].split(' ')
     for l in ligne0:
         if 'kd' in l:
             b3 = eval(l)
         elif l != '':
             alpha = -eval(l)
 
-    ligne0 = lines[2]
+    ligne0 = lines[3]
     if 'kp' in ligne0:
         print('kpinl')
         b4 = eval(ligne0)
 
 
-    ligne0 = lines[3]
+    ligne0 = lines[4]
     if ligne0 != '':
         a = eval(ligne0)
 
@@ -89,7 +91,7 @@ def getGains(file="./Calculs/test.txt"):
     kp = (4 * p ** 3) / b4
     kd = (6 * p ** 2 + alpha) / b3
     kx = (4 * p + b2 * kp) / b1
-    return kp, kd, kx
+    return kp, kd, kx, math.radians(qd1)
 
 '''
 getGains("./Calculs/test.txt")

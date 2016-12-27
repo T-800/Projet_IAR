@@ -10,13 +10,15 @@ import sympy as sp
 from readfile import *
 from plots import *
 import math
-
-global qd1, qd2
+import os
 
 tab = [[], [], []]
 
-qd2 = 0
-qd1 = pi/2
+vals_qd2 = [-pi / 4, -pi / 3, -pi / 2, 0, pi / 2, pi / 3, pi / 4]
+
+# qd2 = -pi/2
+# qd1 = 2*math.atan(420061**(1/2)/506 + 405/506)
+
 
 _last_time = 0
 g = 9.81  # gravite (m/s^2)
@@ -31,86 +33,100 @@ I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie (kg.m^2)
 I2 = 1 / 12.0 * m2 * l2 ** 2
 
 dt = 30e-3
-t = np.arange(0.0, 10, dt)
+t = []
+for i in range(len(vals_qd2)):
+    t += [np.arange(0.0 + i * 10, 10*(i+1), dt)]
 
-kp, kd, kdd = getGains()
 
 def torque(state, t):
+    q1 = state[0]
+    dq1 = state[1]
+    q2 = state[2]
+    dq2 = state[3]
 
-	q1 = state[0]
-	dq1 = state[1]
-	q2 = state[2]
-	dq2 = state[3]
+    x1 = lc1 * cos(q1)
+    x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
+    dx1 = - dq1 * lc1 * sin(q1)
+    dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
 
-	x1 = lc1 * cos(q1)
-	x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
-	dx1 = - dq1 * lc1 * sin(q1)
-	dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
+    taud = m2 * lc2 * g * cos(qd1 + qd2)
 
-	taud = m2 * lc2 * g * cos(qd1 + qd2)
+    Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * dq1 + (
+                                                                                                            m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(
+                                                                                                                q2)) * dq2
 
-	Moment = (m1 * lc1**2 + m2 * l1**2 + I1 + m2 * lc2**2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * dq1 + (m2 * lc2**2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
+    dL = - g * (m1 * x1 + m2 * x2)
+    ddL = - g * (m1 * dx1 + m2 * dx2)
 
-	dL = - g * (m1 * x1 + m2 * x2)
-	ddL = - g * (m1 * dx1 + m2 * dx2)
-
-
-	tau = kdd * ddL + kd * dL + kp * Moment + taud
-	tq = tau
-	return tq
+    tau = kdd * ddL + kd * dL + kp * Moment + taud
+    tq = tau
+    return tq
 
 
 def derivs(state, t):
-	global _last_time, tab, dt
-	d = np.zeros_like(state)
-	q1 = state[0]
-	dq1 = state[1]
-	q2 = state[2]
-	dq2 = state[3]
-	if _last_time < t:
-		tab[0] += [q1]
-		tab[1] += [q2]
-		tab[2] += [t]
+    global _last_time, tab, dt
+    d = np.zeros_like(state)
+    q1 = state[0]
+    dq1 = state[1]
+    q2 = state[2]
+    dq2 = state[3]
+    if _last_time < t:
+        tab[0] += [q1]
+        tab[1] += [q2]
+        tab[2] += [t]
 
-	d11 = m1 * lc1 ** 2 + m2 * (l1 ** 2 + lc2 ** 2 + 2 * l1 * lc2 * cos(q2)) + I1 + I2
-	d22 = m2 * lc2 ** 2 + I2
-	d12 = m2 * (lc2 ** 2 + l1 * lc2 * cos(q2)) + I2
-	d21 = m2 * (lc2 ** 2 + l1 * lc2 * cos(q2)) + I2
+    d11 = m1 * lc1 ** 2 + m2 * (l1 ** 2 + lc2 ** 2 + 2 * l1 * lc2 * cos(q2)) + I1 + I2
+    d22 = m2 * lc2 ** 2 + I2
+    d12 = m2 * (lc2 ** 2 + l1 * lc2 * cos(q2)) + I2
+    d21 = m2 * (lc2 ** 2 + l1 * lc2 * cos(q2)) + I2
 
-	h1 = -m2 * l1 * lc2 * sin(q2) * dq2 ** 2 - 2 * m2 * l1 * lc2 * sin(q2) * dq2 * dq1
-	h2 = m2 * l1 * lc2 * sin(q2) * dq1 ** 2
-	phi1 = (m1 * lc1 + m2 * l1) * g * cos(q1) + m2 * lc2 * g * cos(q1 + q2)
-	phi2 = m2 * lc2 * g * cos(q1 + q2)
+    h1 = -m2 * l1 * lc2 * sin(q2) * dq2 ** 2 - 2 * m2 * l1 * lc2 * sin(q2) * dq2 * dq1
+    h2 = m2 * l1 * lc2 * sin(q2) * dq1 ** 2
+    phi1 = (m1 * lc1 + m2 * l1) * g * cos(q1) + m2 * lc2 * g * cos(q1 + q2)
+    phi2 = m2 * lc2 * g * cos(q1 + q2)
 
-	d[0] = dq1
-	d[2] = dq2
+    d[0] = dq1
+    d[2] = dq2
 
-	tq = torque(state, t)
-	A = np.array([[d11, d12], [d21, d22]])
-	B = np.array([-h1 - phi1, tq - h2 - phi2])
-	x = np.linalg.solve(A, B)
-	d[1] = x[0]
-	d[3] = x[1]
+    tq = torque(state, t)
+    A = np.array([[d11, d12], [d21, d22]])
+    B = np.array([-h1 - phi1, tq - h2 - phi2])
+    x = np.linalg.solve(A, B)
+    d[1] = x[0]
+    d[3] = x[1]
 
-	return d
+    return d
 
 
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
-#th1 = 45.0
-th2 = -90.0
+# th1 = 45.0
+th2 = 0.0
 x = Symbol('x')
 
-th1 = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+math.radians(th2)), x)[0]
+# th1 = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+math.radians(th2)), x)[0]
+# th1 = math.degrees(2*math.atan(420061**(1/2)/506 + 405/506))
+th1 = 90.0
 dth1 = 0.0
-
 dth2 = 0.0
 
 # etat initial (un vecteur de dimension 4)
-state = np.array([th1, dth1, th2, dth2]) * pi / 180.
+for i in range(len(vals_qd2)):
+    qd2 = vals_qd2[i]
+    fic_vals = open("Data/vals_qd.txt", "w")
+    fic_vals.write("qd2 = "+str(math.degrees(qd2)))
+    fic_vals.close()
 
-y = integrate.odeint(derivs, state, t, mxstep=5000000)
+    os.system("cd C:/Users/Nadjet BOURDACHE/Desktop/Cours/M2 ANDROIDE/Projets/Projet_IAR/Code/Calculs")
+    os.system('matlab -nojvm -nodisplay -r "calcul_gains ; exit" ')
 
+    kp, kd, kdd, qd1 = getGains()
+
+    state = np.array([th1, dth1, th2, dth2]) * pi / 180.
+    y = integrate.odeint(derivs, state, t[i], mxstep=5000000)
+
+    th1 = qd1
+    th2 = qd2
 
 
 x1 = l1 * cos(y[:, 0])
@@ -131,20 +147,21 @@ time_text = ax.text(0.05, 0.95, '', color='red', transform=ax.transAxes)
 
 
 def init():
-	line1.set_data([], [])
-	time_text.set_text('')
-	return line1, time_text
+    line1.set_data([], [])
+    time_text.set_text('')
+    return line1, time_text
 
 
 def animate(i):
-	thisx = [0, x1[i], x2[i]]
-	thisy = [0, y1[i], y2[i]]
-	line1.set_data(thisx, thisy)
-	time_text.set_text(time_template % (i * dt))
-	return line1, time_text
+    thisx = [0, x1[i], x2[i]]
+    thisy = [0, y1[i], y2[i]]
+    line1.set_data(thisx, thisy)
+    time_text.set_text(time_template % (i * dt))
+    return line1, time_text
 
-print("len q1 " , len(tab[0]))
-print("len t " , len(t))
+
+print("len q1 ", len(tab[0]))
+print("len t ", len(t))
 ani = animation.FuncAnimation(fig, animate, frames=len(y),
                               interval=dt * 1e3, init_func=init)
 
@@ -152,6 +169,6 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
-tab[0] = [tab[0][i]-qd1 for i in range(len(tab[1]))]
-tab[1] = [tab[1][i]-qd2 for i in range(len(tab[1]))]
+tab[0] = [tab[0][i] - qd1 for i in range(len(tab[1]))]
+tab[1] = [tab[1][i] - qd2 for i in range(len(tab[1]))]
 do_plot(tab[0], tab[1], tab[2])

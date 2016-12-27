@@ -86,22 +86,23 @@ fid = fopen('../Data/vals_qd.txt','r');
 %lit dans ce fichier, fid est sa reference pour matlab
 formatSpec = '%s';
 str = fscanf(fid,formatSpec);
-val = strsplit(str, 'qd2=');
-val_q2 = degtorad(str2double(val(2)));
-%val_q2 = pi/3
+val = strsplit(str, 'qd1=');
+val_qd2 = str2num(val(2))
+
+fclose(fid);
 
 %val_q2 = 0;
 f = subs(f, qd2, val_q2);
 
 %val_qd1 = solve(f==0, qd1, 'Real', true);
 val_qd1 = solve(f==0, qd1, 'Real', true);
-if val_qd1(1) >= 0
+if val_qd1(1) > 0
     val_qd1 = val_qd1(1);
 else 
     val_qd1 = val_qd1(2);
 end
 val_qd1
-A = subs(A, [qd1 qd2], [val_qd1 val_q2]);
+A = subs(A, [qd1 qd2], [val_qd1(1) val_q2]);
 A = vpa(A);
 A(3,2);
 % Est ce qu'on a le droit de garder uniquemment la partie réelle???
