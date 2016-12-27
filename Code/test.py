@@ -11,7 +11,13 @@ from readfile import *
 from plots import *
 import math
 
+global qd1, qd2
+
 tab = [[], [], []]
+
+qd2 = 0
+qd1 = pi/2
+
 _last_time = 0
 g = 9.81  # gravite (m/s^2)
 l1 = 1.15  # longueur des segments (m)
@@ -26,12 +32,6 @@ I2 = 1 / 12.0 * m2 * l2 ** 2
 
 dt = 30e-3
 t = np.arange(0.0, 10, dt)
-
-qd2 = 0
-qd1 = pi/2
-
-#x = Symbol('x')
-#x = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+qd2), x)[0]
 
 kp, kd, kdd = getGains()
 
@@ -97,9 +97,13 @@ def derivs(state, t):
 
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
-th1 = 45.0
+#th1 = 45.0
+th2 = -90.0
+x = Symbol('x')
+
+th1 = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+math.radians(th2)), x)[0]
 dth1 = 0.0
-th2 = 45.0
+
 dth2 = 0.0
 
 # etat initial (un vecteur de dimension 4)
@@ -148,4 +152,6 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
+tab[0] = [tab[0][i]-qd1 for i in range(len(tab[1]))]
+tab[1] = [tab[1][i]-qd2 for i in range(len(tab[1]))]
 do_plot(tab[0], tab[1], tab[2])
