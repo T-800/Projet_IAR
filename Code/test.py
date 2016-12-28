@@ -13,6 +13,7 @@ from readfile import *
 from plots import *
 import math
 import os
+import matlab.engine
 
 
 tab = [[], [], []]
@@ -127,16 +128,14 @@ for i in range(len(vals_qd2)):
     fic_vals.write("qd2 = "+str(math.degrees(qd2)))
     fic_vals.close()
 """
-
-# coucou chez moi ça marche comme ça dans le terminal et dans pycharm parcontre
-# j'ai du modifier calcul_gains.m t'inquète pas j'ai juste changé le nom du dossier et le sens des / pour chez moi
-# et mis des valeurs fausse un peu partout :-P
-subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" ']) ## le problème ici c'est que tu faisais
-# deux commndes et que quand le cd est fini il reste pas dans le dossier il revient au dossier de base
-# il falllait tout mettre dans le même os.system
-ff = open("Data/test2.txt", 'r')  ## et j'ai verifier sur internet il attend bien que la commande soit fini avant de passer
-# à la suite du code python
-print(ff.readlines()) ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
+print("start engine")
+eng = matlab.engine.start_matlab()
+#subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" '])
+print("calcul_gains")
+eng.calcul_gains(nargout=0)
+print("fin")
+ff = open("Data/test2.txt", 'r')
+print("file : ", ff.readlines()) ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
 """
     #os.system('')
 
