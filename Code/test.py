@@ -1,27 +1,19 @@
-import sys
-
 import subprocess
-from numpy import sin, cos, pi, array
-import numpy as np
-import matplotlib.pyplot as plt
-import scipy.integrate as integrate
-import matplotlib.animation as animation
-from sympy.solvers import solve
-from sympy import Symbol
-import sympy as sp
-from readfile import *
-from plots import *
-import math
-import os
 
+import matplotlib.animation as animation
+import scipy.integrate as integrate
+from numpy import sin, cos, pi
+
+from plots import *
+from readfile import *
 
 tab = [[], [], []]
 
-qd2 = -pi/2 # En radian!!
+qd2 = -pi / 2  # En radian!!
 th1 = 90.0
 th2 = 0.0
 
-#vals_qd2 = [-pi / 4, -pi / 3, -pi / 2, 0, pi / 2, pi / 3, pi / 4]
+# vals_qd2 = [-pi / 4, -pi / 3, -pi / 2, 0, pi / 2, pi / 3, pi / 4]
 
 
 _last_time = 0
@@ -44,6 +36,7 @@ for i in range(len(vals_qd2)):
     t += [np.arange(0.0 + i * 10, 10*(i+1), dt)]
 """
 
+
 def torque(state, t):
     q1 = state[0]
     dq1 = state[1]
@@ -58,8 +51,8 @@ def torque(state, t):
     taud = m2 * lc2 * g * cos(qd1 + qd2)
 
     Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * dq1 + (
-                                                                                                            m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(
-                                                                                                                q2)) * dq2
+                                                                                                                m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(
+                                                                                                                    q2)) * dq2
 
     dL = - g * (m1 * x1 + m2 * x2)
     ddL = - g * (m1 * dx1 + m2 * dx2)
@@ -119,7 +112,6 @@ kp, kd, kdd, qd1 = getGains()
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
 y = integrate.odeint(derivs, state, t, mxstep=5000000)
 
-
 """
 for i in range(len(vals_qd2)):
     qd2 = vals_qd2[i]
@@ -131,12 +123,13 @@ for i in range(len(vals_qd2)):
 # coucou chez moi ça marche comme ça dans le terminal et dans pycharm parcontre
 # j'ai du modifier calcul_gains.m t'inquète pas j'ai juste changé le nom du dossier et le sens des / pour chez moi
 # et mis des valeurs fausse un peu partout :-P
-subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" ']) ## le problème ici c'est que tu faisais
+subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" '])  ## le problème ici c'est que tu faisais
 # deux commndes et que quand le cd est fini il reste pas dans le dossier il revient au dossier de base
 # il falllait tout mettre dans le même os.system
-ff = open("Data/test2.txt", 'r')  ## et j'ai verifier sur internet il attend bien que la commande soit fini avant de passer
+ff = open("Data/test2.txt",'r')  ## et j'ai verifier sur internet il attend bien que la commande soit fini avant de passer
 # à la suite du code python
-print(ff.readlines()) ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
+print(
+    ff.readlines())  ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
 """
     #os.system('')
 

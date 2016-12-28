@@ -1,7 +1,7 @@
 import re
 import math
 
-def getGains(file="Data/test.txt"):
+def getGains(file="Data/test2.txt"):
     file = open(file, 'r')
     lines = [line.rstrip() for line in file]
     file.close()
