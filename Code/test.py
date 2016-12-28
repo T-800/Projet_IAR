@@ -1,8 +1,19 @@
 import subprocess
 
 import matplotlib.animation as animation
+<<<<<<< HEAD
 import scipy.integrate as integrate
 from numpy import sin, cos, pi
+=======
+from sympy.solvers import solve
+from sympy import Symbol
+import sympy as sp
+from readfile import *
+from plots import *
+import math
+import os
+import matlab.engine
+>>>>>>> 2cf6d85aa316494c98a3db425d3c9ae381931712
 
 from plots import *
 from readfile import *
@@ -119,6 +130,7 @@ for i in range(len(vals_qd2)):
     fic_vals.write("qd2 = "+str(math.degrees(qd2)))
     fic_vals.close()
 """
+<<<<<<< HEAD
 
 # coucou chez moi ça marche comme ça dans le terminal et dans pycharm parcontre
 # j'ai du modifier calcul_gains.m t'inquète pas j'ai juste changé le nom du dossier et le sens des / pour chez moi
@@ -130,6 +142,16 @@ ff = open("Data/test2.txt",'r')  ## et j'ai verifier sur internet il attend bien
 # à la suite du code python
 print(
     ff.readlines())  ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
+=======
+print("start engine")
+eng = matlab.engine.start_matlab()
+#subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" '])
+print("calcul_gains")
+eng.calcul_gains(nargout=0)
+print("fin")
+ff = open("Data/test2.txt", 'r')
+print("file : ", ff.readlines()) ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
+>>>>>>> 2cf6d85aa316494c98a3db425d3c9ae381931712
 """
     #os.system('')
 
