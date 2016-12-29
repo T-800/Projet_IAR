@@ -1,6 +1,8 @@
 import re
 import math
 
+import matlab.engine
+
 def getGains(file="Data/test2.txt"):
     file = open(file, 'r')
     lines = [line.rstrip() for line in file]
@@ -93,6 +95,23 @@ def getGains(file="Data/test2.txt"):
     kd = (6 * p ** 2 + alpha) / b3
     kx = (4 * p + b2 * kp) / b1
     return kp, kd, kx, qd1
+
+def send_val_qd2(qd2):
+    fic_vals = open("Data/vals_qd.txt", "w")
+    fic_vals.write("qd2 = " + str(math.degrees(qd2)))
+    fic_vals.close()
+
+
+def calcul_gains_m():
+    print("start engine")
+    eng = matlab.engine.start_matlab()
+    #subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" '])
+    print("calcul_gains")
+    eng.calcul_gains(nargout=0)
+    print("fin")
+    ff = open("Data/test2.txt", 'r')
+    print("file : ", ff.readlines()) ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
+
 
 '''
 getGains("./Calculs/test.txt")

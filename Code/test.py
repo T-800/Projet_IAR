@@ -1,10 +1,8 @@
 import subprocess
 
 import matplotlib.animation as animation
-<<<<<<< HEAD
 import scipy.integrate as integrate
 from numpy import sin, cos, pi
-=======
 from sympy.solvers import solve
 from sympy import Symbol
 import sympy as sp
@@ -13,18 +11,20 @@ from plots import *
 import math
 import os
 import matlab.engine
->>>>>>> 2cf6d85aa316494c98a3db425d3c9ae381931712
 
 from plots import *
 from readfile import *
 
 tab = [[], [], []]
 
-qd2 = -pi / 2  # En radian!!
+#qd2 = -pi / 2  # En radian!!
+#send_val_qd2(qd2)
+#calcul_gains_m()
+it = 1
 th1 = 90.0
 th2 = 0.0
 
-# vals_qd2 = [-pi / 4, -pi / 3, -pi / 2, 0, pi / 2, pi / 3, pi / 4]
+vals_qd2 = [-pi / 4, -pi / 3, -pi / 2, 0, pi / 2, pi / 3, pi / 4]
 
 
 _last_time = 0
@@ -47,8 +47,14 @@ for i in range(len(vals_qd2)):
     t += [np.arange(0.0 + i * 10, 10*(i+1), dt)]
 """
 
+qd2 = vals_qd2[0]
+send_val_qd2(qd2)
+calcul_gains_m()
+kp, kd, kdd, qd1 = getGains()
+
 
 def torque(state, t):
+
     q1 = state[0]
     dq1 = state[1]
     q2 = state[2]
@@ -70,6 +76,7 @@ def torque(state, t):
 
     tau = kdd * ddL + kd * dL + kp * Moment + taud
     tq = tau
+
     return tq
 
 
@@ -104,10 +111,22 @@ def derivs(state, t):
     x = np.linalg.solve(A, B)
     d[1] = x[0]
     d[3] = x[1]
+    """
+    if t >= 9 :
+        maj_param()
+        print("maj" """
 
     return d
 
-
+def maj_param():
+    global qd1, qd2, it, kdd, kd, kp, th1, th2
+    th1 = qd1
+    th2 = qd2
+    qd2 = vals_qd2[it]
+    send_val_qd2(qd2)
+    calcul_gains_m()
+    kp, kd, kdd, qd1 = getGains()
+    it += 1
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
 
@@ -118,7 +137,7 @@ dth2 = 0.0
 
 
 
-kp, kd, kdd, qd1 = getGains()
+#kp, kd, kdd, qd1 = getGains()
 
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
 y = integrate.odeint(derivs, state, t, mxstep=5000000)
@@ -130,28 +149,7 @@ for i in range(len(vals_qd2)):
     fic_vals.write("qd2 = "+str(math.degrees(qd2)))
     fic_vals.close()
 """
-<<<<<<< HEAD
 
-# coucou chez moi ça marche comme ça dans le terminal et dans pycharm parcontre
-# j'ai du modifier calcul_gains.m t'inquète pas j'ai juste changé le nom du dossier et le sens des / pour chez moi
-# et mis des valeurs fausse un peu partout :-P
-subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" '])  ## le problème ici c'est que tu faisais
-# deux commndes et que quand le cd est fini il reste pas dans le dossier il revient au dossier de base
-# il falllait tout mettre dans le même os.system
-ff = open("Data/test2.txt",'r')  ## et j'ai verifier sur internet il attend bien que la commande soit fini avant de passer
-# à la suite du code python
-print(
-    ff.readlines())  ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
-=======
-print("start engine")
-eng = matlab.engine.start_matlab()
-#subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" '])
-print("calcul_gains")
-eng.calcul_gains(nargout=0)
-print("fin")
-ff = open("Data/test2.txt", 'r')
-print("file : ", ff.readlines()) ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
->>>>>>> 2cf6d85aa316494c98a3db425d3c9ae381931712
 """
     #os.system('')
 

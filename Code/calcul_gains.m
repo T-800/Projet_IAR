@@ -1,5 +1,5 @@
 % Valeurs de qd2 � modifier
-val_qd2 = -pi/2;
+%val_qd2 = -pi/2;
 
 % Calcul des constantes
 g = 9.81;
@@ -79,11 +79,11 @@ A = subs( A, [q1 q2 dotq1 dotq2], [qd1 qd2 0 0] );
 
 % R�cup�re une valeur pour qd2 qui est dans un fichier
 % Servira quant on pourra tout lancer � partir de python
-%fid = fopen('Data/vals_qd.txt','r');
-%formatSpec = '%s';
-%str = fscanf(fid,formatSpec);
-%val = strsplit(str, 'qd2=');
-%val_q2 = degtorad(str2double(val(2)));
+fid = fopen('Data/vals_qd.txt','r');
+formatSpec = '%s';
+str = fscanf(fid,formatSpec);
+val = strsplit(str, 'qd2=');
+val_qd2 = degtorad(str2double(val(2)));
 
 
 % Calcul de qd1, de sorte que qd1 et qd2 forment une position d'�quilibre
