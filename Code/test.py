@@ -114,7 +114,7 @@ def derivs(state, t):
     """
     if t >= 9 :
         maj_param()
-        print("maj" """
+        print("maj") """
 
     return d
 
