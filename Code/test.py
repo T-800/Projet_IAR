@@ -17,15 +17,14 @@ from readfile import *
 
 tab = [[], [], []]
 
-#qd2 = -pi / 2  # En radian!!
-#send_val_qd2(qd2)
-#calcul_gains_m()
+# qd2 = -pi / 2  # En radian!!
+# send_val_qd2(qd2)
+# calcul_gains_m()
 it = 1
 th1 = 90.0
 th2 = 0.0
 
 vals_qd2 = [-pi / 4, -pi / 3, -pi / 2, 0, pi / 2, pi / 3, pi / 4]
-
 
 _last_time = 0
 g = 9.81  # gravite (m/s^2)
@@ -49,12 +48,10 @@ for i in range(len(vals_qd2)):
 
 qd2 = vals_qd2[0]
 send_val_qd2(qd2)
-calcul_gains_m()
-kp, kd, kdd, qd1 = getGains()
+
 
 
 def torque(state, t):
-
     q1 = state[0]
     dq1 = state[1]
     q2 = state[2]
@@ -118,6 +115,7 @@ def derivs(state, t):
 
     return d
 
+
 def maj_param():
     global qd1, qd2, it, kdd, kd, kp, th1, th2
     th1 = qd1
@@ -137,30 +135,21 @@ dth2 = 0.0
 
 
 
-#kp, kd, kdd, qd1 = getGains()
-
+# kp, kd, kdd, qd1 = getGains()
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
+calcul_gains_m()
+kp, kd, kdd, qd1 = getGains()
+t = np.arange(0.0, 10 , dt)
 y = integrate.odeint(derivs, state, t, mxstep=5000000)
 
-"""
-for i in range(len(vals_qd2)):
-    qd2 = vals_qd2[i]
-    fic_vals = open("Data/vals_qd.txt", "w")
-    fic_vals.write("qd2 = "+str(math.degrees(qd2)))
-    fic_vals.close()
-"""
+for i in range(1, len(vals_qd2)):
+    print("itération :", i)
+    t = np.arange(0.0 * i + 10, 10 * i + 10, dt)
+    maj_param()
+    z = integrate.odeint(derivs, state, t, mxstep=5000000)
+    y = np.concatenate((y, z))
 
-"""
-    #os.system('')
 
-    kp, kd, kdd, qd1 = getGains()
-
-    state = np.array([th1, dth1, th2, dth2]) * pi / 180.
-    y = integrate.odeint(derivs, state, t[i], mxstep=5000000)
-
-    th1 = qd1
-    th2 = qd2
-"""
 
 x1 = l1 * cos(y[:, 0])
 y1 = l1 * sin(y[:, 0])
@@ -189,10 +178,12 @@ def animate(i):
     thisx = [0, x1[i], x2[i]]
     thisy = [0, y1[i], y2[i]]
     line1.set_data(thisx, thisy)
+    #time_text.set_text(time_template % (i * dt) + "\nqd2 = " + str(vals_qd2[int(i*dt)//10]))
     time_text.set_text(time_template % (i * dt))
     return line1, time_text
 
 
+print("annimate")
 ani = animation.FuncAnimation(fig, animate, frames=len(y),
                               interval=dt * 1e3, init_func=init)
 
@@ -202,4 +193,5 @@ plt.axis([-L, L, -L, L])
 plt.show()
 tab[0] = [tab[0][i] - qd1 for i in range(len(tab[1]))]
 tab[1] = [tab[1][i] - qd2 for i in range(len(tab[1]))]
+print("plot")
 do_plot(tab[0], tab[1], tab[2])
