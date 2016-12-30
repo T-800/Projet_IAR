@@ -142,11 +142,11 @@ kp, kd, kdd, qd1 = getGains()
 t = np.arange(0.0, 10 , dt)
 y = integrate.odeint(derivs, state, t, mxstep=5000000)
 
-for i in range(1, len(vals_qd2)):
+for i in range(len(vals_qd2)-1):
     print("itération :", i)
     t = np.arange(0.0 * i + 10, 10 * i + 10, dt)
-    state = np.array([th1, dth1, th2, dth2]) * pi / 180.
     maj_param()
+    state = np.array([th1, dth1, th2, dth2]) * pi / 180.
     z = integrate.odeint(derivs, state, t, mxstep=5000000)
     y = np.concatenate((y, z))
 
