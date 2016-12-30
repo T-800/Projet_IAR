@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 '''
 bruits_0 = open("./bruit0.txt", "r")
@@ -49,17 +50,18 @@ plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
 plt.show()
 '''
 
-def do_plot(q1, q2, t, it=0):
-	print('plot ', it)
+def do_plot(q1, q2, t, qd1, qd2):
 	fig2 = plt.figure()
 	fig2.suptitle('Variation des angles en fonction du temps.', fontsize=14, fontweight='bold')
 	ax2 = fig2.add_subplot(111, xlim=(0, 10))
-	#ax2.settitle()
+	s1 = ''+str(int(math.degrees(q1[0])))+' - '+str(int(math.degrees(qd1)))
+	s2 = ''+str(int(math.degrees(q2[0])))+' - '+str(int(math.degrees(qd2)))
+	ax2.set_title('q1 : '+s1+' q2 : ' + s2)
 	ax2.grid()
 	ax2.set_xlabel('Temps')
 	ax2.set_ylabel('Angle (rad)')
 	ax2.plot(t, q1, 'g-', label="q1 - qd1")
 	ax2.plot(t, q2, 'r-', label="q2 - qd2")
 	plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
-	plt.savefig('Data/plots/plot_'+str(it)+'.png', bbox_inches='tight')
+	plt.savefig('Data/plots/plot_'+str(s2)+'.png', bbox_inches='tight')
 	plt.close(fig2)

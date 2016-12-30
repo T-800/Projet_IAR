@@ -136,10 +136,10 @@ dth2 = 0.0
 
 # kp, kd, kdd, qd1 = getGains()
 
-t = np.arange(0.0, 10 , dt)
+#t = np.arange(0.0, 10 , dt)
 
-do_plot(tab[0], tab[1], tab[2], 0)
-tab = [[], [], []]
+#do_plot(tab[0], tab[1], tab[2])
+#tab = [[], [], []]
 
 for i in range(len(vals_qd2)):
     print("itération :", i)
@@ -151,7 +151,7 @@ for i in range(len(vals_qd2)):
     else:
         z = integrate.odeint(derivs, state, t, mxstep=5000000)
         y = np.concatenate((y, z))
-    do_plot(tab[0], tab[1], tab[2], i)
+    do_plot(tab[0], tab[1], tab[2], vals_qd2[i], qd1)
     tab = [[], [], []]
 
 
@@ -163,6 +163,7 @@ x2 = l2 * cos(y[:, 0] + y[:, 2]) + x1
 y2 = l2 * sin(y[:, 0] + y[:, 2]) + y1
 
 fig = plt.figure()
+fig.suptitle('Acrobot', fontsize=14, fontweight='bold')
 ax = fig.add_subplot(111, autoscale_on=False, xlim=(-2, 2), ylim=(-2, 2))
 ax.grid()
 ax.set_axis_bgcolor('black')
