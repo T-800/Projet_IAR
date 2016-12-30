@@ -50,8 +50,11 @@ plt.show()
 '''
 
 def do_plot(q1, q2, t, it=0):
+	print('plot ', it)
 	fig2 = plt.figure()
-	ax2 = fig2.add_subplot(111, ylim=(-3, 3))
+	fig2.suptitle('Variation des angles en fonction du temps.', fontsize=14, fontweight='bold')
+	ax2 = fig2.add_subplot(111, xlim=(0, 10))
+	#ax2.settitle()
 	ax2.grid()
 	ax2.set_xlabel('Temps')
 	ax2.set_ylabel('Angle (rad)')
