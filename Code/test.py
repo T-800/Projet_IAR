@@ -145,7 +145,10 @@ y = integrate.odeint(derivs, state, t, mxstep=5000000)
 for i in range(1, len(vals_qd2)):
     print("itération :", i)
     t = np.arange(0.0 * i + 10, 10 * i + 10, dt)
+    dth1 = 0.0
+    dth2 = 0.0
     maj_param()
+    state = np.array([th1, dth1, th2, dth2]) * pi / 180.
     z = integrate.odeint(derivs, state, t, mxstep=5000000)
     y = np.concatenate((y, z))
 
@@ -164,8 +167,9 @@ ax.set_axis_bgcolor('black')
 
 line1, = ax.plot([], [], 'o-', lw=2, c=(0, 1, 0))
 line2, = ax.plot([], [], 'o-', lw=2, c=(1, 1.0 * 180.0 / 255.0, 0))
-time_template = 'time = %.2fs'
-time_text = ax.text(0.05, 0.95, '', color='red', transform=ax.transAxes)
+#time_template = 'time = %.2fs'
+time_template = 'time = %.2fs\nqd2 = %.2f'
+time_text = ax.text(0.05, 0.90, '', color='red', transform=ax.transAxes)
 
 
 def init():
@@ -178,8 +182,9 @@ def animate(i):
     thisx = [0, x1[i], x2[i]]
     thisy = [0, y1[i], y2[i]]
     line1.set_data(thisx, thisy)
-    #time_text.set_text(time_template % (i * dt) + "\nqd2 = " + str(vals_qd2[int(i*dt)//10]))
-    time_text.set_text(time_template % (i * dt))
+    txt = math.degrees(vals_qd2[int(i//10*dt)])
+    time_text.set_text(time_template % (i * dt, txt)  )
+    #time_text.set_text(time_template % (i * dt))
     return line1, time_text
 
 
