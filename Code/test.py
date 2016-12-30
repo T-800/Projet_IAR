@@ -82,10 +82,9 @@ def derivs(state, t):
     dq1 = state[1]
     q2 = state[2]
     dq2 = state[3]
-    if _last_time < t:
-        tab[0] += [q1]
-        tab[1] += [q2]
-        tab[2] += [t]
+    tab[0] += [q1 - qd1]
+    tab[1] += [q2 - qd2]
+    tab[2] += [t]
 
     d11 = m1 * lc1 ** 2 + m2 * (l1 ** 2 + lc2 ** 2 + 2 * l1 * lc2 * cos(q2)) + I1 + I2
     d22 = m2 * lc2 ** 2 + I2
@@ -142,13 +141,18 @@ kp, kd, kdd, qd1 = getGains()
 t = np.arange(0.0, 10 , dt)
 y = integrate.odeint(derivs, state, t, mxstep=5000000)
 
+do_plot(tab[0], tab[1], tab[2], 0)
+tab = [[], [], []]
+
 for i in range(len(vals_qd2)-1):
     print("itération :", i)
-    t = np.arange(0.0 * i + 10, 10 * i + 10, dt)
+    t = np.arange(0.0, 10, dt)
     maj_param()
     state = np.array([th1, dth1, th2, dth2]) * pi / 180.
     z = integrate.odeint(derivs, state, t, mxstep=5000000)
     y = np.concatenate((y, z))
+    do_plot(tab[0], tab[1], tab[2], i)
+    tab = [[], [], []]
 
 
 
@@ -167,7 +171,7 @@ line1, = ax.plot([], [], 'o-', lw=2, c=(0, 1, 0))
 line2, = ax.plot([], [], 'o-', lw=2, c=(1, 1.0 * 180.0 / 255.0, 0))
 #time_template = 'time = %.2fs'
 time_template = 'time = %.2fs\nqd2 = %.2f'
-time_text = ax.text(0.05, 0.90, '', color='red', transform=ax.transAxes)
+time_text = ax.text(0.05, 0.93, '', color='red', transform=ax.transAxes)
 
 
 def init():
@@ -180,7 +184,7 @@ def animate(i):
     thisx = [0, x1[i], x2[i]]
     thisy = [0, y1[i], y2[i]]
     line1.set_data(thisx, thisy)
-    print(" **************** " + str(int(i//10*dt)))
+    #print(" **************** " + str(int(i//10*dt)))
     txt = math.degrees(vals_qd2[int(i//10*dt)])
     time_text.set_text(time_template % (i * dt, txt)  )
     #time_text.set_text(time_template % (i * dt))
@@ -195,7 +199,7 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
-tab[0] = [tab[0][i] - qd1 for i in range(len(tab[1]))]
-tab[1] = [tab[1][i] - qd2 for i in range(len(tab[1]))]
-print("plot")
-do_plot(tab[0], tab[1], tab[2])
+#tab[0] = [tab[0][i] - qd1 for i in range(len(tab[1]))]
+#tab[1] = [tab[1][i] - qd2 for i in range(len(tab[1]))]
+#print("plot")
+#do_plot(tab[0], tab[1], tab[2])

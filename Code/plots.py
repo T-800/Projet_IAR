@@ -58,5 +58,5 @@ def do_plot(q1, q2, t, it=0):
 	ax2.plot(t, q1, 'g-', label="q1 - qd1")
 	ax2.plot(t, q2, 'r-', label="q2 - qd2")
 	plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
-	#plt.savefig('Data/plots/plot_'+str(it)+'.png', bbox_inches='tight')
-	#plt.close(fig2)
+	plt.savefig('Data/plots/plot_'+str(it)+'.png', bbox_inches='tight')
+	plt.close(fig2)
