@@ -46,8 +46,6 @@ for i in range(len(vals_qd2)):
     t += [np.arange(0.0 + i * 10, 10*(i+1), dt)]
 """
 
-qd2 = vals_qd2[0]
-send_val_qd2(qd2)
 
 
 
@@ -118,8 +116,8 @@ def derivs(state, t):
 
 def maj_param():
     global qd1, qd2, it, kdd, kd, kp, th1, th2
-    th1 = qd1
-    th2 = qd2
+    th1 = math.degrees(qd1)
+    th2 = math.degrees(qd2)
     qd2 = vals_qd2[it]
     send_val_qd2(qd2)
     calcul_gains_m()
@@ -136,17 +134,17 @@ dth2 = 0.0
 
 
 # kp, kd, kdd, qd1 = getGains()
+qd2 = vals_qd2[0]
+send_val_qd2(qd2)
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
 calcul_gains_m()
 kp, kd, kdd, qd1 = getGains()
 t = np.arange(0.0, 10 , dt)
 y = integrate.odeint(derivs, state, t, mxstep=5000000)
 
-for i in range(1, len(vals_qd2)):
+for i in range(len(vals_qd2)-1):
     print("itération :", i)
     t = np.arange(0.0 * i + 10, 10 * i + 10, dt)
-    dth1 = 0.0
-    dth2 = 0.0
     maj_param()
     state = np.array([th1, dth1, th2, dth2]) * pi / 180.
     z = integrate.odeint(derivs, state, t, mxstep=5000000)
@@ -182,6 +180,7 @@ def animate(i):
     thisx = [0, x1[i], x2[i]]
     thisy = [0, y1[i], y2[i]]
     line1.set_data(thisx, thisy)
+    print(" **************** " + str(int(i//10*dt)))
     txt = math.degrees(vals_qd2[int(i//10*dt)])
     time_text.set_text(time_template % (i * dt, txt)  )
     #time_text.set_text(time_template % (i * dt))

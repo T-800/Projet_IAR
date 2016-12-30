@@ -99,7 +99,7 @@ def getGains(file="Data/test2.txt"):
 
 
 def send_val_qd2(qd2):
-	fic_vals = open("Data/vals_qd.txt", "a")
+	fic_vals = open("Data/vals_qd.txt", "w")
 	fic_vals.write("qd2 = " + str(math.degrees(qd2)) + '\n')
 	fic_vals.close()
 
