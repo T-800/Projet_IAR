@@ -1,6 +1,4 @@
-import re
 import math
-
 import matlab.engine
 
 print("start engine")
@@ -15,12 +13,10 @@ def getGains(file="Data/test2.txt"):
     je donne des valeurs de 1 au kd.. comme ça je peux evaluer la ligne comme une expression mathématique avec le eval
     '''
 
-	# λ4 + (b1 kdd − b2 kp )λ3 + (b3 kd − α)λ2 + (b4 kp )λ + a = 0
 	kp = kd = kx = 1
 
 	b1 = b2 = b3 = b4 = a = alpha = 0
 	lines = list(filter(None, lines))
-	#print('\n\navant')
 	for i in range(1, len(lines[:])):
 		lines[i] = lines[i].split(' ')
 		for j in range(len(lines[i])):
@@ -29,14 +25,11 @@ def getGains(file="Data/test2.txt"):
 			if lines[i][j] not in '-+' and abs(eval(lines[i][j])) < 0.001:  # si la valeur est trop petite
 				lines[i][j] = '0'
 
-		#print(lines[i])
-	#print('Apres')
 	for i in range(len(lines[:])):
 		tmp = ''
 		for exp in lines[i]:
 			tmp = tmp + " " + exp
 		tmp += " "
-		# print(tmp)
 		lines[i] = tmp.replace(' + 0 ', ' ')  # on retire les -0
 		lines[i] = lines[i].replace(' 0 +', ' ')  # on remplace les 0- par -
 		lines[i] = lines[i].replace('- 0 ', ' ')  # les +0
@@ -48,11 +41,6 @@ def getGains(file="Data/test2.txt"):
 		lines[i] = lines[i].lstrip(' ')
 		lines[i] = lines[i].rstrip(' ')
 
-		# Suivant les lignes il reste maintenant que 1 ou deux term donc on split sur les + et -
-		# delimiters = " - ", " + "
-		# regexPattern = '|'.join(map(re.escape, delimiters))
-		# lines[i] = re.split(regexPattern, lines[i])
-		#print(lines[i])
 
 	ligne0 = lines[0].replace(' ', '')
 	ligne0 = ligne0.split('qd1=')
@@ -75,21 +63,12 @@ def getGains(file="Data/test2.txt"):
 
 	ligne0 = lines[3]
 	if 'kp' in ligne0:
-		#print('kpinl')
 		b4 = eval(ligne0)
 
 	ligne0 = lines[4]
 	if ligne0 != '':
 		a = eval(ligne0)
 
-	'''
-    print("b1 : ", b1)
-    print("b2 : ", b2)
-    print("b3 : ", b3)
-    print("b4 : ", b4)
-    print("a : ", a)
-    print("alpha : ", alpha)
-	'''
 	p = a ** (1 / 4)
 
 	kp = (4 * p ** 3) / b4
@@ -105,19 +84,11 @@ def send_val_qd2(qd2):
 
 
 def calcul_gains_m():
-	# subprocess.run(['matlab', '-nojvm', '-nodisplay', '-r "calcul_gains ; exit" '])
 	print("calcul_gains")
 	eng.calcul_gains(nargout=0)
 	print("fin")
-	# ff = open("Data/test2.txt", 'r')
-	# print("file : ", ff.readlines()) ## un petit print pour te montrer que le fichier est bien rempli avant la lecture (efface le avant)
 
-
-'''
-getGains("./Calculs/test.txt")
-getGains("./Calculs/test1.txt")
-getGains("./Calculs/test2.txt")
-getGains("./Calculs/test3.txt")
-getGains("./Calculs/test4.txt")
-getGains("./Calculs/test5.txt")
-'''
+def calcul_gains_tracking_m():
+	print("calcul_gains tracking")
+	eng.calcul_gains_tracking(nargout=0)
+	print("fin")

@@ -1,21 +1,16 @@
-import sys
-from numpy import sin, cos, pi, array
-import numpy as np
-import matplotlib.pyplot as plt
-import scipy.integrate as integrate
-import matplotlib.animation as animation
-from sympy.solvers import solve
-from sympy import Symbol
-import sympy as sp
-from readfile import *
-<<<<<<< HEAD
-from plots import *
-import math as mat
+import subprocess
 
-tab = [[], []]
-=======
-import math
->>>>>>> e0a98e8b793929989083dda053f843c9b66e506a
+import matplotlib.animation as animation
+import scipy.integrate as integrate
+from numpy import sin, cos, pi
+from readfile import *
+from plots import *
+import numpy as np
+
+tab = [[], [], []]
+
+# it = 0
+# vals_qd2 = [-pi / 2, pi / 3, -pi / 6, 0, pi / 2, -pi / 3, pi / 6]
 
 g = 9.81  # gravite (m/s^2)
 l1 = 1.15  # longueur des segments (m)
@@ -29,66 +24,67 @@ I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie (kg.m^2)
 I2 = 1 / 12.0 * m2 * l2 ** 2
 
 dt = 30e-3
-t = np.arange(0.0, 10, dt)
+t = np.arange(0.0, 40, dt)
 
-qd2 = -pi/3.0
-qd1 = 2*math.atan((405*3**(1/2))/1417 - (2*624991**(1/2))/1417)
-
-
-#x = Symbol('x')
-#x = solve((m1 * lc1 + m2 * l1)*sp.cos(x)+(m2 * lc2)*sp.cos(x+qd2), x)[0]
-
-kp, kd, kdd = getGains()
+def get_qd2(t):
+	if t < 5:
+		return -1.55 # verifier
+	if t < 10:
+		return 0
+	if t < 15:
+		return -0.25 * t + 2.5
+	if t < 20:
+		return -1.25
+	return (sin(t) - 2.25) # TODO : Finir sinus
+	pass
 
 def torque(state, t):
-
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
 
-
+	qd2 = get_qd2(t)
 
 	x1 = lc1 * cos(q1)
 	x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
 	dx1 = - dq1 * lc1 * sin(q1)
 	dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
 
-	taud = m2 * lc2 * g * cos(qd1 + qd2)
-	'''
-	kv = (m1 + m2) * g * kdd
-	kx = (m1 + m2) * g * kd
+	taud = m2 * lc2 * g * cos(qd1 + qd2) # TODO : changer taud
 
+	Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
+			 dq1 + ( m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
 
+	c1 = m1 * lc1 ** 2 + m2 * l1 ** 2 + I1
+	c2 = m2 * lc2 ** 2 + I2
+	c3 = m2 * l1 * lc2
 
-	XG = (m1 * x1 + m2 * x2)/(m1 + m2)
-	dXG = m1/(m1 + m2) * (- dq1 * lc1 * sin(q1)) + m2/(m1 + m2) * (- dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2))
+	# TODO : Definir les nouvelles variables dotqd1 et dotqd2
+	dotqd1 = 0
+	dotqd2 = 0
 
-	tau = - kv * XG - kx * dXG + kp * L
-	#print(tau)
-	'''
-
-	Moment = (m1 * lc1**2 + m2 * l1**2 + I1 + m2 * lc2**2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * dq1 + (m2 * lc2**2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
+	Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2
 
 	dL = - g * (m1 * x1 + m2 * x2)
 	ddL = - g * (m1 * dx1 + m2 * dx2)
 
-
-	tau = kdd * ddL + kd * dL + kp * Moment + taud
+	tau = kdd * ddL + kd * dL + kp * (Moment - Ld) + taud
 	tq = tau
+
 	return tq
 
 
-def derivs(state, t, tab):
+def derivs(state, t):
+	global _last_time, tab, dt
 	d = np.zeros_like(state)
-
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
-
-	tab[0] += [mat.radians(q1)]
-	tab[1] += [mat.radians(q2)]
+	tab[0] += [get_qd2(t)]
+	tab[1] += [q2]
+	tab[2] += [t]
 
 	d11 = m1 * lc1 ** 2 + m2 * (l1 ** 2 + lc2 ** 2 + 2 * l1 * lc2 * cos(q2)) + I1 + I2
 	d22 = m2 * lc2 ** 2 + I2
@@ -112,19 +108,21 @@ def derivs(state, t, tab):
 
 	return d
 
-
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
-th1 = 45.0
+th1 = 90.0
+th2 = 0.0
 dth1 = 0.0
-th2 = 180.0
 dth2 = 0.0
 
 # etat initial (un vecteur de dimension 4)
+
+
+
+kp, kd, kdd, qd1 = getGains()
+
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
-
-y = integrate.odeint(derivs, state, t, (tab,), mxstep=5000000)
-
+y = integrate.odeint(derivs, state, t, mxstep=5000000)
 
 
 x1 = l1 * cos(y[:, 0])
@@ -159,11 +157,10 @@ def animate(i):
 
 
 ani = animation.FuncAnimation(fig, animate, frames=len(y),
-                              interval=dt * 1e3, init_func=init)
+							  interval=dt * 1e3, init_func=init)
 
 # ani.save('test.mp4', fps=15)
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
-
-#do_plot(tab[0], tab[1], y)
+do_plot_tracking(tab[0], tab[1], tab[2])
