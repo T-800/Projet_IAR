@@ -7,6 +7,12 @@ from readfile import *
 from plots import *
 import numpy as np
 
+
+from sympy.solvers import solve
+from sympy import Symbol
+import sympy as sp
+
+
 tab = [[], [], []]
 
 # it = 0
@@ -35,8 +41,16 @@ def get_qd2(t):
 		return -0.25 * t + 2.5
 	if t < 20:
 		return -1.25
-	return (sin(t) - 2.25) # TODO : Finir sinus
-	pass
+	return (0.4 * sin(t * 0.7 + 20 )) - 1
+
+def get_dotqd2(t):
+	if t < 10:
+		return 0
+	if t < 15:
+		return -0.25
+	if t < 20:
+		return 0
+	return (0.4 * 0.7 * cos(0.7 * t + 90)) # TODO : Finir sinus
 
 def torque(state, t):
 	q1 = state[0]
@@ -51,19 +65,29 @@ def torque(state, t):
 	dx1 = - dq1 * lc1 * sin(q1)
 	dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
 
-	taud = m2 * lc2 * g * cos(qd1 + qd2) # TODO : changer taud
+	taud = m2 * lc2 * g * cos(qd1 + qd2)
 
 	Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
 			 dq1 + ( m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
 
+	c = m1 + m2
 	c1 = m1 * lc1 ** 2 + m2 * l1 ** 2 + I1
 	c2 = m2 * lc2 ** 2 + I2
 	c3 = m2 * l1 * lc2
+	c4 = m1 * lc1 + m2 * l1
+	c5 = m2 * lc2
 
-	# TODO : Definir les nouvelles variables dotqd1 et dotqd2
+
 	dotqd1 = 0
 	dotqd2 = 0
+	'''
+	dotqd1 = Symbol('dotqd1', real=True)
+	dotqd2 = get_dotqd2(t)
 
+	x = solve( - c4 * sin(qd1) * dotqd1 - c5 * sin(qd1+qd2) * dotqd1 , dotqd1)
+	print(x)
+	dotqd1 = float(x[0])
+	'''
 	Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2
 
 	dL = - g * (m1 * x1 + m2 * x2)
@@ -136,8 +160,10 @@ ax = fig.add_subplot(111, autoscale_on=False, xlim=(-2, 2), ylim=(-2, 2))
 ax.grid()
 ax.set_axis_bgcolor('black')
 
+line3, = ax.plot([], [], 'r-', lw=2)
 line1, = ax.plot([], [], 'o-', lw=2, c=(0, 1, 0))
-line2, = ax.plot([], [], 'o-', lw=2, c=(1, 1.0 * 180.0 / 255.0, 0))
+
+#line2, = ax.plot([], [], 'o-', lw=2, c=(1, 1.0 * 180.0 / 255.0, 0))
 time_template = 'time = %.2fs'
 time_text = ax.text(0.05, 0.95, '', color='red', transform=ax.transAxes)
 
@@ -149,11 +175,14 @@ def init():
 
 
 def animate(i):
+	trace = 50
 	thisx = [0, x1[i], x2[i]]
 	thisy = [0, y1[i], y2[i]]
+	line3.set_data(x2[max(0, i-trace):i], y2[max(0, i-trace):i])
+	#line3.set_data(x2[:i], y2[:i])
 	line1.set_data(thisx, thisy)
 	time_text.set_text(time_template % (i * dt))
-	return line1, time_text
+	return line1, line3, time_text
 
 
 ani = animation.FuncAnimation(fig, animate, frames=len(y),

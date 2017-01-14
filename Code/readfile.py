@@ -40,6 +40,7 @@ def getGains(file="Data/test2.txt"):
 		lines[i] = lines[i].replace(' + ', ' +')  # on remplace les 0- par -
 		lines[i] = lines[i].lstrip(' ')
 		lines[i] = lines[i].rstrip(' ')
+		print(lines[i])
 
 
 	ligne0 = lines[0].replace(' ', '')

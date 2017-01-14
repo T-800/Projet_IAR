@@ -11,6 +11,7 @@ from plots import *
 import math
 import os
 import matlab.engine
+import numpy as np
 
 from plots import *
 from readfile import *
