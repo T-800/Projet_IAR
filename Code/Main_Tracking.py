@@ -48,14 +48,14 @@ def get_qd2(t):
 	if t < 15:
 
 		x = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + (-0.25 * t + 2.5)), qd1)
-		return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], gains[2][3], x[0]
+		return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], x[0]
 
 	if t < 20:
         return -1.25, gains[2][0], gains[2][1], gains[2][2], gains[2][3]
 
 	x = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + ((0.4 * sin(t * 0.7 + 20 )) - 1)), qd1)
 
-	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[3][0], gains[3][1], gains[3][2], gains[3][3], x[0]
+	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[3][0], gains[3][1], gains[3][2], x[0]
 
 def get_dotqd2(t):
 	if t < 10:
@@ -67,21 +67,16 @@ def get_dotqd2(t):
 	return (0.4 * 0.7 * cos(0.7 * t + 90)) # TODO : Finir sinus
 
 def torque(state, t):
-	gain = get_qd2(t)[1:]
 	qd2, kp, kd, kdd, qd1 = get_qd2(t)
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
-
-
-
 	x1 = lc1 * cos(q1)
 	x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
 	dx1 = - dq1 * lc1 * sin(q1)
 	dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
-
-	taud = m2 * lc2 * g * cos(qd1 + qd2)
+	taud = m2 * lc2 * g * cos(float(qd1) + qd2)
 
 	Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
 			 dq1 + ( m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
@@ -168,20 +163,20 @@ if v[0] > 0:
 	v = v[0]
 else:
 	v = v[1]
-print(v)
-gains[0][3] = v
+gains[0] = [gains[0][0], gains[0][1], gains[0][2], v]
 v = solve(c4 * sp.cos(x) + c5 * sp.cos(x), x)
 if v[0] > 0:
 	v = v[0]
 else:
 	v = v[1]
-gains[1][3] = v
+gains[1] = [gains[1][0], gains[1][1], gains[1][2], v]
 v = solve(c4 * sp.cos(x) + c5 * (sp.cos(x)*math.cos(1.25) + sp.sin(x)*math.sin(1.25)), x)
 if v[0] > 0:
 	v = v[0]
 else:
 	v = v[1]
-gains[2][3] = v
+#gains[2][3] = v
+gains[2] = [gains[2][0], gains[2][1], gains[2][2], v]
 
 
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
