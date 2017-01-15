@@ -93,8 +93,8 @@ def derivs(state, t):
     dq1 = state[1]
     q2 = state[2]
     dq2 = state[3]
-    tab[0] += [q1 - qd1]
-    tab[1] += [q2 - qd2]
+    tab[0] += [q1 - pi/2]
+    tab[1] += [q2]
     tab[2] += [t]
 
     d11 = m1 * lc1 ** 2 + m2 * (l1 ** 2 + lc2 ** 2 + 2 * l1 * lc2 * cos(q2)) + I1 + I2
