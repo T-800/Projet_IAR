@@ -48,14 +48,14 @@ def get_qd2(t):
 	if t < 15:
 
 		x = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + (-0.25 * t + 2.5)), qd1)
-		return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], gains[2][3], x[0]
+		return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], x[0]
 
 	if t < 20:
 		return -1.25, gains[2][0], gains[2][1], gains[2][2], gains[2][3]
 
 	x = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + ((0.4 * sin(t * 0.7 + 20 )) - 1)), qd1)
 
-	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[3][0], gains[3][1], gains[3][2], gains[3][3], x[0]
+	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[3][0], gains[3][1], gains[3][2], x[0]
 
 def get_dotqd2(t):
 	if t < 10:
