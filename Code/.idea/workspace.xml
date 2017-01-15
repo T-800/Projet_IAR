@@ -24,8 +24,8 @@
       <file leaf-file-name="Main_Tracking.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main_Tracking.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
+            <state relative-caret-position="170">
+              <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -33,31 +33,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="vals_qd2_tracking.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Data/vals_qd2_tracking.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="calcul_gains_tracking.m" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/calcul_gains_tracking.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-1105">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="polys_tracking.txt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="polys_tracking.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Data/polys_tracking.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-60">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vals_qd2_tracking.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Data/vals_qd2_tracking.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="2" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -84,9 +84,9 @@
         <option value="$PROJECT_DIR$/../../MADI/evaluation.py" />
         <option value="$PROJECT_DIR$/../../MADI/apprentissage_complet.py" />
         <option value="$PROJECT_DIR$/../../MADI/Main.ipynb" />
-        <option value="$PROJECT_DIR$/Main_Tracking.py" />
-        <option value="$PROJECT_DIR$/Data/vals_qd2_tracking.txt" />
         <option value="$PROJECT_DIR$/Data/polys_tracking.txt" />
+        <option value="$PROJECT_DIR$/Data/vals_qd2_tracking.txt" />
+        <option value="$PROJECT_DIR$/Main_Tracking.py" />
       </list>
     </option>
   </component>
@@ -729,24 +729,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main_Tracking.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/calcul_gains_tracking.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Data/vals_qd.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -755,18 +737,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Data/vals_qd2_tracking.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="2" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Data/polys_tracking.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-60">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/calcul_gains_tracking.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1105">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main_Tracking.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Data/vals_qd2_tracking.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
