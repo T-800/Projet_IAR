@@ -119,7 +119,7 @@ def get_dotqd2(t):
         return -0.25
     if t < 20:
         return 0
-    return (0.4 * 0.7 * cos(0.7 * t + 90))
+    return (0.4 * 0.7 * cos(0.7 * t + 21))
 
 
 
@@ -147,7 +147,6 @@ def torque(state, t):
     c4 = m1 * lc1 + m2 * l1
     c5 = m2 * lc2
 
-    #dotqd2 = get_dotqd2(t)
     dotqd1 = Symbol('dotqd1', real=True)
     dotqd2 = get_dotqd2(t)
 
@@ -156,7 +155,7 @@ def torque(state, t):
 
 
     x = solve( dotX , dotqd1)
-    print("t", t, "dotqd1", x)
+    #print("t", t, "dotqd1", x)
     dotqd1 = float(x[0])
     Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2
 
