@@ -160,14 +160,28 @@ dth2 = 0.0
 calcul_gains_tracking_m()
 gains = read_file("Data/polys_tracking.txt", 1)
 
-qd1 = Symbol('qd1', real=True)
+x = Symbol('x', real=True)
 c4 = m1 * lc1 + m2 * l1
 c5 = m2 * lc2
-v = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + -1.55), qd1)
+v = solve(c4 * sp.cos(x) + c5 * (sp.cos(x)*math.cos(1.55) + sp.sin(x)*math.sin(1.55)), x)
+if v[0] > 0:
+	v = v[0]
+else:
+	v = v[1]
 print(v)
-gains[0][3] = v[0]
-gains[1][3] = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + 0), qd1)[0]
-gains[2][3] = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + -1.25), qd1)[0]
+gains[0][3] = v
+v = solve(c4 * sp.cos(x) + c5 * sp.cos(x), x)
+if v[0] > 0:
+	v = v[0]
+else:
+	v = v[1]
+gains[1][3] = v
+v = solve(c4 * sp.cos(x) + c5 * (sp.cos(x)*math.cos(1.25) + sp.sin(x)*math.sin(1.25)), x)
+if v[0] > 0:
+	v = v[0]
+else:
+	v = v[1]
+gains[2][3] = v
 
 
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
