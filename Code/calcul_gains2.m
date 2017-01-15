@@ -106,5 +106,6 @@ A = vpa(A);
 % Calcul du polyn�me caract�ristique
 syms x
 polynome = charpoly(A);
-y = radtodeg(vpa(val_qd1));
+y = struct('qd1', radtodeg(vpa(val_qd1)));
+%y = radtodeg(vpa(val_qd1));
 end
