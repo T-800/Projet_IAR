@@ -56,7 +56,6 @@ def get_dotqd2(t):
 	return (0.4 * 0.7 * cos(0.7 * t + 90)) # TODO : Finir sinus
 
 def torque(state, t):
-	gain = get_qd2(t)[1:]
 	qd2, kp, kd, kdd, qd1 = get_qd2(t)
 	q1 = state[0]
 	dq1 = state[1]
@@ -183,7 +182,7 @@ def animate(i):
 	trace = 50
 	thisx = [0, x1[i], x2[i]]
 	thisy = [0, y1[i], y2[i]]
-	line3.set_data(x2[max(0, i-trace):i], y2[max(0, i-trace):i])
+	#line3.set_data(x2[max(0, i-trace):i], y2[max(0, i-trace):i])
 	#line3.set_data(x2[:i], y2[:i])
 	line1.set_data(thisx, thisy)
 	time_text.set_text(time_template % (i * dt))

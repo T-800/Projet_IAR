@@ -33,4 +33,3 @@ def do_plot_tracking(cmd, q2, t):
 	#plt.savefig('Data/plots/plot_tracking.png', bbox_inches='tight')
 	#plt.close(fig2)
 	plt.show()
-	print("sds")
