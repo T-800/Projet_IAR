@@ -41,10 +41,10 @@ def get_qd2(t):
 	if t < 10:
 		return 0, gains[1][0], gains[1][1], gains[1][2], gains[1][3]
 	if t < 15:
-		return -0.25 * t + 2.5, gains[2][0], gains[2][2], gains[2][3]
+		return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], gains[2][3]
 	if t < 20:
-		return -1.25, gains[3][0], gains[3][1], gains[3][2], gains[3][3]
-	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[4][0], gains[4][1], gains[4][2], gains[4][3]
+		return -1.25, gains[2][0], gains[2][1], gains[2][2], gains[2][3]
+	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[3][0], gains[3][1], gains[3][2], gains[3][3]
 
 def get_dotqd2(t):
 	if t < 10:
@@ -56,7 +56,7 @@ def get_dotqd2(t):
 	return (0.4 * 0.7 * cos(0.7 * t + 90)) # TODO : Finir sinus
 
 def torque(state, t):
-	p = get_qd2(t)
+	gain = get_qd2(t)[1:]
 	qd2, kp, kd, kdd, qd1 = get_qd2(t)
 	q1 = state[0]
 	dq1 = state[1]
@@ -111,7 +111,7 @@ def derivs(state, t):
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
-	tab[0] += [get_qd2(t)]
+	tab[0] += [get_qd2(t)[0]]
 	tab[1] += [q2]
 	tab[2] += [t]
 

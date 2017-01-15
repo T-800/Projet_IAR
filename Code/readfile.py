@@ -24,6 +24,8 @@ def read_file(file, mode):
                 t = []
             else:
                 t += [l]
+
+        print(len(g))
         return g
 
 
@@ -56,17 +58,18 @@ def getGains(lines):
         for exp in lines[i]:
             tmp = tmp + " " + exp
         tmp += " "
+        print("avant :", tmp)
         lines[i] = tmp.replace(' + 0 ', ' ')  # on retire les -0
-        lines[i] = lines[i].replace(' 0 +', ' ')  # on remplace les 0- par -
         lines[i] = lines[i].replace('- 0 ', ' ')  # les +0
         lines[i] = lines[i].replace(' 0 -', ' -')  # on remplace les 0- par -
+        lines[i] = lines[i].replace(' 0 +', ' ')  # on remplace les 0- par -
         lines[i] = lines[i].replace(' + - ', ' - ')  # on remplace les 0- par -
         lines[i] = lines[i].replace(' - + ', ' - ')  # on remplace les 0- par -
         lines[i] = lines[i].replace(' - ', ' -')  # on remplace les 0- par -
         lines[i] = lines[i].replace(' + ', ' +')  # on remplace les 0- par -
         lines[i] = lines[i].lstrip(' ')
         lines[i] = lines[i].rstrip(' ')
-        print(lines[i])
+        print("apres :", lines[i])
 
 
 
