@@ -51,7 +51,7 @@ def get_qd2(t):
 		return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], gains[2][3], x[0]
 
 	if t < 20:
-		return -1.25, gains[2][0], gains[2][1], gains[2][2], gains[2][3]
+        return -1.25, gains[2][0], gains[2][1], gains[2][2], gains[2][3]
 
 	x = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + ((0.4 * sin(t * 0.7 + 20 )) - 1)), qd1)
 
