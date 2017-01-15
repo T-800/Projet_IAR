@@ -29,7 +29,7 @@ m2 = 0.9
 I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie (kg.m^2)
 I2 = 1 / 12.0 * m2 * l2 ** 2
 
-dt = 30e-3
+dt = 31e-3
 t = np.arange(0.0, 40, dt)
 
 
@@ -53,7 +53,7 @@ def get_qd2(t, all=True):
         #print(t)
         if not all:
             return -0.25 * t + 2.5
-        x = solve(c4 * sp.cos(qd1) + c5 * ( sp.cos(qd1)*math.cos(-0.25 * t + 2.5) - sp.sin(qd1)*math.sin(-0.25 * t + 2.5) ), qd1)
+        x = solve(c4 * sp.cos(qd1) + c5 * ( sp.cos(qd1)*cos(-0.25 * t + 2.5) - sp.sin(qd1)*sin(-0.25 * t + 2.5) ), qd1)
         #print(math.sin(-0.25 * t + 2.5))
         if x[0] > 0:
             x = x[0]
@@ -67,14 +67,14 @@ def get_qd2(t, all=True):
         return -1.25, gains[2][0], gains[2][1], gains[2][2], gains[2][3]
 
     if not all:
-        return (0.4 * sin(t * 0.7 + 20 )) - 1
-    x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1)*cos(0.4 * sin(t * 0.7 + 20 ) - 1) - sp.sin(qd1)*sin( 0.4 * sin(t * 0.7 + 20 ) - 1)), qd1)
+        return (0.4 * sin(t * 0.7 + 21 )) - 1.25
+    x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1)*cos(0.4 * sin(t * 0.7 + 21 ) - 1.25) - sp.sin(qd1)*sin( 0.4 * sin(t * 0.7 + 21 ) - 1.25)), qd1)
     #print(t)
     if x[0] > 0:
         x = x[0]
     else:
         x = x[1]
-    return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[3][0], gains[3][1], gains[3][2], x
+    return (0.4 * sin(t * 0.7 + 21 )) - 1.25, gains[3][0], gains[3][1], gains[3][2], x
 
 def get_dotqd2(t):
     if t < 10:
@@ -108,9 +108,13 @@ def torque(state, t):
     c4 = m1 * lc1 + m2 * l1
     c5 = m2 * lc2
 
-
-    dotqd1 = 0
+    #dotqd2 = get_dotqd2(t)
     dotqd2 = 0
+    #x = Symbol('x', real=True)
+    #v = solve(- c4 * math.sin(qd1) * x - c5 * math.sin(qd1 + qd2) * x, x)
+    #print(v)
+    dotqd1 = 0
+
     '''
     dotqd1 = Symbol('dotqd1', real=True)
     dotqd2 = get_dotqd2(t)
