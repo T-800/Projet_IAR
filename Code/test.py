@@ -23,17 +23,28 @@ tab = [[], [], []]
 # calcul_gains_m()
 it = 0
 
-vals_qd2 = [-pi / 2, pi / 3, -pi / 6, 0, pi / 2, -pi / 3, pi / 6]
+#vals_qd2 = [-pi / 2, pi / 3, -pi / 6, 0, pi / 2, -pi / 3, pi / 6]
+vals_qd2 = [-pi / 2, 0]
+
 
 _last_time = 0
+
 g = 9.81  # gravite (m/s^2)
-l1 = 1.15  # longueur des segments (m)
-l2 = 2.25
+#l1 = 1.15  # longueur des segments (m)
+l1 = 0.5
+#l2 = 2.25
+l2 = 0.75
 L = 1.3 * (l1 + l2)
-lc1 = l1 / 2.0
-lc2 = l2 / 2.0
-m1 = 0.4  # masse des segments (kg)
-m2 = 0.9
+#lc1 = l1 / 2.0
+lc1 = 0.5
+#lc2 = l2 / 2.0
+lc2 = 0.75
+#m1 = 0.4  # masse des segments (kg)
+#m2 = 0.9
+m1 = 7
+m2 = 7
+
+
 I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie (kg.m^2)
 I2 = 1 / 12.0 * m2 * l2 ** 2
 
@@ -49,6 +60,7 @@ for i in range(len(vals_qd2)):
 
 
 def torque(state, t):
+    global I1, I2
     q1 = state[0]
     dq1 = state[1]
     q2 = state[2]
@@ -75,7 +87,7 @@ def torque(state, t):
 
 
 def derivs(state, t):
-    global _last_time, tab, dt
+    global _last_time, tab, dt, I1, I2
     d = np.zeros_like(state)
     q1 = state[0]
     dq1 = state[1]

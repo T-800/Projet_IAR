@@ -1,13 +1,21 @@
 % Calcul des constantes
 g = 9.81;
-l1 = 1.15;
-l2 = 2.25;
-lc1 = l1/2;
-lc2 = l2/2;
-m1 = 0.4;
-m2 = 0.9;
-I1 = 1/12 * m1 * l1^2;
-I2 = 1/12 * m2 * l2^2;
+%l1 = 1.15;
+l1 = 0.5;
+%l2 = 2.25;
+l2 = 0.75;
+%lc1 = l1/2;
+%lc2 = l2/2;
+lc1 = 0.5;
+lc2 = 0.75;
+%m1 = 0.4;
+%m2 = 0.9;
+
+m1 = 7;
+m2 = 7;
+
+I1 = 1/12 * m1 * l1^2
+I2 = 1/12 * m2 * l2^2
 
 % On declare les gains et les variables d'angles comme etants des symboles de
 % variables reelles
