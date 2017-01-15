@@ -146,7 +146,7 @@ dth2 = 0.0
 
 # etat initial (un vecteur de dimension 4)
 
-
+calcul_gains_tracking_m()
 gains = read_file("Data/polys_tracking.txt", 1)
 
 
