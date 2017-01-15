@@ -107,5 +107,4 @@ A = vpa(A);
 syms x
 polynome = charpoly(A);
 y = radtodeg(vpa(val_qd1));
-%polynome(i)
 end

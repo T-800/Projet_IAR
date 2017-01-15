@@ -34,21 +34,27 @@ t = np.arange(0.0, 40, dt)
 
 
 
-def get_qd2(t):
+def get_qd2(t, all=True):
     qd1 = Symbol('qd1', real=True)
     c4 = m1 * lc1 + m2 * l1
     c5 = m2 * lc2
 
     if t < 5:
+        if not all:
+            return -1.55
         return -1.55, gains[0][0], gains[0][1], gains[0][2], gains[0][3]
 
     if t < 10:
+        if not all:
+            return 0
         return 0, gains[1][0], gains[1][1], gains[1][2], gains[1][3]
 
     if t < 15:
-        print("15")
+        #print(t)
+        if not all:
+            return -0.25 * t + 2.5
         x = solve(c4 * sp.cos(qd1) + c5 * ( sp.cos(qd1)*math.cos(-0.25 * t + 2.5) - sp.sin(qd1)*math.sin(-0.25 * t + 2.5) ), qd1)
-        print(math.sin(-0.25 * t + 2.5))
+        #print(math.sin(-0.25 * t + 2.5))
         if x[0] > 0:
             x = x[0]
         else:
@@ -56,10 +62,14 @@ def get_qd2(t):
         return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], x
 
     if t < 20:
+        if not all:
+            return -1.25
         return -1.25, gains[2][0], gains[2][1], gains[2][2], gains[2][3]
 
+    if not all:
+        return (0.4 * sin(t * 0.7 + 20 )) - 1
     x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1)*cos(0.4 * sin(t * 0.7 + 20 ) - 1) - sp.sin(qd1)*sin( 0.4 * sin(t * 0.7 + 20 ) - 1)), qd1)
-    print(x)
+    #print(t)
     if x[0] > 0:
         x = x[0]
     else:
@@ -75,6 +85,7 @@ def get_dotqd2(t):
         return 0
     return (0.4 * 0.7 * cos(0.7 * t + 90)) # TODO : Finir sinus
 
+last_t = 0
 def torque(state, t):
     qd2, kp, kd, kdd, qd1 = get_qd2(t)
     q1 = state[0]
@@ -126,7 +137,7 @@ def derivs(state, t):
     dq1 = state[1]
     q2 = state[2]
     dq2 = state[3]
-    tab[0] += [get_qd2(t)[0]]
+    tab[0] += [get_qd2(t, all=False)]
     tab[1] += [q2]
     tab[2] += [t]
 
