@@ -17,13 +17,20 @@ tab = [[], [], []]
 # vals_qd2 = [-pi / 2, pi / 3, -pi / 6, 0, pi / 2, -pi / 3, pi / 6]
 
 g = 9.81  # gravite (m/s^2)
-l1 = 1.15  # longueur des segments (m)
-l2 = 2.25
+#l1 = 1.15  # longueur des segments (m)
+l1 = 0.5
+#l2 = 2.25
+l2 = 0.75
 L = 1.3 * (l1 + l2)
-lc1 = l1 / 2.0
-lc2 = l2 / 2.0
-m1 = 0.4  # masse des segments (kg)
-m2 = 0.9
+#lc1 = l1 / 2.0
+lc1 = 0.5
+#lc2 = l2 / 2.0
+lc2 = 0.75
+#m1 = 0.4  # masse des segments (kg)
+#m2 = 0.9
+m1 = 7
+m2 = 7
+
 I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie (kg.m^2)
 I2 = 1 / 12.0 * m2 * l2 ** 2
 
@@ -75,7 +82,7 @@ def get_qd2(t):
     if t < 20:
         return -1.25
 
-    return (0.4 * sin(t * 0.7 + 21 )) - 1.25
+    return (0.25 * sin(t * 0.7 + 21 )) - 1.25
 
 
 def get_gains(t):
@@ -103,8 +110,8 @@ def get_gains(t):
         return  gains[2][0], gains[2][1], gains[2][2], qd1s[3]
 
     qd1 = Symbol('qd1', real=True)
-    x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1)*cos(0.4 * sin(t * 0.7 + 21 ) - 1.25) -
-                                       sp.sin(qd1)*sin( 0.4 * sin(t * 0.7 + 21 ) - 1.25)), qd1)
+    x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1)*cos(0.25 * sin(t * 0.7 + 21 ) - 1.25) -
+                                       sp.sin(qd1)*sin( 0.25 * sin(t * 0.7 + 21 ) - 1.25)), qd1)
     if x[0] > 0:
         x = x[0]
     else:
@@ -119,7 +126,7 @@ def get_dotqd2(t):
         return -0.25
     if t < 20:
         return 0
-    return (0.4 * 0.7 * cos(0.7 * t + 21))
+    return (0.25 * 0.7 * cos(0.7 * t + 21))
 
 
 
