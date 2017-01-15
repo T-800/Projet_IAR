@@ -154,7 +154,7 @@ def torque(state, t):
     #print(v)
     dotqd1 = 0
     #dotX = (m1 / (m1 + m2)) * (- dotqd1 * lc1 * sp.sin(qd1)) + \
-    #       (m2 / (m1 + m2)) * (- dotqd1 * l1 * sp.sin(qd1) - (dotqd1 + dotqd2) * lc2 * np.sin(qd1 + qd2))
+    #       (m2 / (m1 + m2)) * (- dotqd1 * l1 * sp.sin(qd1) - (dotqd1 + dotqdt2) * lc2 * np.sin(qd1 + qd2))
 
     '''
     dotqd1 = Symbol('dotqd1', real=True)
