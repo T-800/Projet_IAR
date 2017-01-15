@@ -30,6 +30,6 @@ def do_plot_tracking(cmd, q2, t):
 	ax2.plot(t, cmd, 'k--', label="commande")
 	ax2.plot(t, q2, 'k-', label="output")
 	plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
-	#plt.savefig('Data/plots/plot_tracking.png', bbox_inches='tight')
+	plt.savefig('Data/plots/plot_tracking.png', bbox_inches='tight')
 	#plt.close(fig2)
 	plt.show()
