@@ -119,7 +119,7 @@ def get_dotqd2(t):
         return -0.25
     if t < 20:
         return 0
-    return (0.4 * 0.7 * cos(0.7 * t + 90))
+    return (0.4 * 0.7 * cos(0.7 * t + 21))
 
 
 
@@ -147,6 +147,7 @@ def torque(state, t):
     c4 = m1 * lc1 + m2 * l1
     c5 = m2 * lc2
 
+<<<<<<< HEAD
     #dotqd2 = get_dotqd2(t)
     dotqd2 = 0
     #x = Symbol('x', real=True)
@@ -157,13 +158,18 @@ def torque(state, t):
     #       (m2 / (m1 + m2)) * (- dotqd1 * l1 * sp.sin(qd1) - (dotqd1 + dotqdt2) * lc2 * np.sin(qd1 + qd2))
 
     '''
+=======
+>>>>>>> 398a02f81782166f1300438275c28fd09ae75aeb
     dotqd1 = Symbol('dotqd1', real=True)
     dotqd2 = get_dotqd2(t)
 
-    x = solve( - c4 * sin(qd1) * dotqd1 - c5 * sin(qd1+qd2) * dotqd1 , dotqd1)
-    print(x)
+    dotX = (m1 / (m1 + m2)) * (- dotqd1 * lc1 * sp.sin(qd1)) + \
+           (m2 / (m1 + m2)) * (- dotqd1 * l1 * sp.sin(qd1) - (dotqd1 + dotqd2) * lc2 * np.sin(qd1 + qd2))
+
+
+    x = solve( dotX , dotqd1)
+    #print("t", t, "dotqd1", x)
     dotqd1 = float(x[0])
-    '''
     Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2
 
     dL = - g * (m1 * x1 + m2 * x2)
