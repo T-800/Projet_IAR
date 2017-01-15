@@ -126,7 +126,6 @@ def get_dotqd2(t):
 def torque(state, t):
     qd2 = get_qd2(t)
     kp, kd, kdd, qd1 = get_gains(t)
-    qd1 = float(qd1)
     q1 = state[0]
     dq1 = state[1]
     q2 = state[2]
@@ -135,7 +134,7 @@ def torque(state, t):
     x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
     dx1 = - dq1 * lc1 * sin(q1)
     dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
-    taud = m2 * lc2 * g * cos(qd1 + qd2)
+    taud = m2 * lc2 * g * cos(float(qd1) + qd2)
 
     Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
              dq1 + ( m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
@@ -153,8 +152,6 @@ def torque(state, t):
     #v = solve(- c4 * math.sin(qd1) * x - c5 * math.sin(qd1 + qd2) * x, x)
     #print(v)
     dotqd1 = 0
-    #dotX = (m1 / (m1 + m2)) * (- dotqd1 * lc1 * sp.sin(qd1)) + \
-    #       (m2 / (m1 + m2)) * (- dotqd1 * l1 * sp.sin(qd1) - (dotqd1 + dotqd2) * lc2 * np.sin(qd1 + qd2))
 
     '''
     dotqd1 = Symbol('dotqd1', real=True)
