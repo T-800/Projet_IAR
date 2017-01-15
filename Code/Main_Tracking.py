@@ -32,16 +32,19 @@ I2 = 1 / 12.0 * m2 * l2 ** 2
 dt = 30e-3
 t = np.arange(0.0, 40, dt)
 
+
+
 def get_qd2(t):
+
 	if t < 5:
-		return -1.55 # verifier
+		return -1.55, gains[0][0], gains[0][1], gains[0][2], gains[0][3]
 	if t < 10:
-		return 0
+		return 0, gains[1][0], gains[1][1], gains[1][2], gains[1][3]
 	if t < 15:
-		return -0.25 * t + 2.5
+		return -0.25 * t + 2.5, gains[2][0], gains[2][2], gains[2][3]
 	if t < 20:
-		return -1.25
-	return (0.4 * sin(t * 0.7 + 20 )) - 1
+		return -1.25, gains[3][0], gains[3][1], gains[3][2], gains[3][3]
+	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[4][0], gains[4][1], gains[4][2], gains[4][3]
 
 def get_dotqd2(t):
 	if t < 10:
@@ -53,12 +56,14 @@ def get_dotqd2(t):
 	return (0.4 * 0.7 * cos(0.7 * t + 90)) # TODO : Finir sinus
 
 def torque(state, t):
+	p = get_qd2(t)
+	qd2, kp, kd, kdd, qd1 = get_qd2(t)
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
 	dq2 = state[3]
 
-	qd2 = get_qd2(t)
+
 
 	x1 = lc1 * cos(q1)
 	x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
@@ -142,8 +147,8 @@ dth2 = 0.0
 # etat initial (un vecteur de dimension 4)
 
 
+gains = read_file("Data/polys_tracking.txt", 1)
 
-kp, kd, kdd, qd1 = getGains()
 
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
 y = integrate.odeint(derivs, state, t, mxstep=5000000)

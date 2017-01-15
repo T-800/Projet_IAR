@@ -123,7 +123,7 @@ def maj_param():
     qd2 = vals_qd2[it]
     send_val_qd2(qd2)
     calcul_gains_m()
-    kp, kd, kdd, qd1 = getGains()
+    kp, kd, kdd, qd1 = read_file("Data/test2.txt", 0)
     it += 1
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
