@@ -35,16 +35,27 @@ t = np.arange(0.0, 40, dt)
 
 
 def get_qd2(t):
+	qd1 = Symbol('qd1', real=True)
+	c4 = m1 * lc1 + m2 * l1
+	c5 = m2 * lc2
 
 	if t < 5:
 		return -1.55, gains[0][0], gains[0][1], gains[0][2], gains[0][3]
+
 	if t < 10:
 		return 0, gains[1][0], gains[1][1], gains[1][2], gains[1][3]
+
 	if t < 15:
-		return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], gains[2][3]
+
+		x = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + (-0.25 * t + 2.5)), qd1)
+		return -0.25 * t + 2.5, gains[2][0], gains[1][1], gains[2][2], gains[2][3], x[0]
+
 	if t < 20:
 		return -1.25, gains[2][0], gains[2][1], gains[2][2], gains[2][3]
-	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[3][0], gains[3][1], gains[3][2], gains[3][3]
+
+	x = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + ((0.4 * sin(t * 0.7 + 20 )) - 1)), qd1)
+
+	return (0.4 * sin(t * 0.7 + 20 )) - 1, gains[3][0], gains[3][1], gains[3][2], gains[3][3], x[0]
 
 def get_dotqd2(t):
 	if t < 10:
@@ -147,6 +158,15 @@ dth2 = 0.0
 
 calcul_gains_tracking_m()
 gains = read_file("Data/polys_tracking.txt", 1)
+
+qd1 = Symbol('qd1', real=True)
+c4 = m1 * lc1 + m2 * l1
+c5 = m2 * lc2
+v = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + -1.55), qd1)
+print(v)
+gains[0][3] = v[0]
+gains[1][3] = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + 0), qd1)[0]
+gains[2][3] = solve(c4 * sp.cos(qd1) + c5 * sp.cos(qd1 + -1.25), qd1)[0]
 
 
 state = np.array([th1, dth1, th2, dth2]) * pi / 180.
