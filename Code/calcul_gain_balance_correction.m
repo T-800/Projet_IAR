@@ -109,9 +109,7 @@ A = vpa(A);
 % Calcul du polyn�me caract�ristique
 syms x
 polynome = charpoly(A);
-strcmp(class(polynome(2)),'sym');
-c = coeffs(polynome(3), ks);
-strcmp(class(vpa(c)),'sym');
+
 % Cr�ation d'un fichier o� on va mettre tout les coef du poly
 % caract�ristique et la bonne valeur de qd1
 fid = fopen('Data/gains_balance_correction.txt','w');

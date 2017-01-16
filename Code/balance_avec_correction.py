@@ -56,7 +56,7 @@ for i in range(len(vals_qd2)):
     t += [np.arange(0.0 + i * 10, 10*(i+1), dt)]
 """
 
-ks = -100
+ks = -50
 
 
 def torque(state, t):
@@ -217,7 +217,7 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-L, L, -L, L])
 plt.show()
-#tab[0] = [tab[0][i] - qd1 for i in range(len(tab[1]))]
-#tab[1] = [tab[1][i] - qd2 for i in range(len(tab[1]))]
+tab[0] = [tab[0][i] - qd1 for i in range(len(tab[1]))]
+tab[1] = [tab[1][i] - qd2 for i in range(len(tab[1]))]
 #print("plot")
-#do_plot(tab[0], tab[1], tab[2])
+do_plot(tab[0], tab[1], tab[2])

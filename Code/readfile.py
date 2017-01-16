@@ -206,15 +206,15 @@ def getGains2(lines, a, kss):
     print("gamma2 : ", gamma2)
     print("beta : ", beta)
 
-    p4 = (gamma2 * kss)/a
+    p4 = (gamma2 * kss)#/a
     print("p4 : ", p4)
     p = p4 ** (1/4)
     # print("p : ", p)
 
 
-    kp = (4 * a * p ** 3) / gK
-    kd = (6 * a * p ** 2 - beta - gamma1 * kss) / gK
-    kx = (4 * p * a) / gK
+    kp = (4 * p ** 3) / gK
+    kd = (6 * p ** 2 - beta - gamma1 * kss) / gK
+    kx = (4 * p) / gK
 
 
     print("kp : ", kp)
