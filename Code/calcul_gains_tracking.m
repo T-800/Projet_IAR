@@ -14,8 +14,8 @@ lc2 = 0.75;
 m1 = 7;
 m2 = 7;
 
-I1 = 1/12 * m1 * l1^2
-I2 = 1/12 * m2 * l2^2
+I1 = 1/12 * m1 * l1^2;
+I2 = 1/12 * m2 * l2^2;
 
 % On declare les gains et les variables d'angles comme etants des symboles de
 % variables reelles
@@ -116,7 +116,7 @@ end
 
 % Creation d'un fichier on on va mettre tout les coef du poly
 % caracteristique et la bonne valeur de qd1
-fid = fopen('Data/polys_tracking.txt','w');
+fid = fopen('Data/gains_tracking.txt','w');
 
 for i=1:4
     Mat = subs(A, [qd1 qd2], [vals_qd1(i) vals_qd2(i)]);

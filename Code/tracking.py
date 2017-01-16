@@ -41,7 +41,7 @@ qd1s = [0] * 4
 
 def read_gains():
     global gains
-    gains = read_file("Data/polys_tracking.txt", 1)
+    gains = read_file("Data/gains_tracking.txt", 1)
 
     x = Symbol('x', real=True)
     c4 = m1 * lc1 + m2 * l1

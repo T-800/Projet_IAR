@@ -23,8 +23,6 @@ def read_file(file, mode, a=None, ks=1):
                 t = []
             else:
                 t += [l]
-
-        print("fin calcul gain")
         return g
     else:
         return getGains2(lines, a, ks)
@@ -234,12 +232,12 @@ def send_val_qd2(qd2):
 
 def calcul_gains_m():
     print("calcul_gains")
-    eng.calcul_gains(nargout=0)
+    eng.calcul_gains_balance(nargout=0)
     print("fin")
 
 def calcul_gains_v2_m():
     print("calcul_gain_version2")
-    eng.calcul_gain_version2(nargout=0)
+    eng.calcul_gain_balance_correction(nargout=0)
     print("fin")
 
 

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 import math
 
-def do_plot(q1, q2, t, qd1, qd2):
+def do_plot(q1, q2, t, qd1, qd2, name):
 	fig2 = plt.figure()
 	fig2.suptitle('Variation des angles en fonction du temps.', fontsize=14, fontweight='bold')
 	ax2 = fig2.add_subplot(111, xlim=(0, 4))
@@ -15,7 +15,7 @@ def do_plot(q1, q2, t, qd1, qd2):
 	ax2.plot(t, q2, 'r-', label="q2")
 	#plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
 	ax2.legend(loc="upper right")
-	plt.savefig('Data/plots/plot_'+str(s2)+'.png', bbox_inches='tight')
+	plt.savefig('Data/plots/'+name+'_'+str(s2)+'.png', bbox_inches='tight')
 	plt.close(fig2)
 
 
@@ -31,6 +31,6 @@ def do_plot_tracking(cmd, q2, t):
 	ax2.plot(t, cmd, 'k--', label="commande")
 	ax2.plot(t, q2, 'r-', label="output")
 	ax2.legend(loc="upper right")
-	plt.savefig('Data/plots/plot_tracking.png', bbox_inches='tight')
-	#plt.close(fig2)
+	plt.savefig('Data/plots/tracking_plot.png', bbox_inches='tight')
+	plt.close(fig2)
 	plt.show()

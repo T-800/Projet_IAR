@@ -1,18 +1,21 @@
-function y = calcul_gains2()
-
-
-
 % Valeurs de qd2 � modifier
 %val_qd2 = -pi/2;
-
 % Calcul des constantes
 g = 9.81;
-l1 = 1.15;
-l2 = 2.25;
-lc1 = l1/2;
-lc2 = l2/2;
-m1 = 0.4;
-m2 = 0.9;
+%l1 = 1.15;
+l1 = 0.5;
+%l2 = 2.25;
+l2 = 0.75;
+%lc1 = l1/2;
+%lc2 = l2/2;
+lc1 = 0.5;
+lc2 = 0.75;
+%m1 = 0.4;
+%m2 = 0.9;
+
+m1 = 7;
+m2 = 7;
+
 I1 = 1/12 * m1 * l1^2;
 I2 = 1/12 * m2 * l2^2;
 
@@ -106,6 +109,12 @@ A = vpa(A);
 % Calcul du polyn�me caract�ristique
 syms x
 polynome = charpoly(A);
-y = struct('qd1', adtodeg(vpa(val_qd1)));
-%y = radtodeg(vpa(val_qd1));
+
+% Cr�ation d'un fichier o� on va mettre tout les coef du poly
+% caract�ristique et la bonne valeur de qd1
+fid = fopen('Data/gains_balance.txt','w');
+fprintf(fid,'qd1 = %s\n \n',radtodeg(vpa(val_qd1)));
+for i = 2:5
+    fprintf(fid,'%s\n \n',polynome(i));
 end
+fclose(fid);

@@ -135,7 +135,7 @@ def maj_param():
     qd2 = vals_qd2[it]
     send_val_qd2(qd2)
     calcul_gains_m()
-    kp, kd, kdd, qd1 = read_file("Data/gains.txt", 0)
+    kp, kd, kdd, qd1 = read_file("Data/gains_balance.txt", 0)
     it += 1
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
@@ -164,7 +164,7 @@ for i in range(len(vals_qd2)):
     else:
         z = integrate.odeint(derivs, state, t, mxstep=5000000)
         y = np.concatenate((y, z))
-    do_plot(tab[0], tab[1], tab[2], qd1, vals_qd2[i])
+    do_plot(tab[0], tab[1], tab[2], qd1, vals_qd2[i], 'balance')
     tab = [[], [], []]
 
 
