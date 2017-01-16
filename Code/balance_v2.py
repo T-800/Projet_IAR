@@ -56,7 +56,7 @@ for i in range(len(vals_qd2)):
     t += [np.arange(0.0 + i * 10, 10*(i+1), dt)]
 """
 
-
+ks = -100
 
 
 def torque(state, t):
@@ -80,7 +80,7 @@ def torque(state, t):
     dL = - g * (m1 * x1 + m2 * x2)
     ddL = - g * (m1 * dx1 + m2 * dx2)
 
-    tau = kdd * ddL + kd * dL + kp * Moment + ks(qd2 - q2) + taug
+    tau = kdd * ddL + kd * dL + kp * Moment + ks * (qd2 - q2) + taug
     tq = tau
 
     return tq
@@ -134,8 +134,12 @@ def maj_param():
         th2 = math.degrees(qd2)
     qd2 = vals_qd2[it]
     send_val_qd2(qd2)
-    calcul_gains_m()
-    kp, kd, kdd, kd, ks, qd1 = read_file_2("Data/gains_v2.txt", 0)
+    calcul_gains_v2_m()
+    c1 = m1 * lc1 ** 2 + m2 * l1 ** 2 + I1
+    c2 = m2 * lc2 ** 2 + I2
+    c3 = m2 * l1 * lc2
+    a = c1 * c2 - (c3 * cos(qd2))**2
+    kp, kd, kdd, qd1 = read_file("Data/gains_v2.txt", 2, a=a, ks=ks)
     it += 1
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)
