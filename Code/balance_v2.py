@@ -71,7 +71,7 @@ def torque(state, t):
     dx1 = - dq1 * lc1 * sin(q1)
     dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
 
-    taud = m2 * lc2 * g * cos(qd1 + qd2)
+    taug = m2 * lc2 * g * cos(q1 + q2)
 
     Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * dq1 + (
                                                                                                                 m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(
@@ -80,7 +80,7 @@ def torque(state, t):
     dL = - g * (m1 * x1 + m2 * x2)
     ddL = - g * (m1 * dx1 + m2 * dx2)
 
-    tau = kdd * ddL + kd * dL + kp * Moment + taud
+    tau = kdd * ddL + kd * dL + kp * Moment + ks(qd2 - q2) + taug
     tq = tau
 
     return tq
@@ -135,7 +135,7 @@ def maj_param():
     qd2 = vals_qd2[it]
     send_val_qd2(qd2)
     calcul_gains_m()
-    kp, kd, kdd, qd1 = read_file("Data/test2.txt", 0)
+    kp, kd, kdd, kd, ks, qd1 = read_file_2("Data/gains_v2.txt", 0)
     it += 1
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)

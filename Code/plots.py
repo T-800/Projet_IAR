@@ -11,15 +11,11 @@ def do_plot(q1, q2, t, qd1, qd2):
 	ax2.grid()
 	ax2.set_xlabel('Temps (sec)')
 	ax2.set_ylabel('Angle (rad)')
-<<<<<<< HEAD
-	ax2.plot(t, q1, 'g-', label="q1 - pi/2")
-=======
 	ax2.plot(t, q1, 'g-', label="q1 - π/2")
->>>>>>> 450cf1a13fe0427b0023bb1d715aba3653cddf0c
 	ax2.plot(t, q2, 'r-', label="q2")
 	#plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
 	ax2.legend(loc="upper right")
-	plt.savefig('Data/plots/plot_'+str(s2)+'.png', bbox_inches='tight')
+	#plt.savefig('Data/plots/plot_'+str(s2)+'.png', bbox_inches='tight')
 	plt.close(fig2)
 
 

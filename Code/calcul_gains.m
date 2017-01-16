@@ -16,8 +16,8 @@ lc2 = 0.75;
 m1 = 7;
 m2 = 7;
 
-I1 = 1/12 * m1 * l1^2
-I2 = 1/12 * m2 * l2^2
+I1 = 1/12 * m1 * l1^2;
+I2 = 1/12 * m2 * l2^2;
 
 % On d�clare les gains et les variables d'angles comme �tants des symboles de
 % variables r�elles
@@ -112,7 +112,7 @@ polynome = charpoly(A);
 
 % Cr�ation d'un fichier o� on va mettre tout les coef du poly
 % caract�ristique et la bonne valeur de qd1
-fid = fopen('Data/test2.txt','w');
+fid = fopen('Data/gains.txt','w');
 fprintf(fid,'qd1 = %s\n \n',radtodeg(vpa(val_qd1)));
 for i = 2:5
     fprintf(fid,'%s\n \n',polynome(i));
