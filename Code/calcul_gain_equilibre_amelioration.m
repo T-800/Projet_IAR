@@ -21,7 +21,7 @@ I2 = 1/12 * m2 * l2^2;
 
 % On d�clare les gains et les variables d'angles comme �tants des symboles de
 % variables r�elles
-syms q1 q2 qd1 qd2 dotq1 dotq2 ddotq1 ddotq2 kdd kd kp real
+syms q1 q2 qd1 qd2 dotq1 dotq2 ddotq1 ddotq2 kdd kd kp ks real
 
 % Calcul des variables de position et de leurs premi�res d�riv�es par rapport au
 % temps
@@ -44,10 +44,10 @@ dotL = - g * ( m1*x1 + m2*x2 );
 ddotL = - g * ( m1*dotx1 + m2*dotx2 );
 
 % Valeurs du couple pour la configuration but
-taud = m2*lc2*g*cos(qd1 + qd2);
+taug = m2*lc2*g*cos(q1 + q2);
 
 % Formule de la loi de contr�le
-tau = kdd*ddotL + kd*dotL  + kp*L + taud;
+tau = kdd*ddotL + kd*dotL  + kp*L + ks*(qd2 - q2) + taug;
 
 % Variables li�es au �quations du mouvement
 d11 = m1*lc1^2 + m2*(l1^2 + lc2^2 + 2*l1*lc2*cos(q2)) + I1 + I2;
@@ -112,9 +112,10 @@ polynome = charpoly(A);
 
 % Cr�ation d'un fichier o� on va mettre tout les coef du poly
 % caract�ristique et la bonne valeur de qd1
-fid = fopen('Data/gains_balance.txt','w');
+fid = fopen('Data/gains_equilibre_amelioration.txt','w');
 fprintf(fid,'qd1 = %s\n \n',radtodeg(vpa(val_qd1)));
 for i = 2:5
     fprintf(fid,'%s\n \n',polynome(i));
+    polynome(i)
 end
 fclose(fid);
