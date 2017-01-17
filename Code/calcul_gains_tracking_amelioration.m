@@ -61,8 +61,8 @@ Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2;
 taug = m2*lc2*g*cos(q1 + q2);
 
 % Formule de la loi de controle
-%tau = kdd*ddotL + kd*dotL  + kp*(L - 0) + taud;
-tau = kdd*ddotL + kd*dotL  + kp*(L - 0) + ks*(qd2 - q2) + taug;
+%tau = kdd*ddotL + kd*dotL  + kp*(L - Ld) + taud;
+tau = kdd*ddotL + kd*dotL  + kp*(L - Ld) + ks*(qd2 - q2) + taug;
 
 % Variables liees aux equations du mouvement
 d11 = m1*lc1^2 + m2*(l1^2 + lc2^2 + 2*l1*lc2*cos(q2)) + I1 + I2;
