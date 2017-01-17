@@ -116,6 +116,5 @@ fid = fopen('Data/gains_equilibre_amelioration.txt','w');
 fprintf(fid,'qd1 = %s\n \n',radtodeg(vpa(val_qd1)));
 for i = 2:5
     fprintf(fid,'%s\n \n',polynome(i));
-    polynome(i)
 end
 fclose(fid);

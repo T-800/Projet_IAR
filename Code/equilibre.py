@@ -13,8 +13,6 @@ import os
 import matlab.engine
 import numpy as np
 
-from plots import *
-from readfile import *
 
 tab = [[], [], []]
 
@@ -136,6 +134,7 @@ def maj_param():
     send_val_qd2(qd2)
     calcul_gains_m()
     kp, kd, kdd, qd1 = read_file("Data/gains_equilibre.txt", 0)
+    print("------------------------------------    " + str(qd1-pi/2))
     it += 1
 # th1 et th2 sont les angles initiaux (degres)
 # dth1 et dth2 sont leurs derivees respectives (les vitesses angulaires, en degres/s)

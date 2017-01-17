@@ -142,6 +142,7 @@ def torque(state, t):
     x2 = l1 * cos(q1) + lc2 * cos(q1 + q2)
     dx1 = - dq1 * lc1 * sin(q1)
     dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
+
     taud = m2 * lc2 * g * cos(qd1 + qd2)
 
     Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
@@ -255,11 +256,11 @@ def animate(i):
     trace = 50
     thisx = [0, x1[i], x2[i]]
     thisy = [0, y1[i], y2[i]]
-    #line3.set_data(x2[max(0, i-trace):i], y2[max(0, i-trace):i])
+    line3.set_data(x2[max(0, i-trace):i], y2[max(0, i-trace):i])
     #line3.set_data(x2[:i], y2[:i])
     line1.set_data(thisx, thisy)
     time_text.set_text(time_template % (i * dt))
-    return line1, time_text
+    return line1, line3, time_text
 
 
 ani = animation.FuncAnimation(fig, animate, frames=len(y),
