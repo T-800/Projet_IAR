@@ -24,8 +24,20 @@ def read_file(file, mode, ks=1):
 			else:
 				t += [l]
 		return g
-	else:
+	elif mode == 3:
 		return getGains2(lines, ks)
+	else :
+		t = []
+		g = []
+		for l in lines:
+
+			if l == "":
+				tu = getGains2(t, ks)
+				g += [tu]
+				t = []
+			else:
+				t += [l]
+		return g
 
 
 def getGains(lines):
@@ -159,12 +171,14 @@ def getGains2(lines, kss):
 		lines[i] = lines[i].replace(' - + ', ' - ')  # on remplace les 0- par -
 		lines[i] = lines[i].replace(' - ', ' -')  # on remplace les 0- par -
 		lines[i] = lines[i].replace(' + ', ' +')  # on remplace les 0- par -
+		lines[i] = lines[i].replace('  ', ' ')  # on remplace les 0- par -
 		lines[i] = lines[i].lstrip(' ')
 		lines[i] = lines[i].rstrip(' ')
 		print("apres :", lines[i])
 
 	# print('qd1 : ', qd1)
 	ligne0 = lines[0].split(' ')
+	ligne0 = list(filter(None, ligne0))
 	for l in ligne0:
 		if 'kx' in l:
 			gK = eval(l)
@@ -172,8 +186,11 @@ def getGains2(lines, kss):
 			print("Error in lambda^3")
 
 	ligne0 = lines[1].split(' ')
+	ligne0 = list(filter(None, ligne0))
 	for l in ligne0:
-		if 'kd' in l:
+		if l == "":
+			print("1 : ", l)
+		elif 'kd' in l:
 			pass
 			t = eval(l)
 			if t != gK:
@@ -185,15 +202,18 @@ def getGains2(lines, kss):
 		#elif l != '':
 		#	alpha = -eval(l)
 		else :
+			print(l)
 			beta = eval(l)
 
 	ligne0 = lines[2]
+	#ligne0 = list(filter(None, ligne0))
 	if 'kp' in ligne0:
 		t = eval(ligne0)
 		if t != gK:
 			print("gK !=  dans lambda^3 et Lambda^2 ")
 
 	ligne0 = lines[3]
+	#ligne0 = list(filter(None, ligne0))
 	if 'ks' in ligne0:
 		s = ligne0.split('*')[0]
 		print(s)
@@ -205,6 +225,7 @@ def getGains2(lines, kss):
 	print("gamma1 : ", gamma1)
 	print("gamma2 : ", gamma2)
 	print("beta : ", beta)
+	print()
 
 	p4 = (gamma2 * kss)#/a
 	print("p4 : ", p4)
@@ -245,4 +266,9 @@ def calcul_gains_m(bool):
 def calcul_gains_tracking_m():
 	print("calcul_gains tracking")
 	eng.calcul_gains_tracking(nargout=0)
+	print("fin")
+
+def calcul_gains_tracking_amelioration_m():
+	print("calcul_gains_tracking_amelioration_m")
+	eng.calcul_gains_tracking_amelioration(nargout=0)
 	print("fin")

@@ -7,6 +7,20 @@ f2 = open("/media/data/Data/git/Projet_IAR/Code/Data/data/equilibre_0.txt")
 f3 = open("/media/data/Data/git/Projet_IAR/Code/Data/data/equilibre_amelioration_-90.txt")
 f4 = open("/media/data/Data/git/Projet_IAR/Code/Data/data/equilibre_-90.txt")
 
+f5 = open("/media/data/Data/git/Projet_IAR/Code/Data/data/traking_ameliore.txt")
+f6 = open("/media/data/Data/git/Projet_IAR/Code/Data/data/traking.txt")
+
+
+trAcmd = eval(f5.readline())
+trAq2 = eval(f5.readline())
+trAt = eval(f5.readline())
+
+trcmd = eval(f6.readline())
+trq2 = eval(f6.readline())
+trt = eval(f6.readline())
+
+
+
 q1A0 = eval(f1.readline())
 q2A0 = eval(f1.readline())
 tA0 = eval(f1.readline())
@@ -65,3 +79,21 @@ plt.legend(handles=[old, new])
 plt.savefig('plot90.png', bbox_inches='tight')
 plt.close(fig2)
 plt.show()
+
+fig2 = plt.figure()
+fig2.suptitle('Suivi de trajectoire', fontsize=14, fontweight='bold')
+ax2 = fig2.add_subplot(111, xlim=(0, 40))
+#s2 = 'th2 = '+str(int(math.degrees(q2[0])))+' qd2 = '+str(int(math.degrees(qd2)))
+#ax2.set_title(s2)
+ax2.grid()
+ax2.set_xlabel('Temps (sec)')
+ax2.set_ylabel('q2 (rad)')
+
+
+ax2.plot(trAt, trAq2, 'r-', label="new")
+ax2.plot(trt, trq2, 'c-', label="old")
+ax2.plot(trt, trcmd, 'k--', label="cm")
+ax2.legend(loc="upper right")
+plt.savefig('traking20.png', bbox_inches='tight')
+plt.show()
+plt.close(fig2)
