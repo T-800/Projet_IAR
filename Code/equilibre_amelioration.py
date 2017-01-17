@@ -168,7 +168,7 @@ for i in range(len(vals_qd2)):
     else:
         z = integrate.odeint(derivs, state, t, mxstep=5000000)
         y = np.concatenate((y, z))
-    do_plot(tab[0], tab[1], tab[2], qd1, vals_qd2[i], 'quilibre_amelioration')
+    do_plot(tab[0], tab[1], tab[2], qd1, vals_qd2[i], 'equilibre_amelioration')
     tab = [[], [], []]
 
 
