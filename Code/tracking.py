@@ -156,6 +156,7 @@ def get_dotqd1(t, dotqd2, qd1, qd2):
 		else:
 			return lastdotqd1
 	if t < 20:
+		lastdotqd1 = 0
 		return 0
 
 	if last_time_dotqd1 + 0.1 > t:
