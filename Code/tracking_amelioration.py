@@ -13,7 +13,6 @@ start = time.time()
 
 tab = [[], [], []]
 
-
 g = 9.81  # gravite (m/s^2)
 
 # longueur des segments (m)
@@ -42,27 +41,23 @@ T = 1.3 * (l1 + l2)
 def read_gains():
 	global gains
 	gains = read_file("Data/gains_tracking_amelioration.txt", 3, ks)
-
 	x = Symbol('x', real=True)
 	c4 = m1 * lc1 + m2 * l1
 	c5 = m2 * lc2
-
 	v = solve(c4 * sp.cos(x) + c5 * (sp.cos(x) * math.cos(1.55) + sp.sin(x) * math.sin(1.55)), x)
-	if v[0] > 0:
+	if v[0] >= 0:
 		v = v[0]
 	else:
 		v = v[1]
 	qd1s[0] = v
-
 	v = solve(c4 * sp.cos(x) + c5 * sp.cos(x), x)
-	if v[0] > 0:
+	if v[0] >= 0:
 		v = v[0]
 	else:
 		v = v[1]
 	qd1s[1] = v
-
 	v = solve(c4 * sp.cos(x) + c5 * (sp.cos(x) * math.cos(1.25) + sp.sin(x) * math.sin(1.25)), x)
-	if v[0] > 0:
+	if v[0] >= 0:
 		v = v[0]
 	else:
 		v = v[1]
@@ -72,47 +67,38 @@ def read_gains():
 def get_qd2(t):
 	if t < 5:
 		return -1.55
-
 	if t < 10:
 		return 0
-
 	if t < 15:
 		return -0.25 * t + 2.5
-
 	if t < 20:
 		return -1.25
-
 	return (0.25 * sin(t * 0.7 + 21)) - 1.25
 
 
 def get_gains(t):
 	global qd1
-
 	c4 = m1 * lc1 + m2 * l1
 	c5 = m2 * lc2
 	if t < 5:
 		return gains[0][0], gains[0][1], gains[0][2], qd1s[0]
-
 	if t < 10:
 		return gains[1][0], gains[1][1], gains[1][2], qd1s[1]
-
 	if t < 15:
 		qd1 = Symbol('qd1', real=True)
 		x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1) * cos(-0.25 * t + 2.5) -
 		                                   sp.sin(qd1) * sin(-0.25 * t + 2.5)), qd1)
-		if x[0] > 0:
+		if x[0] >= 0:
 			x = x[0]
 		else:
 			x = x[1]
 		return gains[2][0], gains[2][1], gains[2][2], x
-
 	if t < 20:
 		return gains[2][0], gains[2][1], gains[2][2], qd1s[3]
-
 	qd1 = Symbol('qd1', real=True)
 	x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1) * cos(0.25 * sin(t * 0.7 + 21) - 1.25) -
 	                                   sp.sin(qd1) * sin(0.25 * sin(t * 0.7 + 21) - 1.25)), qd1)
-	if x[0] > 0:
+	if x[0] >= 0:
 		x = x[0]
 	else:
 		x = x[1]
@@ -129,6 +115,24 @@ def get_dotqd2(t):
 	return (0.25 * 0.7 * cos(0.7 * t + 21))
 
 
+def get_dotqd1(t, dotqd2, qd1, qd2):
+	if t < 10:
+		return 0
+	if t < 15:
+		val = Symbol('dotqd1', real=True)
+		dotX = - val * c4 * sp.sin(qd1) - (val + dotqd2) * c5 * np.sin(qd1 + qd2)
+		x = solve(dotX, val)
+		val = float(x[0])
+		return val
+	if t < 20:
+		return 0
+	val = Symbol('dotqd1', real=True)
+	dotX = - val * c4 * sp.sin(qd1) - (val + dotqd2) * c5 * np.sin(qd1 + qd2)
+	x = solve(dotX, val)
+	val = float(x[0])
+	return val
+
+
 def torque(state, t):
 	qd2 = get_qd2(t)
 	kp, kd, kdd, qd1 = get_gains(t)
@@ -142,7 +146,6 @@ def torque(state, t):
 	dx1 = - dq1 * lc1 * sin(q1)
 	dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
 
-	# taud = m2 * lc2 * g * cos(qd1 + qd2)
 	taug = m2 * lc2 * g * cos(q1 + q2)
 
 	L = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
@@ -155,15 +158,11 @@ def torque(state, t):
 	c4 = m1 * lc1 + m2 * l1
 	c5 = m2 * lc2
 
-	dotqd1 = Symbol('dotqd1', real=True)
 	dotqd2 = get_dotqd2(t)
+	dotqd1 = get_dotqd1(t, dotqd2, qd1, qd2)
 
-	dotX = (m1 / (m1 + m2)) * (- dotqd1 * lc1 * sp.sin(qd1)) + \
-	       (m2 / (m1 + m2)) * (- dotqd1 * l1 * sp.sin(qd1) - (dotqd1 + dotqd2) * lc2 * np.sin(qd1 + qd2))
+	print("t ", t)
 
-	x = solve(dotX, dotqd1)
-	# print("t", t, "dotqd1", x)
-	dotqd1 = float(x[0])
 	Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2
 
 	dL = - g * (m1 * x1 + m2 * x2)
@@ -177,21 +176,6 @@ def torque(state, t):
 
 def derivs(state, t):
 	global _last_time, tab, dt
-	print(t)
-	if int(t) == 5:
-		print(5)
-	if int(t) == 10:
-		print(10)
-	if int(t) == 15:
-		print(15)
-	if int(t) == 20:
-		print(20)
-	if int(t) == 25:
-		print(25)
-	if int(t) == 30:
-		print(30)
-	if int(t) == 35:
-		print(35)
 
 	d = np.zeros_like(state)
 	q1 = state[0]
@@ -282,6 +266,6 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 
 # ani.save('test.mp4', fps=15)
 plt.axis('equal')
-plt.axis([-L, L, -L, L])
+plt.axis([-T, T, -T, T])
 plt.show()
 do_plot_tracking(tab[0], tab[1], tab[2], "traking_ameliore")

@@ -4,7 +4,6 @@ l1 = 0.5;
 l2 = 0.75;
 lc1 = 0.5;
 lc2 = 0.75;
-
 m1 = 7;
 m2 = 7;
 
@@ -14,7 +13,6 @@ I2 = 1/12 * m2 * l2^2;
 % On declare les gains et les variables d'angles comme etants des symboles de
 % variables reelles
 syms q1 q2 qd1 qd2 dotq1 dotq2 ddotq1 ddotq2 kdd kd kp dotqd1 dotqd2 ks real
-
 
 % Recupere une valeur pour qd2 qui est dans un fichier
 % Servira quant on pourra tout lancer a partir de python
@@ -48,7 +46,7 @@ ddotL = - g * ( m1*dotx1 + m2*dotx2 );
 
 % Moment cinetique a la position desiree
 
-Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2;
+%Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2;
 
 % Valeurs du couple pour la configuration but
 %taud = m2*lc2*g*cos(qd1 + qd2);
@@ -56,7 +54,7 @@ taug = m2*lc2*g*cos(q1 + q2);
 
 % Formule de la loi de controle
 %tau = kdd*ddotL + kd*dotL  + kp*(L - Ld) + taud;
-tau = kdd*ddotL + kd*dotL  + kp*(L - Ld) + ks*(qd2 - q2) + taug;
+tau = kdd*ddotL + kd*dotL  + kp*L + ks*(qd2 - q2) + taug;
 
 % Variables liees aux equations du mouvement
 d11 = m1*lc1^2 + m2*(l1^2 + lc2^2 + 2*l1*lc2*cos(q2)) + I1 + I2;
@@ -70,7 +68,7 @@ phi1 = (m1*lc1+m2*l1)*g*cos(q1)+m2*lc2*g*cos(q1+q2);
 phi2 = m2*lc2*g*cos(q1+q2);
 
 % Calcul de la fonction h
-dotqd2s = [0 0 -0.25 0 0];
+dotqd2s = [0 0 -0.25 0];
 
 M = [[0 0 d11 d12]
     [0 0 d21 d22]
@@ -134,7 +132,6 @@ for i=1:4
     polynome = charpoly(Mat);
 
     for j = 2:5
-
         fprintf(fid,'%s \n',char(polynome(j)));
     end
     fprintf(fid, '\n');
