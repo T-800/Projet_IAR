@@ -35,7 +35,7 @@ def do_plot_tracking(cmd, q2, t, name):
 	ax2.set_xlabel('Temps (sec)')
 	ax2.set_ylabel('q2 (rad)')
 	ax2.plot(t, cmd, 'k--', label="commande")
-	ax2.plot(t, q2, 'r-', label="output")
+	ax2.plot(t, q2, 'c-', label="output")
 	ax2.legend(loc="upper right")
 	fic_vals = open("Data/data/" + name + ".txt", "w")
 	fic_vals.write(str(cmd) + '\n')

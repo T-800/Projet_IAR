@@ -143,7 +143,7 @@ def get_dotqd1(t, dotqd2, qd1, qd2):
 	if t < 10:
 		return 0
 	if t < 15:
-		if last_time_dotqd1 + 0.1 > t:
+		if last_time_dotqd1 + 0.001 < t:
 			val = Symbol('dotqd1', real=True)
 			print("dot qd2     = " + str(dotqd2))
 			dotX = - val * c4 * sp.sin(qd1) - (val + dotqd2) * c5 * np.sin(qd1 + qd2)
@@ -159,7 +159,7 @@ def get_dotqd1(t, dotqd2, qd1, qd2):
 		lastdotqd1 = 0
 		return 0
 
-	if last_time_dotqd1 + 0.1 > t:
+	if last_time_dotqd1 + 0.001 < t:
 
 		val = Symbol('dotqd1', real=True)
 		print("dot qd2     = " + str(dotqd2))
