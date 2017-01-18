@@ -115,18 +115,19 @@ for i=1:4
     val_dotqd1 = solve(f==0, dotqd1, 'Real', true);
 
     if val_dotqd1(1) >= 0
-        Mat = subs(A, [dotqd1 dotqd2], [val_dotqd1(1) vals_dotqd2(i)]);
+        Mat = subs(A, [dotqd1 dotqd2], [val_dotqd(1) vals_dotqd2(i)]);
     else
         Mat = subs(A, [dotqd1 dotqd2], [val_dotqd1(2) vals_dotqd2(i)]);
     end
 
-    Mat = subs(Mat, [qd1 qd2], [vals_qd1(i) vals_qd2(i)]);
+    Mat = subs(Mat, [qd1 qd2], [vals_qd1(i) vals_qd1(i)]);
     Mat = vpa(Mat);
 
     % Calcul du polynome caracteristique
     polynome = charpoly(Mat);
 
     for j = 2:5
+        
         fprintf(fid,'%s \n',char(polynome(j)));
     end
     fprintf(fid, '\n');
