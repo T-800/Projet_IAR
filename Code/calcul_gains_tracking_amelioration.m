@@ -1,15 +1,9 @@
 % Calcul des constantes
 g = 9.81;
-%l1 = 1.15;
 l1 = 0.5;
-%l2 = 2.25;
 l2 = 0.75;
-%lc1 = l1/2;
-%lc2 = l2/2;
 lc1 = 0.5;
 lc2 = 0.75;
-%m1 = 0.4;
-%m2 = 0.9;
 
 m1 = 7;
 m2 = 7;
@@ -130,7 +124,7 @@ for i=1:4
     if dotqd1S(1) >= 0
         Mat = subs(A, [dotqd1 dotqd2], [dotqd1S(1) dotqd2S]);
     else
-        mat = subs(A, [dotqd1 dotqd2], [dotqd1S(2) dotqd2S]);
+        Mat = subs(A, [dotqd1 dotqd2], [dotqd1S(2) dotqd2S]);
     end
 
     Mat = subs(Mat, [qd1 qd2], [vals_qd1(i) vals_qd1(i)]);

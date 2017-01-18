@@ -46,13 +46,13 @@ dotL = - g * ( m1*x1 + m2*x2 );
 ddotL = - g * ( m1*dotx1 + m2*dotx2 );
 
 % Moment cinetique a la position desiree
-Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2;
+%Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2;
 
 % Valeurs du couple pour la configuration but
 taud = m2*lc2*g*cos(qd1 + qd2);
 
 % Formule de la loi de controle
-tau = kdd*ddotL + kd*dotL  + kp*(L - 0) + taud;
+tau = kdd*ddotL + kd*dotL  + kp*L + taud;
 
 % Variables liees aux equations du mouvement
 d11 = m1*lc1^2 + m2*(l1^2 + lc2^2 + 2*l1*lc2*cos(q2)) + I1 + I2;

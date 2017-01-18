@@ -13,25 +13,21 @@ start = time.time()
 
 tab = [[], [], []]
 
-# it = 0
-# vals_qd2 = [-pi / 2, pi / 3, -pi / 6, 0, pi / 2, -pi / 3, pi / 6]
 
 g = 9.81  # gravite (m/s^2)
-# l1 = 1.15  # longueur des segments (m)
+
+# longueur des segments (m)
 l1 = 0.5
-# l2 = 2.25
 l2 = 0.75
-L = 1.3 * (l1 + l2)
-# lc1 = l1 / 2.0
 lc1 = 0.5
-# lc2 = l2 / 2.0
 lc2 = 0.75
-# m1 = 0.4  # masse des segments (kg)
-# m2 = 0.9
+
+# masse des segments (kg)
 m1 = 7
 m2 = 7
 
-I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie (kg.m^2)
+# Moment d'inertie, par rapport au centre des "tiges" (kg.m^2)
+I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie
 I2 = 1 / 12.0 * m2 * l2 ** 2
 
 dt = 30e-3
@@ -41,6 +37,7 @@ qd1s = [0] * 4
 
 ks = -20
 
+T = 1.3 * (l1 + l2)
 
 def read_gains():
 	global gains
@@ -148,7 +145,7 @@ def torque(state, t):
 	# taud = m2 * lc2 * g * cos(qd1 + qd2)
 	taug = m2 * lc2 * g * cos(q1 + q2)
 
-	Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
+	L = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
 	         dq1 + (m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
 
 	c = m1 + m2
@@ -172,8 +169,7 @@ def torque(state, t):
 	dL = - g * (m1 * x1 + m2 * x2)
 	ddL = - g * (m1 * dx1 + m2 * dx2)
 
-	tau = kdd * ddL + kd * dL + kp * (Moment - Ld) + ks * (qd2 - q2) + taug
-	# tau = kdd * ddL + kd * dL + kp * (Moment - Ld) + taud
+	tau = kdd * ddL + kd * dL + kp * (L - Ld) + ks * (qd2 - q2) + taug
 	tq = tau
 
 	return tq

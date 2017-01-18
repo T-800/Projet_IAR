@@ -1,18 +1,9 @@
-% Valeurs de qd2 � modifier
-%val_qd2 = -pi/2;
 % Calcul des constantes
 g = 9.81;
-%l1 = 1.15;
 l1 = 0.5;
-%l2 = 2.25;
 l2 = 0.75;
-%lc1 = l1/2;
-%lc2 = l2/2;
 lc1 = 0.5;
 lc2 = 0.75;
-%m1 = 0.4;
-%m2 = 0.9;
-
 m1 = 7;
 m2 = 7;
 
