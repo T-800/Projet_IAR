@@ -165,7 +165,7 @@ if __name__ == '__main__':
 			z = integrate.odeint(derivs, state, t, mxstep=5000000)
 			y = np.concatenate((y, z))
 
-		do_plot(tab[0], tab[1], tab[2], qd1, vals_qd2[i], name)
+		#do_plot(tab[0], tab[1], tab[2], qd1, vals_qd2[i], name)
 
 
 
@@ -195,4 +195,4 @@ if __name__ == '__main__':
 	plt.axis('equal')
 	plt.axis([-T, T, -T, T])
 	plt.show()
-	ani.save("Data/video/" + name + '.mp4', fps=30)
+	#ani.save("Data/video/" + name + '.mp4', fps=30)

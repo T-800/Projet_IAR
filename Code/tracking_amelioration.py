@@ -268,4 +268,4 @@ ani = animation.FuncAnimation(fig, animate, frames=len(y),
 plt.axis('equal')
 plt.axis([-T, T, -T, T])
 plt.show()
-do_plot_tracking(tab[0], tab[1], tab[2], "traking_ameliore")
+#do_plot_tracking(tab[0], tab[1], tab[2], "traking_ameliore")
