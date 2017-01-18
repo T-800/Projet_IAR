@@ -41,7 +41,6 @@ ks = -50
 
 def torque(state, t):
 	global I1, I2
-	print(t)
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
@@ -124,7 +123,6 @@ def maj_param(it):
 		kp, kd, kdd, qd1 = read_file("Data/gains_equilibre.txt", 0)
 
 
-	print("------------------------------------    " + str(qd1 - pi / 2))
 
 
 def init():
@@ -158,7 +156,6 @@ if __name__ == '__main__':
 	dth2 = 0.0
 
 	for i in range(len(vals_qd2)):
-		#print("itération :", i)
 		t = np.arange(0.0, 10, dt)
 		maj_param(i)
 		state = np.array([th1, dth1, th2, dth2]) * pi / 180.

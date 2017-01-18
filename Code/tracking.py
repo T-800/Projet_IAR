@@ -135,43 +135,24 @@ def get_dotqd2(t):
 		return 0
 	return (0.25 * 0.7 * cos(0.7 * t + 21))
 
-lastdotqd1 = 0
-last_time_dotqd1 = 0
 
 def get_dotqd1(t, dotqd2, qd1, qd2):
-	global lastdotqd1, last_time_dotqd1
 	if t < 10:
 		return 0
 	if t < 15:
-		if last_time_dotqd1 + 0.001 < t:
-			val = Symbol('dotqd1', real=True)
-			print("dot qd2     = " + str(dotqd2))
-			dotX = - val * c4 * sp.sin(qd1) - (val + dotqd2) * c5 * np.sin(qd1 + qd2)
-			x = solve(dotX, val)
-			print("t", t, "dotqd1", x)
-			val = float(x[0])
-			lastdotqd1 = val
-			last_time_dotqd1 = t
-			return val
-		else:
-			return lastdotqd1
-	if t < 20:
-		lastdotqd1 = 0
-		return 0
-
-	if last_time_dotqd1 + 0.001 < t:
-
 		val = Symbol('dotqd1', real=True)
-		print("dot qd2     = " + str(dotqd2))
 		dotX = - val * c4 * sp.sin(qd1) - (val + dotqd2) * c5 * np.sin(qd1 + qd2)
 		x = solve(dotX, val)
-		print("t", t, "dotqd1", x)
 		val = float(x[0])
-		lastdotqd1 = val
-		last_time_dotqd1 = t
 		return val
-	else:
-		return lastdotqd1
+	if t < 20:
+		return 0
+
+	val = Symbol('dotqd1', real=True)
+	dotX = - val * c4 * sp.sin(qd1) - (val + dotqd2) * c5 * np.sin(qd1 + qd2)
+	x = solve(dotX, val)
+	val = float(x[0])
+	return val
 
 def torque(state, t):
 	qd2 = get_qd2(t)
@@ -207,21 +188,6 @@ def torque(state, t):
 
 def derivs(state, t):
 	global _last_time, tab, dt
-	#print(t)
-	if int(t) == 5:
-		print(5)
-	if int(t) == 10:
-		print(10)
-	if int(t) == 15:
-		print(15)
-	if int(t) == 20:
-		print(20)
-	if int(t) == 25:
-		print(25)
-	if int(t) == 30:
-		print(30)
-	if int(t) == 35:
-		print(35)
 
 	d = np.zeros_like(state)
 	q1 = state[0]

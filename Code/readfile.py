@@ -19,7 +19,6 @@ def read_file(file, mode, ks=1):
 		for l in lines:
 
 			if l == "":
-				print('----------------------gains')
 				tu = getGains(t)
 				g += [tu]
 				t = []
@@ -34,7 +33,6 @@ def read_file(file, mode, ks=1):
 		for l in lines:
 
 			if l == "":
-				print('----------------------gains')
 				tu = getGains2(t, ks)
 				g += [tu]
 				t = []
@@ -56,7 +54,6 @@ def getGains(lines):
 		ligne0 = lines[0].replace(' ', '')
 		ligne0 = ligne0.split('qd1=')
 		qd1 = math.radians(float(ligne0[-1]))
-		print("qd", qd1)
 		lines = lines[1:]
 	for i in range(len(lines[:])):
 		lines[i] = lines[i].split(' ')
@@ -71,7 +68,6 @@ def getGains(lines):
 		for exp in lines[i]:
 			tmp = tmp + " " + exp
 		tmp += " "
-		# print("avant :", tmp)
 		lines[i] = tmp.replace(' + 0 ', ' ')  # on retire les -0
 		lines[i] = lines[i].replace('- 0 ', ' ')  # les +0
 		lines[i] = lines[i].replace(' 0 -', ' -')  # on remplace les 0- par -
@@ -84,9 +80,8 @@ def getGains(lines):
 		lines[i] = lines[i].replace('  ', ' ')  # on remplace les 0- par -
 		lines[i] = lines[i].lstrip(' ')
 		lines[i] = lines[i].rstrip(' ')
-		print("L^", 3 - i, " ;", lines[i])
+		#print("L^", 3 - i, " ;", lines[i])
 
-	# print('qd1 : ', qd1)
 	ligne0 = lines[0].split(' ')
 	for l in ligne0:
 		if 'kx' in l:
@@ -130,8 +125,6 @@ def getGains(lines):
 	print("alpha : ", alpha)
 	'''
 	p = a ** (1 / 4)
-	# print("p : ", p)
-
 
 	kp = (4 * p ** 3) / b4
 	kd = (6 * p ** 2 + alpha) / b3
@@ -160,14 +153,12 @@ def getGains2(lines, kss):
 		ligne0 = lines[0].replace(' ', '')
 		ligne0 = ligne0.split('qd1=')
 		qd1 = math.radians(float(ligne0[-1]))
-		print("qd", ligne0)
 		lines = lines[1:]
 	for i in range(len(lines[:])):
 		lines[i] = lines[i].split(' ')
 		for j in range(len(lines[i])):
 			lines[i][j] = lines[i][j].replace('^', '**')
 			lines[i][j] = lines[i][j].replace('kdd', 'kx')  # on remplace pour eviter les erreur entre kd et kdd
-			#print(lines[i][j])
 			try:
 				if lines[i][j] not in '-+' and abs(eval(lines[i][j])) < 0.001:  # si la valeur est trop petite
 					lines[i][j] = '0'
@@ -179,7 +170,6 @@ def getGains2(lines, kss):
 		for exp in lines[i]:
 			tmp = tmp + " " + exp
 		tmp += " "
-		# print("avant :", tmp)
 		lines[i] = tmp.replace(' + 0 ', ' ')  # on retire les -0
 		lines[i] = lines[i].replace('- 0 ', ' ')  # les +0
 		lines[i] = lines[i].replace(' 0 -', ' -')  # on remplace les 0- par -
@@ -191,9 +181,8 @@ def getGains2(lines, kss):
 		lines[i] = lines[i].replace('  ', ' ')  # on remplace les 0- par -
 		lines[i] = lines[i].lstrip(' ')
 		lines[i] = lines[i].rstrip(' ')
-		print("apres :", lines[i])
+		#print("apres :", lines[i])
 
-	# print('qd1 : ', qd1)
 	ligne0 = lines[0].split(' ')
 	ligne0 = list(filter(None, ligne0))
 	for l in ligne0:
@@ -205,9 +194,7 @@ def getGains2(lines, kss):
 	ligne0 = lines[1].split(' ')
 	ligne0 = list(filter(None, ligne0))
 	for l in ligne0:
-		if l == "":
-			print("1 : ", l)
-		elif 'kd' in l:
+		if 'kd' in l:
 			pass
 			t = eval(l)
 			if t != gK:
@@ -219,7 +206,6 @@ def getGains2(lines, kss):
 		#elif l != '':
 		#	alpha = -eval(l)
 		else :
-			print(l)
 			beta = eval(l)
 
 	ligne0 = lines[2]
@@ -233,19 +219,18 @@ def getGains2(lines, kss):
 	#ligne0 = list(filter(None, ligne0))
 	if 'ks' in ligne0:
 		s = ligne0.split('*')[0]
-		print(s)
 		gamma2 = eval(s)
 
 	# qd1 = gK = gamma1 = gamma2 = beta = 0
-	print("qd1 : ", qd1)
+	"""print("qd1 : ", qd1)
 	print("gK : ", gK)
 	print("gamma1 : ", gamma1)
 	print("gamma2 : ", gamma2)
 	print("beta : ", beta)
-	print()
+	print()"""
 
 	p4 = (gamma2 * kss)#/a
-	print("p4 : ", p4)
+	#print("p4 : ", p4)
 	p = p4 ** (1/4)
 	# print("p : ", p)
 
@@ -255,9 +240,9 @@ def getGains2(lines, kss):
 	kx = (4 * p) / gK
 
 
-	print("kp : ", kp)
+	"""print("kp : ", kp)
 	print("kd : ", kd)
-	print("kdd : ", kx)
+	print("kdd : ", kx)"""
 
 	return kp, kd, kx, qd1
 
@@ -281,11 +266,7 @@ def calcul_gains_m(bool):
 
 
 def calcul_gains_tracking_m():
-	print("calcul_gains tracking")
 	eng.calcul_gains_tracking(nargout=0)
-	print("fin")
 
 def calcul_gains_tracking_amelioration_m():
-	print("calcul_gains_tracking_amelioration_m")
 	eng.calcul_gains_tracking_amelioration(nargout=0)
-	print("fin")

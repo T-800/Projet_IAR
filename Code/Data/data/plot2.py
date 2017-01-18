@@ -10,7 +10,7 @@ f4 = open("/media/data/Data/git/Projet_IAR/Code/Data/data/equilibre_-90.txt")
 f5 = open("/media/data/Data/git/Projet_IAR/Code/Data/data/traking_ameliore.txt")
 f6 = open("/media/data/Data/git/Projet_IAR/Code/Data/data/traking.txt")
 
-
+'''
 trAcmd = eval(f5.readline())
 trAq2 = eval(f5.readline())
 trAt = eval(f5.readline())
@@ -18,7 +18,7 @@ trAt = eval(f5.readline())
 trcmd = eval(f6.readline())
 trq2 = eval(f6.readline())
 trt = eval(f6.readline())
-
+'''
 
 
 q1A0 = eval(f1.readline())
@@ -59,7 +59,7 @@ plt.savefig('plot0.png', bbox_inches='tight')
 plt.close(fig2)
 plt.show()
 
-
+'''
 fig2 = plt.figure()
 fig2.suptitle('Variation des angles en fonction du temps.', fontsize=14, fontweight='bold')
 ax2 = fig2.add_subplot(111, xlim=(0, 4))
@@ -97,3 +97,4 @@ ax2.legend(loc="upper right")
 plt.savefig('traking2.png', bbox_inches='tight')
 plt.show()
 plt.close(fig2)
+'''
