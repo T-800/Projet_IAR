@@ -14,7 +14,6 @@ I2 = 1/12 * m2 * l2^2;
 % variables reelles
 syms q1 q2 qd1 qd2 dotq1 dotq2 ddotq1 ddotq2 kdd kd kp dotqd1 dotqd2 real
 
-
 % Recupere des valeurs pour qd2: les valeurs des "point" destination dans
 % chaque phase de la trajectoire
 fid = fopen('Data/vals_qd2_tracking.txt','r');
@@ -53,7 +52,7 @@ Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2;
 taud = m2*lc2*g*cos(qd1 + qd2);
 
 % Formule de la loi de controle
-tau = kdd*ddotL + kd*dotL  + kp*(L - Ld) + taud;
+tau = kdd*ddotL + kd*dotL  + kp*(L - 0) + taud;
 
 % Variables liees aux equations du mouvement
 d11 = m1*lc1^2 + m2*(l1^2 + lc2^2 + 2*l1*lc2*cos(q2)) + I1 + I2;
@@ -115,9 +114,9 @@ for i=1:4
     val_dotqd1 = solve(f==0, dotqd1, 'Real', true);
 
     if val_dotqd1(1) >= 0
-        Mat = subs(A, [dotqd1 dotqd2], [val_dotqd1(1) vals_dotqd2(i)]);
+        Mat = subs(A, [dotqd1 dotqd2], [0 0]);
     else
-        Mat = subs(A, [dotqd1 dotqd2], [val_dotqd1(2) vals_dotqd2(i)]);
+        Mat = subs(A, [dotqd1 dotqd2], [0 0]);
     end
 
     Mat = subs(Mat, [qd1 qd2], [vals_qd1(i) vals_qd2(i)]);

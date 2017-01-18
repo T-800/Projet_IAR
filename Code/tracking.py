@@ -11,34 +11,40 @@ import time
 
 start = time.time()
 
-tab = [[], [], []]
-
-# it = 0
-# vals_qd2 = [-pi / 2, pi / 3, -pi / 6, 0, pi / 2, -pi / 3, pi / 6]
-
+'''  Constantes :  '''
 g = 9.81  # gravite (m/s^2)
-# l1 = 1.15  # longueur des segments (m)
+
+# longueur des segments (m)
 l1 = 0.5
-# l2 = 2.25
 l2 = 0.75
-L = 1.3 * (l1 + l2)
-# lc1 = l1 / 2.0
 lc1 = 0.5
-# lc2 = l2 / 2.0
 lc2 = 0.75
-# m1 = 0.4  # masse des segments (kg)
-# m2 = 0.9
+
+# masse des segments (kg)
 m1 = 7
 m2 = 7
 
-I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie (kg.m^2)
+# Moment d'inertie, par rapport au centre des "tiges" (kg.m^2)
+I1 = 1 / 12.0 * m1 * l1 ** 2  # moments d'inertie
 I2 = 1 / 12.0 * m2 * l2 ** 2
 
-dt = 30e-3
+# Taille de la fenetre
+T = 1.3 * (l1 + l2)
+
+# Sauvegarde de valeurs : q1, q2, t
+tab = [[], [], []]
+
+dt = 31e-3
 t = np.arange(0.0, 40, dt)
 gains = None
 qd1s = [0] * 4
 
+c = m1 + m2
+c1 = m1 * lc1 ** 2 + m2 * l1 ** 2 + I1
+c2 = m2 * lc2 ** 2 + I2
+c3 = m2 * l1 * lc2
+c4 = m1 * lc1 + m2 * l1
+c5 = m2 * lc2
 
 def read_gains():
 	global gains
@@ -49,21 +55,21 @@ def read_gains():
 	c5 = m2 * lc2
 
 	v = solve(c4 * sp.cos(x) + c5 * (sp.cos(x) * math.cos(1.55) + sp.sin(x) * math.sin(1.55)), x)
-	if v[0] > 0:
+	if v[0] >= 0:
 		v = v[0]
 	else:
 		v = v[1]
 	qd1s[0] = v
 
 	v = solve(c4 * sp.cos(x) + c5 * sp.cos(x), x)
-	if v[0] > 0:
+	if v[0] >= 0:
 		v = v[0]
 	else:
 		v = v[1]
 	qd1s[1] = v
 
 	v = solve(c4 * sp.cos(x) + c5 * (sp.cos(x) * math.cos(1.25) + sp.sin(x) * math.sin(1.25)), x)
-	if v[0] > 0:
+	if v[0] >= 0:
 		v = v[0]
 	else:
 		v = v[1]
@@ -100,20 +106,20 @@ def get_gains(t):
 	if t < 15:
 		qd1 = Symbol('qd1', real=True)
 		x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1) * cos(-0.25 * t + 2.5) -
-		                                   sp.sin(qd1) * sin(-0.25 * t + 2.5)), qd1)
-		if x[0] > 0:
+										   sp.sin(qd1) * sin(-0.25 * t + 2.5)), qd1)
+		if x[0] >= 0:
 			x = x[0]
 		else:
 			x = x[1]
 		return gains[2][0], gains[2][1], gains[2][2], x
 
 	if t < 20:
-		return gains[2][0], gains[2][1], gains[2][2], qd1s[3]
+		return gains[3][0], gains[3][1], gains[3][2], qd1s[3]
 
 	qd1 = Symbol('qd1', real=True)
 	x = solve(c4 * sp.cos(qd1) + c5 * (sp.cos(qd1) * cos(0.25 * sin(t * 0.7 + 21) - 1.25) -
-	                                   sp.sin(qd1) * sin(0.25 * sin(t * 0.7 + 21) - 1.25)), qd1)
-	if x[0] > 0:
+									   sp.sin(qd1) * sin(0.25 * sin(t * 0.7 + 21) - 1.25)), qd1)
+	if x[0] >= 0:
 		x = x[0]
 	else:
 		x = x[1]
@@ -129,6 +135,26 @@ def get_dotqd2(t):
 		return 0
 	return (0.25 * 0.7 * cos(0.7 * t + 21))
 
+def get_dotqd1(t, dotqd2, qd1, qd2):
+	if t < 10:
+		return 0
+	if t < 15:
+		val = Symbol('dotqd1', real=True)
+		print("dot qd2     = " + str(dotqd2))
+		dotX = - val * c4 * sp.sin(qd1) - (val + dotqd2) * c5 * np.sin(qd1 + qd2)
+		x = solve(dotX, val)
+		print("t", t, "dotqd1", x)
+		val = float(x[0])
+		return val
+	if t < 20:
+		return 0
+	val = Symbol('dotqd1', real=True)
+	print("dot qd2     = " + str(dotqd2))
+	dotX = - val * c4 * sp.sin(qd1) - (val + dotqd2) * c5 * np.sin(qd1 + qd2)
+	x = solve(dotX, val)
+	print("t", t, "dotqd1", x)
+	val = float(x[0])
+	return val
 
 def torque(state, t):
 	qd2 = get_qd2(t)
@@ -144,34 +170,22 @@ def torque(state, t):
 	dx2 = - dq1 * l1 * sin(q1) - (dq1 + dq2) * lc2 * sin(q1 + q2)
 	taud = m2 * lc2 * g * cos(qd1 + qd2)
 
-	Moment = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
-	         dq1 + (m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
+	L = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * \
+			 dq1 + (m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
 
-	c = m1 + m2
-	c1 = m1 * lc1 ** 2 + m2 * l1 ** 2 + I1
-	c2 = m2 * lc2 ** 2 + I2
-	c3 = m2 * l1 * lc2
-	c4 = m1 * lc1 + m2 * l1
-	c5 = m2 * lc2
 
-	dotqd1 = Symbol('dotqd1', real=True)
 	dotqd2 = get_dotqd2(t)
+	dotqd1 = get_dotqd1(t, dotqd2, qd1, qd2)
 
-	dotX = (m1 / (m1 + m2)) * (- dotqd1 * lc1 * sp.sin(qd1)) + \
-	       (m2 / (m1 + m2)) * (- dotqd1 * l1 * sp.sin(qd1) - (dotqd1 + dotqd2) * lc2 * np.sin(qd1 + qd2))
 
-	x = solve(dotX, dotqd1)
-	# print("t", t, "dotqd1", x)
-	dotqd1 = float(x[0])
 	Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2
 
 	dL = - g * (m1 * x1 + m2 * x2)
 	ddL = - g * (m1 * dx1 + m2 * dx2)
 
-	tau = kdd * ddL + kd * dL + kp * (Moment - Ld) + taud
-	tq = tau
+	tau = kdd * ddL + kd * dL + kp * (L - Ld) + taud
 
-	return tq
+	return tau
 
 
 def derivs(state, t):
@@ -231,7 +245,6 @@ th2 = 0.0
 dth1 = 0.0
 dth2 = 0.0
 
-# etat initial (un vecteur de dimension 4)
 
 calcul_gains_tracking_m()
 read_gains()
@@ -277,10 +290,10 @@ def animate(i):
 
 
 ani = animation.FuncAnimation(fig, animate, frames=len(y),
-                              interval=dt * 1e3, init_func=init)
+							  interval=dt * 1e3, init_func=init)
 
 # ani.save('test.mp4', fps=15)
 plt.axis('equal')
-plt.axis([-L, L, -L, L])
+plt.axis([-T, T, -T, T])
 plt.show()
 do_plot_tracking(tab[0], tab[1], tab[2], "traking")
