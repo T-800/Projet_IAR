@@ -88,9 +88,6 @@ def getGains(lines):
 			b1 = eval(l)
 		elif 'kp' in l:
 			b2 = -eval(l)
-		else :
-			print("\033[93merror l^3 :\033[0m" ,l)
-			# print(l)
 
 	ligne0 = lines[1].split(' ')
 	for l in ligne0:
@@ -98,43 +95,23 @@ def getGains(lines):
 			b3 = eval(l)
 		elif l != '':
 			alpha = -eval(l)
-		else :
-			print("\033[93merror L^2 :\033[0m" ,l)
 
 	ligne0 = lines[2].split(' ')
 	for l in ligne0:
 		if 'kp' in l:
 			b4 = eval(l)
-		else :
-			print("\033[93merror l^1 :\033[0m" ,l)
 
 	ligne0 = lines[3].split(' ')
 	for l in ligne0:
 		if not 'kd' in l and not 'kx' in l and not 'kp' in l :
 			a = eval(l)
 
-		else :
-			print("\033[93merror a :\033[0m" ,l)
-
-	'''
-	print("b1 : ", b1)
-	print("b2 : ", b2)
-	print("b3 : ", b3)
-	print("b4 : ", b4)
-	print("a : ", a)
-	print("alpha : ", alpha)
-	'''
 	p = a ** (1 / 4)
 
 	kp = (4 * p ** 3) / b4
 	kd = (6 * p ** 2 + alpha) / b3
 	kx = (4 * p + b2 * kp) / b1
 
-	'''
-	print("kp : ", kp)
-	print("kd : ", kd)
-	print("kdd : ", kx)
-	'''
 
 	return kp, kd, kx, qd1
 
@@ -197,37 +174,22 @@ def getGains2(lines, kss):
 		if 'kd' in l:
 			pass
 			t = eval(l)
-			if t != gK:
-				print("gK !=  dans lambda^3 et Lambda^2 ")
-			#b3 = eval(l)
+
 		elif 'ks' in l:
 
 			gamma1 = eval(l)
-		#elif l != '':
-		#	alpha = -eval(l)
 		else :
 			beta = eval(l)
 
 	ligne0 = lines[2]
-	#ligne0 = list(filter(None, ligne0))
 	if 'kp' in ligne0:
 		t = eval(ligne0)
-		if t != gK:
-			print("gK !=  dans lambda^3 et Lambda^2 ")
 
 	ligne0 = lines[3]
-	#ligne0 = list(filter(None, ligne0))
 	if 'ks' in ligne0:
 		s = ligne0.split('*')[0]
 		gamma2 = eval(s)
 
-	# qd1 = gK = gamma1 = gamma2 = beta = 0
-	"""print("qd1 : ", qd1)
-	print("gK : ", gK)
-	print("gamma1 : ", gamma1)
-	print("gamma2 : ", gamma2)
-	print("beta : ", beta)
-	print()"""
 
 	p4 = (gamma2 * kss)#/a
 	#print("p4 : ", p4)
@@ -239,10 +201,6 @@ def getGains2(lines, kss):
 	kd = (6 * p ** 2 - beta - gamma1 * kss) / gK
 	kx = (4 * p) / gK
 
-
-	"""print("kp : ", kp)
-	print("kd : ", kd)
-	print("kdd : ", kx)"""
 
 	return kp, kd, kx, qd1
 
@@ -258,11 +216,6 @@ def calcul_gains_m(bool):
 		eng.calcul_gain_equilibre_amelioration(nargout=0)
 	else :
 		eng.calcul_gains_equilibre(nargout=0)
-
-#def calcul_gains_v2_m():
-#	print("calcul_gain_version2")
-#	eng.calcul_gain_equilibre_amelioration(nargout=0)
-#	print("fin")
 
 
 def calcul_gains_tracking_m():
