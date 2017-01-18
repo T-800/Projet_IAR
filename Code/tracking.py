@@ -175,6 +175,7 @@ def torque(state, t):
 	dotqd2 = get_dotqd2(t)
 	dotqd1 = get_dotqd1(t, dotqd2, qd1, qd2)
 
+	print("t ", t)
 
 	Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2
 
