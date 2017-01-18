@@ -60,7 +60,7 @@ Ld = (c1 + c2 + 2 * c3 * cos(qd2)) * dotqd1 + (c2 + c3 * cos(qd2)) * dotqd2;
 taud = m2*lc2*g*cos(qd1 + qd2);
 
 % Formule de la loi de controle
-tau = kdd*ddotL + kd*dotL  + kp*(L - Ld) + taud;
+tau = kdd*ddotL + kd*dotL  + kp*(L - 0) + taud;
 
 % Variables liees aux equations du mouvement
 d11 = m1*lc1^2 + m2*(l1^2 + lc2^2 + 2*l1*lc2*cos(q2)) + I1 + I2;
@@ -129,7 +129,7 @@ for i=1:4
     if dotqd1S(1) >= 0
         Mat = subs(A, [dotqd1 dotqd2], [dotqd1S(1) dotqd2S]);
     else
-        mat = subs(A, [dotqd1 dotqd2], [dotqd1S(2) dotqd2S]);
+        Mat = subs(A, [dotqd1 dotqd2], [dotqd1S(2) dotqd2S]);
     end
 
     Mat = subs(Mat, [qd1 qd2], [vals_qd1(i) vals_qd1(i)]);

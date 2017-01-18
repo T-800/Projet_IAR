@@ -41,6 +41,7 @@ ks = -50
 
 def torque(state, t):
 	global I1, I2
+	print(t)
 	q1 = state[0]
 	dq1 = state[1]
 	q2 = state[2]
@@ -61,7 +62,7 @@ def torque(state, t):
 		terme_amelioration = ks * (qd2 - q2)
 
 	L = (m1 * lc1 ** 2 + m2 * l1 ** 2 + I1 + m2 * lc2 ** 2 + I2 + 2 * m2 * l1 * lc2 * cos(q2)) * dq1 + \
-	    (m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
+		(m2 * lc2 ** 2 + I2 + m2 * l1 * lc2 * cos(q2)) * dq2
 
 	dL = - g * (m1 * x1 + m2 * x2)
 	ddL = - g * (m1 * dx1 + m2 * dx2)
@@ -192,7 +193,7 @@ if __name__ == '__main__':
 	time_template = 'time = %.2fs\nqd2 = %.2f'
 	time_text = ax.text(0.05, 0.93, '', color='red', transform=ax.transAxes)
 	ani = animation.FuncAnimation(fig, animate, frames=len(y),
-	                              interval=dt * 1e3, init_func=init)
+								  interval=dt * 1e3, init_func=init)
 
 	plt.axis('equal')
 	plt.axis([-T, T, -T, T])
