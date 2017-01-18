@@ -1,5 +1,6 @@
 import math
 import matlab.engine
+import sys
 
 # print("start engine")
 eng = matlab.engine.start_matlab()
@@ -10,9 +11,9 @@ def read_file(file, mode, ks=1):
 	lines = [line.rstrip() for line in file]
 	#print(lines)
 	file.close()
-	if mode == 0:
+	if mode == 0: # equilibre
 		return getGains(lines)
-	elif mode == 1:
+	elif mode == 1: # tracking
 		t = []
 		g = []
 		for l in lines:
@@ -24,9 +25,9 @@ def read_file(file, mode, ks=1):
 			else:
 				t += [l]
 		return g
-	elif mode == 2:
+	elif mode == 2: # eequilibre amélioré
 		return getGains2(lines, ks)
-	else :
+	else : # tracking amélioré
 		t = []
 		g = []
 		for l in lines:
@@ -78,6 +79,7 @@ def getGains(lines):
 		lines[i] = lines[i].replace(' - ', ' -')  # on remplace les 0- par -
 		lines[i] = lines[i].replace(' + ', ' +')  # on remplace les 0- par -
 		lines[i] = lines[i].replace('0  ', ' ')  # on remplace les 0- par -
+		lines[i] = lines[i].replace('  ', ' ')  # on remplace les 0- par -
 		lines[i] = lines[i].lstrip(' ')
 		lines[i] = lines[i].rstrip(' ')
 		print("apres :", lines[i])
@@ -89,6 +91,8 @@ def getGains(lines):
 			b1 = eval(l)
 		elif 'kp' in l:
 			b2 = -eval(l)
+		else :
+			print("error 0 :" ,l, file=sys.stderr)
 			# print(l)
 
 	ligne0 = lines[1].split(' ')
@@ -97,16 +101,23 @@ def getGains(lines):
 			b3 = eval(l)
 		elif l != '':
 			alpha = -eval(l)
+		else :
+			print("error 1 :" ,l, file=sys.stderr)
 
 	ligne0 = lines[2].split(' ')
 	for l in ligne0:
 		if 'kp' in l:
 			b4 = eval(l)
+		else :
+			print("error 2 :" ,l, file=sys.stderr)
 
 	ligne0 = lines[3].split(' ')
 	for l in ligne0:
 		if not 'kd' in l and not 'kx' in l and not 'kp' in l :
 			a = eval(l)
+
+		else :
+			print("error a :" ,l, file=sys.stderr)
 
 
 	print("b1 : ", b1)
