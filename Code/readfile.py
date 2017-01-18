@@ -19,6 +19,7 @@ def read_file(file, mode, ks=1):
 		for l in lines:
 
 			if l == "":
+				print('----------------------gains')
 				tu = getGains(t)
 				g += [tu]
 				t = []
@@ -33,6 +34,7 @@ def read_file(file, mode, ks=1):
 		for l in lines:
 
 			if l == "":
+				print('----------------------gains')
 				tu = getGains2(t, ks)
 				g += [tu]
 				t = []
@@ -82,7 +84,7 @@ def getGains(lines):
 		lines[i] = lines[i].replace('  ', ' ')  # on remplace les 0- par -
 		lines[i] = lines[i].lstrip(' ')
 		lines[i] = lines[i].rstrip(' ')
-		print("apres :", lines[i])
+		print("L^", 3 - i, " ;", lines[i])
 
 	# print('qd1 : ', qd1)
 	ligne0 = lines[0].split(' ')
@@ -92,7 +94,7 @@ def getGains(lines):
 		elif 'kp' in l:
 			b2 = -eval(l)
 		else :
-			print("error 0 :" ,l, file=sys.stderr)
+			print("\033[93merror l^3 :\033[0m" ,l)
 			# print(l)
 
 	ligne0 = lines[1].split(' ')
@@ -102,14 +104,14 @@ def getGains(lines):
 		elif l != '':
 			alpha = -eval(l)
 		else :
-			print("error 1 :" ,l, file=sys.stderr)
+			print("\033[93merror L^2 :\033[0m" ,l)
 
 	ligne0 = lines[2].split(' ')
 	for l in ligne0:
 		if 'kp' in l:
 			b4 = eval(l)
 		else :
-			print("error 2 :" ,l, file=sys.stderr)
+			print("\033[93merror l^1 :\033[0m" ,l)
 
 	ligne0 = lines[3].split(' ')
 	for l in ligne0:
@@ -117,16 +119,16 @@ def getGains(lines):
 			a = eval(l)
 
 		else :
-			print("error a :" ,l, file=sys.stderr)
+			print("\033[93merror a :\033[0m" ,l)
 
-
+	'''
 	print("b1 : ", b1)
 	print("b2 : ", b2)
 	print("b3 : ", b3)
 	print("b4 : ", b4)
 	print("a : ", a)
 	print("alpha : ", alpha)
-
+	'''
 	p = a ** (1 / 4)
 	# print("p : ", p)
 
@@ -135,10 +137,11 @@ def getGains(lines):
 	kd = (6 * p ** 2 + alpha) / b3
 	kx = (4 * p + b2 * kp) / b1
 
-
+	'''
 	print("kp : ", kp)
 	print("kd : ", kd)
 	print("kdd : ", kx)
+	'''
 
 	return kp, kd, kx, qd1
 
