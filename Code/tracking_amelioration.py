@@ -44,7 +44,7 @@ ks = -20
 
 def read_gains():
 	global gains
-	gains = read_file("Data/gains_tracking_amelioration.txt", 4, ks)
+	gains = read_file("Data/gains_tracking_amelioration.txt", 3, ks)
 
 	x = Symbol('x', real=True)
 	c4 = m1 * lc1 + m2 * l1
@@ -181,7 +181,7 @@ def torque(state, t):
 
 def derivs(state, t):
 	global _last_time, tab, dt
-
+	print(t)
 	if int(t) == 5:
 		print(5)
 	if int(t) == 10:

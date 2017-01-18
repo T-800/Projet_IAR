@@ -76,6 +76,7 @@ phi1 = (m1*lc1+m2*l1)*g*cos(q1)+m2*lc2*g*cos(q1+q2);
 phi2 = m2*lc2*g*cos(q1+q2);
 
 % Calcul de la fonction h
+dotqd2s = [0 0 -0.25 0 0];
 
 M = [[0 0 d11 d12]
     [0 0 d21 d22]
@@ -121,14 +122,25 @@ end
 fid = fopen('Data/gains_tracking_amelioration.txt','w');
 
 for i=1:4
-    Mat = subs(A, [qd1 qd2], [vals_qd1(i) vals_qd2(i)]);
+    dotqd2S = dotqd2s(i);
+    f = (m1 / (m1 + m2)) * (- dotqd1 * lc1 * sin(vals_qd1(i))) + (m2 / (m1 + m2)) * (- dotqd1 * l1 * sin(vals_qd1(i)) - (dotqd1 + dotqd2S) * lc2 * sin(vals_qd1(i) + vals_qd2(i)));
+
+    dotqd1S = solve(f==0, dotqd1, 'Real', true);
+
+    if dotqd1S(1) >= 0
+        Mat = subs(A, [dotqd1 dotqd2], [dotqd1S(1) dotqd2S]);
+    else
+        mat = subs(A, [dotqd1 dotqd2], [dotqd1S(2) dotqd2S]);
+    end
+
+    Mat = subs(Mat, [qd1 qd2], [vals_qd1(i) vals_qd1(i)]);
     Mat = vpa(Mat);
 
     % Calcul du polynome caracteristique
     polynome = charpoly(Mat);
 
     for j = 2:5
-        
+
         fprintf(fid,'%s \n',char(polynome(j)));
     end
     fprintf(fid, '\n');

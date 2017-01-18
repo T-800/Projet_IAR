@@ -88,6 +88,8 @@ A = sym(A);
 
 x = [q1 q2 dotq1 dotq2];
 
+dotqd2s = [0 0 -0.25 0 0];
+
 for i = 1:4
     for j = 1:4
         A(i,j) = diff(hx(i), x(j));
@@ -119,7 +121,18 @@ end
 fid = fopen('Data/gains_tracking.txt','w');
 
 for i=1:4
-    Mat = subs(A, [qd1 qd2], [vals_qd1(i) vals_qd2(i)]);
+    dotqd2S = dotqd2s(i);
+    f = (m1 / (m1 + m2)) * (- dotqd1 * lc1 * sin(vals_qd1(i))) + (m2 / (m1 + m2)) * (- dotqd1 * l1 * sin(vals_qd1(i)) - (dotqd1 + dotqd2S) * lc2 * sin(vals_qd1(i) + vals_qd2(i)));
+
+    dotqd1S = solve(f==0, dotqd1, 'Real', true);
+
+    if dotqd1S(1) >= 0
+        Mat = subs(A, [dotqd1 dotqd2], [dotqd1S(1) dotqd2S]);
+    else
+        mat = subs(A, [dotqd1 dotqd2], [dotqd1S(2) dotqd2S]);
+    end
+
+    Mat = subs(Mat, [qd1 qd2], [vals_qd1(i) vals_qd1(i)]);
     Mat = vpa(Mat);
 
     % Calcul du polynome caracteristique

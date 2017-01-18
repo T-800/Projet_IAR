@@ -197,4 +197,4 @@ if __name__ == '__main__':
 	plt.axis('equal')
 	plt.axis([-T, T, -T, T])
 	plt.show()
-	# ani.save(name+'.mp4', fps=15)
+	ani.save(name+'.mp4', fps=30)

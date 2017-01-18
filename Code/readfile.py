@@ -24,7 +24,7 @@ def read_file(file, mode, ks=1):
 			else:
 				t += [l]
 		return g
-	elif mode == 3:
+	elif mode == 2:
 		return getGains2(lines, ks)
 	else :
 		t = []
@@ -77,9 +77,10 @@ def getGains(lines):
 		lines[i] = lines[i].replace(' - + ', ' - ')  # on remplace les 0- par -
 		lines[i] = lines[i].replace(' - ', ' -')  # on remplace les 0- par -
 		lines[i] = lines[i].replace(' + ', ' +')  # on remplace les 0- par -
+		lines[i] = lines[i].replace('0  ', ' ')  # on remplace les 0- par -
 		lines[i] = lines[i].lstrip(' ')
 		lines[i] = lines[i].rstrip(' ')
-		# print("apres :", lines[i])
+		print("apres :", lines[i])
 
 	# print('qd1 : ', qd1)
 	ligne0 = lines[0].split(' ')
@@ -97,22 +98,24 @@ def getGains(lines):
 		elif l != '':
 			alpha = -eval(l)
 
-	ligne0 = lines[2]
-	if 'kp' in ligne0:
-		b4 = eval(ligne0)
+	ligne0 = lines[2].split(' ')
+	for l in ligne0:
+		if 'kp' in l:
+			b4 = eval(l)
 
-	ligne0 = lines[3]
-	if ligne0 != '':
-		a = eval(ligne0)
+	ligne0 = lines[3].split(' ')
+	for l in ligne0:
+		if not 'kd' in l and not 'kx' in l and not 'kp' in l :
+			a = eval(l)
 
-	'''
+
 	print("b1 : ", b1)
 	print("b2 : ", b2)
 	print("b3 : ", b3)
 	print("b4 : ", b4)
 	print("a : ", a)
 	print("alpha : ", alpha)
-	'''
+
 	p = a ** (1 / 4)
 	# print("p : ", p)
 
